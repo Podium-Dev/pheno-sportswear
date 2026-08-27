@@ -1,3 +1,5 @@
+import { NewsletterForm } from "@/components/Forms";
+
 const footerGroups = [
   {
     title: "Shop",
@@ -24,7 +26,8 @@ const footerGroups = [
     links: [
       ["Our Story", "/our-story"],
       ["Train With Yousef", "/train-with-yousef"],
-      ["Pursue The Rise", "/#top-picks"],
+      ["Pursue The Rise", "/our-story"],
+      ["Privacy", "/privacy"],
     ],
   },
 ] as const;
@@ -58,13 +61,19 @@ export function SiteFooter() {
             <h2 className="footer-group__title">{group.title}</h2>
             <ul className="footer-group__links">
               {group.links.map(([label, href]) => (
-                <li key={href}>
+                <li key={`${group.title}-${label}`}>
                   <a href={href}>{label}</a>
                 </li>
               ))}
             </ul>
           </div>
         ))}
+
+        <div className="footer-newsletter">
+          <p className="footer-group__title">Stay in the loop</p>
+          <p className="footer-newsletter__copy">Training notes and collection updates.</p>
+          <NewsletterForm compact />
+        </div>
 
         <SocialLinks />
       </div>

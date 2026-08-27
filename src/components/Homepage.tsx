@@ -1,26 +1,6 @@
 import { SiteFooter } from "@/components/SiteFooter";
 import { SiteHeader } from "@/components/SiteHeader";
-
-const topPicks = [
-  {
-    name: "Type 1 Shorts",
-    price: "£45.00",
-    image: "/images/type-1-shorts.jpg",
-    href: "/shop/type-1",
-  },
-  {
-    name: "Type 1 Joggers",
-    price: "£65.00",
-    image: "/images/type-1-joggers.jpg",
-    href: "/shop/type-1",
-  },
-  {
-    name: "Type 1 T-Shirt",
-    price: "£36.00",
-    image: "/images/type-1-tshirt.jpg",
-    href: "/shop/tops",
-  },
-];
+import { HomepageProductRail } from "@/components/HomepageProductRail";
 
 function SectionHeading({ children }: { children: React.ReactNode }) {
   return <h2 className="section-heading">{children}</h2>;
@@ -71,39 +51,7 @@ function Hero() {
 function TopPicks() {
   return (
     <section className="top-picks" id="top-picks" aria-labelledby="top-picks-title">
-      <div className="section-heading-row">
-        <SectionHeading>
-          <span id="top-picks-title">Top picks</span>
-        </SectionHeading>
-        <div className="carousel-controls" aria-label="Top picks carousel controls">
-          <button type="button" aria-label="Previous top picks">
-            ‹
-          </button>
-          <button type="button" aria-label="Next top picks">
-            ›
-          </button>
-        </div>
-      </div>
-
-      <div className="product-grid">
-        {topPicks.map((product) => (
-          <article className="product-card" key={product.name}>
-            <a className="product-card__link" href={product.href}>
-              <span className="product-card__media">
-                <img src={product.image} alt={`${product.name}, PHENO Sportswear`} />
-              </span>
-              <span className="product-card__details">
-                <span className="product-card__name">{product.name}</span>
-                <span className="product-card__price">{product.price}</span>
-              </span>
-            </a>
-          </article>
-        ))}
-      </div>
-
-      <div className="carousel-progress" aria-hidden="true">
-        <span />
-      </div>
+      <HomepageProductRail />
     </section>
   );
 }
