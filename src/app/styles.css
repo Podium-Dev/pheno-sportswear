@@ -53,74 +53,15 @@ img {
   max-width: 100%;
 }
 
-.page-board {
-  position: relative;
+.homepage {
   min-height: 100vh;
-  padding-bottom: 148px;
-  overflow-x: clip;
-  overflow-y: visible;
-  isolation: isolate;
-}
-
-.page-board::before,
-.page-board::after {
-  position: absolute;
-  z-index: -1;
-  content: "";
-  pointer-events: none;
-}
-
-.page-board::before {
-  top: 62px;
-  right: -132px;
-  width: 350px;
-  height: 660px;
-  background: oklch(94.4% 0.004 95);
-  clip-path: polygon(100% 0, 100% 38%, 28% 58%, 100% 58%, 100% 100%, 7% 78%);
-}
-
-.page-board::after {
-  right: -180px;
-  bottom: 190px;
-  width: 330px;
-  height: 460px;
-  background: oklch(95.4% 0.004 95);
-  clip-path: polygon(100% 0, 100% 50%, 15% 100%, 0 80%);
-}
-
-.page-board__intro {
-  display: flex;
-  gap: 51px;
-  align-items: flex-start;
-  width: min(calc(100% - 32px), var(--site-width));
-  min-height: 171px;
-  margin: 0 auto;
-  padding-top: 68px;
-}
-
-.page-board__index {
-  color: var(--muted);
-  font-size: 12px;
-  font-weight: 700;
-  line-height: 1.2;
-}
-
-.page-board__title {
-  font-family: var(--heading-font);
-  font-size: 20px;
-  font-weight: 700;
-  line-height: 1;
-  letter-spacing: -0.025em;
-}
-
-.site-shell {
-  position: relative;
-  z-index: 1;
-  width: min(calc(100% - 32px), var(--site-width));
-  margin: 0 auto;
-  overflow: hidden;
   background: var(--paper);
-  box-shadow: 0 28px 42px oklch(23% 0.006 95 / 0.12);
+  color: var(--ink);
+}
+
+.homepage-section-inner {
+  width: min(100%, 1440px);
+  margin-inline: auto;
 }
 
 .site-header {
@@ -134,6 +75,8 @@ img {
   display: flex;
   align-items: center;
   height: 100%;
+  width: min(100%, 1500px);
+  margin-inline: auto;
   padding: 0 var(--content-pad);
 }
 
@@ -256,6 +199,8 @@ img {
 .hero__inner {
   position: relative;
   height: 100%;
+  width: min(100%, 1440px);
+  margin-inline: auto;
   padding: 0 var(--content-pad);
 }
 
@@ -626,12 +571,17 @@ img {
 
 .campaign {
   position: relative;
+  min-height: 425px;
+  overflow: hidden;
+  background: var(--paper);
+}
+
+.campaign__inner {
+  position: relative;
   display: grid;
   grid-template-columns: 43% 57%;
   min-height: 425px;
   padding: 94px var(--content-pad) 70px;
-  overflow: hidden;
-  background: var(--paper);
 }
 
 .campaign__content {
@@ -701,6 +651,11 @@ img {
   padding: 37px var(--content-pad) 28px;
   background: var(--ink);
   color: var(--paper);
+}
+
+.site-footer__inner {
+  width: min(100%, 1500px);
+  margin-inline: auto;
 }
 
 .site-footer__top {
@@ -854,7 +809,7 @@ img {
     width: 490px;
   }
 
-  .campaign {
+  .campaign__inner {
     grid-template-columns: 45% 55%;
   }
 
@@ -867,31 +822,6 @@ img {
 }
 
 @media (max-width: 720px) {
-  .page-board {
-    padding-bottom: 24px;
-  }
-
-  .page-board::before,
-  .page-board::after {
-    display: none;
-  }
-
-  .page-board__intro {
-    width: 100%;
-    min-height: 92px;
-    gap: 22px;
-    padding: 29px 20px 23px;
-  }
-
-  .page-board__title {
-    font-size: 18px;
-  }
-
-  .site-shell {
-    width: 100%;
-    box-shadow: none;
-  }
-
   .site-header {
     height: 70px;
   }
@@ -974,8 +904,7 @@ img {
   }
 
   .top-picks,
-  .editorial,
-  .campaign {
+  .editorial {
     padding-right: 22px;
     padding-left: 22px;
   }
@@ -1022,8 +951,12 @@ img {
   .campaign {
     display: block;
     min-height: 620px;
-    padding-top: 72px;
-    padding-bottom: 0;
+  }
+
+  .campaign__inner {
+    display: block;
+    min-height: 620px;
+    padding: 72px 22px 0;
   }
 
   .campaign__slash {

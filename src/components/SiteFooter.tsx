@@ -51,36 +51,38 @@ function SocialLinks() {
 export function SiteFooter() {
   return (
     <footer className="site-footer">
-      <div className="site-footer__top">
-        <a className="footer-brand" href="/" aria-label="PHENO home">
-          <img src="/images/pheno-logo.png" alt="PHENO" />
-        </a>
+      <div className="site-footer__inner">
+        <div className="site-footer__top">
+          <a className="footer-brand" href="/" aria-label="PHENO home">
+            <img src="/images/pheno-logo.png" alt="PHENO" />
+          </a>
 
-        {footerGroups.map((group) => (
-          <div className="footer-group" key={group.title}>
-            <h2 className="footer-group__title">{group.title}</h2>
-            <ul className="footer-group__links">
-              {group.links.map(([label, href]) => (
-                <li key={`${group.title}-${label}`}>
-                  <a href={href}>{label}</a>
-                </li>
-              ))}
-            </ul>
+          {footerGroups.map((group) => (
+            <div className="footer-group" key={group.title}>
+              <h2 className="footer-group__title">{group.title}</h2>
+              <ul className="footer-group__links">
+                {group.links.map(([label, href]) => (
+                  <li key={`${group.title}-${label}`}>
+                    <a href={href}>{label}</a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+
+          <div className="footer-newsletter">
+            <p className="footer-group__title">Stay in the loop</p>
+            <p className="footer-newsletter__copy">Training notes and collection updates.</p>
+            <NewsletterForm compact />
           </div>
-        ))}
 
-        <div className="footer-newsletter">
-          <p className="footer-group__title">Stay in the loop</p>
-          <p className="footer-newsletter__copy">Training notes and collection updates.</p>
-          <NewsletterForm compact />
+          <SocialLinks />
         </div>
 
-        <SocialLinks />
-      </div>
-
-      <div className="site-footer__bottom">
-        <p>© 2026 PHENO Sportswear<br />All rights reserved</p>
-        <a href="/privacy">Privacy &amp; Cookie Policy</a>
+        <div className="site-footer__bottom">
+          <p>© 2026 PHENO Sportswear<br />All rights reserved</p>
+          <a href="/privacy">Privacy &amp; Cookie Policy</a>
+        </div>
       </div>
     </footer>
   );

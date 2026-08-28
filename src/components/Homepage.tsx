@@ -51,7 +51,9 @@ function Hero() {
 function TopPicks() {
   return (
     <section className="top-picks" id="top-picks" aria-labelledby="top-picks-title">
-      <HomepageProductRail />
+      <div className="homepage-section-inner">
+        <HomepageProductRail />
+      </div>
     </section>
   );
 }
@@ -59,40 +61,42 @@ function TopPicks() {
 function Editorial() {
   return (
     <section className="editorial" aria-labelledby="editorial-title">
-      <SectionHeading>
-        <span id="editorial-title">The rise</span>
-      </SectionHeading>
+      <div className="homepage-section-inner">
+        <SectionHeading>
+          <span id="editorial-title">The rise</span>
+        </SectionHeading>
 
-      <div className="editorial__main">
-        <a className="editorial-card editorial-card--main" href="/our-story">
-          <img src="/images/editorial-main.jpg" alt="Athlete training in a bright gym" />
-          <span className="editorial-card__shade" aria-hidden="true" />
-          <span className="editorial-card__copy">
-            <span className="eyebrow">THE PHENO MINDSET</span>
-            <strong>Built for the work</strong>
-            <span>Performance pieces for every hard-earned rep.</span>
-            <span className="editorial-card__cta">Discover</span>
-          </span>
-        </a>
-      </div>
+        <div className="editorial__main">
+          <a className="editorial-card editorial-card--main" href="/our-story">
+            <img src="/images/editorial-main.jpg" alt="Athlete training in a bright gym" />
+            <span className="editorial-card__shade" aria-hidden="true" />
+            <span className="editorial-card__copy">
+              <span className="eyebrow">THE PHENO MINDSET</span>
+              <strong>Built for the work</strong>
+              <span>Performance pieces for every hard-earned rep.</span>
+              <span className="editorial-card__cta">Discover</span>
+            </span>
+          </a>
+        </div>
 
-      <div className="editorial__subgrid">
-        <a className="editorial-card" href="/shop/type-1">
-          <img src="/images/editorial-left.jpg" alt="Athlete running outdoors" />
-          <span className="editorial-card__shade" aria-hidden="true" />
-          <span className="editorial-card__copy">
-            <strong>Type 1 collection</strong>
-            <span className="editorial-card__cta">Shop now</span>
-          </span>
-        </a>
-        <a className="editorial-card" href="/our-story">
-          <img src="/images/editorial-right.jpg" alt="Athlete preparing for a workout" />
-          <span className="editorial-card__shade" aria-hidden="true" />
-          <span className="editorial-card__copy">
-            <strong>Pursue the rise</strong>
-            <span className="editorial-card__cta">Our story</span>
-          </span>
-        </a>
+        <div className="editorial__subgrid">
+          <a className="editorial-card" href="/shop/type-1">
+            <img src="/images/editorial-left.jpg" alt="Athlete running outdoors" />
+            <span className="editorial-card__shade" aria-hidden="true" />
+            <span className="editorial-card__copy">
+              <strong>Type 1 collection</strong>
+              <span className="editorial-card__cta">Shop now</span>
+            </span>
+          </a>
+          <a className="editorial-card" href="/our-story">
+            <img src="/images/editorial-right.jpg" alt="Athlete preparing for a workout" />
+            <span className="editorial-card__shade" aria-hidden="true" />
+            <span className="editorial-card__copy">
+              <strong>Pursue the rise</strong>
+              <span className="editorial-card__cta">Our story</span>
+            </span>
+          </a>
+        </div>
       </div>
     </section>
   );
@@ -102,22 +106,24 @@ function Campaign() {
   return (
     <section className="campaign" aria-labelledby="campaign-title">
       <span className="campaign__slash" aria-hidden="true" />
-      <div className="campaign__content">
-        <p className="eyebrow">THE PHENO STORY</p>
-        <h2 id="campaign-title">Rise different</h2>
-        <p>
-          Your starting point does not define where you finish. Build the next
-          version of you, one session at a time.
-        </p>
-        <a className="button button--dark" href="/our-story">
-          Discover PHENO
-        </a>
-      </div>
-      <div className="campaign__visual">
-        <img src="/images/type-1-joggers.jpg" alt="PHENO Type 1 performance joggers" />
-        <span className="campaign__visual-label" aria-hidden="true">
-          TYPE 1
-        </span>
+      <div className="homepage-section-inner campaign__inner">
+        <div className="campaign__content">
+          <p className="eyebrow">THE PHENO STORY</p>
+          <h2 id="campaign-title">Rise different</h2>
+          <p>
+            Your starting point does not define where you finish. Build the next
+            version of you, one session at a time.
+          </p>
+          <a className="button button--dark" href="/our-story">
+            Discover PHENO
+          </a>
+        </div>
+        <div className="campaign__visual">
+          <img src="/images/type-1-joggers.jpg" alt="PHENO Type 1 performance joggers" />
+          <span className="campaign__visual-label" aria-hidden="true">
+            TYPE 1
+          </span>
+        </div>
       </div>
     </section>
   );
@@ -125,22 +131,15 @@ function Campaign() {
 
 export function Homepage() {
   return (
-    <div className="page-board">
-      <div className="page-board__intro" aria-hidden="true">
-        <span className="page-board__index">05</span>
-        <span className="page-board__title">Home page</span>
-      </div>
-
-      <div className="site-shell">
-        <SiteHeader />
-        <main>
-          <Hero />
-          <TopPicks />
-          <Editorial />
-          <Campaign />
-        </main>
-        <SiteFooter />
-      </div>
+    <div className="homepage">
+      <SiteHeader />
+      <main>
+        <Hero />
+        <TopPicks />
+        <Editorial />
+        <Campaign />
+      </main>
+      <SiteFooter />
     </div>
   );
 }
