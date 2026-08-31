@@ -8,7 +8,7 @@
   --line: oklch(89% 0.004 95);
   --accent: oklch(79% 0.16 76);
   --accent-soft: oklch(92% 0.055 82);
-  --site-width: 1000px;
+  --site-width: 1312px;
   --content-pad: 84px;
   --header-height: 86px;
   --section-gap: 14px;
@@ -61,7 +61,7 @@ img {
 }
 
 .homepage-section-inner {
-  width: min(100%, 1440px);
+  width: min(100%, var(--site-width));
   margin-inline: auto;
 }
 
@@ -76,7 +76,7 @@ img {
   display: flex;
   align-items: center;
   height: 100%;
-  width: min(100%, 1500px);
+  width: min(100%, var(--site-width));
   margin-inline: auto;
   padding: 0 var(--content-pad);
 }
@@ -200,7 +200,7 @@ img {
 .hero__inner {
   position: relative;
   height: 100%;
-  width: min(100%, 1440px);
+  width: min(100%, var(--site-width));
   margin-inline: auto;
   padding: 0 var(--content-pad);
 }
@@ -641,7 +641,7 @@ img {
 }
 
 .site-footer__inner {
-  width: min(100%, 1500px);
+  width: min(100%, var(--site-width));
   margin-inline: auto;
 }
 
@@ -3295,7 +3295,7 @@ img {
 .homepage .hero__inner,
 .homepage .homepage-section-inner,
 .homepage .site-footer__inner {
-  width: min(100%, 1160px);
+  width: min(100%, var(--site-width));
 }
 
 .homepage .site-header__inner {
@@ -4049,7 +4049,7 @@ img {
 }
 
 .homepage .home-section-inner {
-  width: min(100%, 1500px);
+  width: min(100%, var(--site-width));
   margin-inline: auto;
   padding-inline: var(--home-section-pad-x);
 }
@@ -4146,7 +4146,7 @@ img {
 }
 
 .homepage .site-header__inner {
-  width: min(100%, 1500px);
+  width: min(100%, var(--site-width));
   padding-inline: var(--home-section-pad-x);
 }
 
@@ -4304,7 +4304,7 @@ img {
   position: relative;
   display: flex;
   min-height: inherit;
-  width: min(100%, 1500px);
+  width: min(100%, var(--site-width));
   margin-inline: auto;
   align-items: center;
   padding: 116px var(--home-section-pad-x) var(--home-section-pad-y);
@@ -5126,7 +5126,7 @@ img {
 .homepage .site-footer__inner {
   position: relative;
   z-index: 1;
-  width: min(100%, 1500px);
+  width: min(100%, var(--site-width));
   margin-inline: auto;
 }
 
