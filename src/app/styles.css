@@ -54,6 +54,26 @@ img {
   max-width: 100%;
 }
 
+[data-parallax] {
+  --parallax-offset: 0px;
+  --parallax-scale: 1;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  [data-parallax] {
+    translate: 0 var(--parallax-offset);
+    scale: var(--parallax-scale);
+    will-change: transform;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-parallax] {
+    translate: none !important;
+    scale: none !important;
+  }
+}
+
 .homepage {
   min-height: 100vh;
   background: var(--paper);
