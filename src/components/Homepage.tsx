@@ -63,18 +63,18 @@ function Editorial() {
     <section className="editorial" aria-labelledby="editorial-title">
       <div className="homepage-section-inner">
         <SectionHeading>
-          <span id="editorial-title">The rise</span>
+          <span id="editorial-title">Trending now</span>
         </SectionHeading>
 
         <div className="editorial__main">
-          <a className="editorial-card editorial-card--main" href="/our-story">
+          <a className="editorial-card editorial-card--main" href="/shop/type-1">
             <img src="/images/editorial-main.jpg" alt="Athlete training in a bright gym" />
             <span className="editorial-card__shade" aria-hidden="true" />
             <span className="editorial-card__copy">
-              <span className="eyebrow">THE PHENO MINDSET</span>
-              <strong>Built for the work</strong>
-              <span>Performance pieces for every hard-earned rep.</span>
-              <span className="editorial-card__cta">Discover</span>
+              <span className="eyebrow">PHENO</span>
+              <strong>Train in the present</strong>
+              <span>Technical pieces for the session in front of you.</span>
+              <span className="editorial-card__cta">Shop now</span>
             </span>
           </a>
         </div>
@@ -84,8 +84,8 @@ function Editorial() {
             <img src="/images/editorial-left.jpg" alt="Athlete running outdoors" />
             <span className="editorial-card__shade" aria-hidden="true" />
             <span className="editorial-card__copy">
-              <strong>Type 1 collection</strong>
-              <span className="editorial-card__cta">Shop now</span>
+              <strong>Type 1 training</strong>
+              <span className="editorial-card__cta">Explore</span>
             </span>
           </a>
           <a className="editorial-card" href="/our-story">
@@ -143,3 +143,4 @@ export function Homepage() {
     </div>
   );
 }
+
