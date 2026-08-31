@@ -5,6 +5,7 @@ import {
 } from "@/data/products";
 import { BundleCard } from "@/components/BundleCard";
 import { ProductGrid } from "@/components/ProductGrid";
+import { ShopPerformanceBanner } from "@/components/ShopPerformanceBanner";
 import { Breadcrumbs, EditorialPageIntro, StorefrontPage } from "@/components/StorefrontPage";
 
 const collectionDescriptions: Record<string, string> = {
@@ -26,6 +27,7 @@ export function CollectionPage({ collection }: { collection: string }) {
 
   return (
     <StorefrontPage className="storefront-page--catalogue">
+      {collection === "all" ? <ShopPerformanceBanner /> : null}
       <div className="catalogue-page">
         <Breadcrumbs current={label} />
         <EditorialPageIntro eyebrow="PHENO SPORTSWEAR" title={label}>
