@@ -1,9 +1,39 @@
-import { SiteFooter } from "@/components/SiteFooter";
-import { SiteHeader } from "@/components/SiteHeader";
-import { HomepageProductRail } from "@/components/HomepageProductRail";
+"use client";
 
-function SectionHeading({ children }: { children: React.ReactNode }) {
-  return <h2 className="section-heading">{children}</h2>;
+import { useEffect, useState, type ReactNode } from "react";
+import { useCommerce } from "@/components/CommerceProvider";
+import { getProductBySlug, type Product } from "@/data/products";
+import { formatCurrency } from "@/lib/format";
+
+const retailNavLinks = [
+  ["Shop", "/shop"],
+  ["Our story", "/our-story"],
+  ["Train with Yousef", "/train-with-yousef"],
+  ["Contact", "/contact"],
+] as const;
+
+const retailPickSlugs = [
+  "pheno-type-1-t-shirt",
+  "pheno-type-1-shorts",
+  "pheno-type-1-hoodie",
+  "pheno-type-1-joggers",
+  "pheno-type-1-tank",
+];
+
+const retailSpotlightSlugs = [
+  "pheno-type-1-hoodie",
+  "pheno-type-1-joggers",
+  "pheno-type-1-shorts",
+  "pheno-type-1-t-shirt",
+  "pheno-type-1-tank",
+];
+
+function ArrowIcon() {
+  return (
+    <svg className="retail-arrow" viewBox="0 0 18 18" aria-hidden="true">
+      <path d="M2 9h13M10 4l5 5-5 5" />
+    </svg>
+  );
 }
 
 const socialProofPosts = [
@@ -34,123 +64,294 @@ const socialProofPosts = [
   },
 ] as const;
 
-function Hero() {
+function MenuIcon() {
   return (
-    <section className="hero" aria-labelledby="hero-title">
-      <img
-        className="hero__background"
-        src="/images/pheno-banner.jpg"
-        alt=""
-        aria-hidden="true"
-      />
-      <div className="hero__slash" aria-hidden="true" />
-      <div className="hero__graphic" aria-hidden="true">
-        RISE
+    <svg viewBox="0 0 20 20" aria-hidden="true">
+      <path d="M3 6h14M3 10h14M3 14h14" />
+    </svg>
+  );
+}
+
+function SearchIcon() {
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <circle cx="10.5" cy="10.5" r="6.5" />
+      <path d="m16 16 5 5" />
+    </svg>
+  );
+}
+
+function CartIcon() {
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M4 6h2l1.7 10.2a2 2 0 0 0 2 1.7h7.6a2 2 0 0 0 2-1.6L21 9H7" />
+      <circle cx="10" cy="21" r="1" />
+      <circle cx="18" cy="21" r="1" />
+    </svg>
+  );
+}
+
+function RetailCta({ href, children, dark = false }: { href: string; children: ReactNode; dark?: boolean }) {
+  return (
+    <a className={`retail-cta${dark ? " retail-cta--dark" : ""}`} href={href}>
+      <span>{children}</span>
+      <ArrowIcon />
+    </a>
+  );
+}
+
+function RetailHeader() {
+  const { cartCount, setCartOpen, setSearchOpen } = useCommerce();
+  const [mobileOpen, setMobileOpen] = useState(false);
+
+  const openSearch = () => {
+    setMobileOpen(false);
+    setSearchOpen(true);
+  };
+
+  const openCart = () => {
+    setMobileOpen(false);
+    setCartOpen(true);
+  };
+
+  return (
+    <header className="retail-header">
+      <div className="retail-utility">
+        <button className="retail-utility__menu" type="button" aria-label="Open menu" onClick={() => setMobileOpen((open) => !open)}>
+          <MenuIcon />
+        </button>
+        <span>Home page</span>
       </div>
-      <div className="hero__inner">
-        <div className="hero__content">
-          <p className="eyebrow">PHENO SPORTSWEAR</p>
-          <h1 id="hero-title">Pursue the rise</h1>
-          <p className="hero__summary">
-            Performance sportswear built for those who refuse to stay down.
-          </p>
-          <a className="button button--dark" href="/shop">
-            Shop the collection
-          </a>
+
+      <div className="retail-navigation">
+        <a className="retail-navigation__brand" href="/" aria-label="PHENO home">
+          <img src="/images/pheno-desktop-logo-wide.avif" alt="PHENO" />
+        </a>
+
+        <nav className="retail-navigation__links" aria-label="Primary navigation">
+          {retailNavLinks.map(([label, href]) => (
+            <a href={href} key={href}>{label}</a>
+          ))}
+        </nav>
+
+        <div className="retail-navigation__tools" aria-label="Utility navigation">
+          <button type="button" aria-label="Search" onClick={openSearch}>
+            <SearchIcon />
+            <span>Search</span>
+          </button>
+          <button type="button" aria-label={`Cart (${cartCount})`} onClick={openCart}>
+            <CartIcon />
+            <span>My cart ({cartCount})</span>
+          </button>
         </div>
 
-        <div className="hero__visual" aria-hidden="true">
-          <img src="/images/type-1-shorts.jpg" alt="" />
-          <span className="hero__visual-word">PHENO</span>
+        <button className="retail-navigation__mobile-toggle" type="button" aria-expanded={mobileOpen} aria-controls="retail-mobile-menu" onClick={() => setMobileOpen((open) => !open)}>
+          <span>{mobileOpen ? "Close" : "Menu"}</span>
+          <MenuIcon />
+        </button>
+      </div>
+
+      {mobileOpen ? (
+        <nav id="retail-mobile-menu" className="retail-mobile-menu" aria-label="Mobile navigation">
+          {retailNavLinks.map(([label, href]) => (
+            <a href={href} key={href} onClick={() => setMobileOpen(false)}>{label}</a>
+          ))}
+          <button type="button" onClick={openSearch}>Search</button>
+          <button type="button" onClick={openCart}>My cart ({cartCount})</button>
+        </nav>
+      ) : null}
+    </header>
+  );
+}
+
+function RetailHero() {
+  return (
+    <section className="retail-hero" aria-labelledby="retail-hero-title">
+      <img className="retail-hero__backdrop" src="/images/campaign-athlete.jpg" alt="" aria-hidden="true" />
+      <div className="retail-hero__wash" aria-hidden="true" />
+
+      <div className="retail-hero__inner">
+        <div className="retail-hero__copy">
+          <p className="retail-eyebrow">New arrival</p>
+          <h1 id="retail-hero-title"><span>Type 1</span><span>performance</span></h1>
+          <p>Engineered for movement. Built for every session, every day.</p>
+          <RetailCta href="/shop/type-1" dark>Shop the collection</RetailCta>
         </div>
 
-        <div className="hero__indicators" aria-label="Hero slide 1 of 5">
-          <span className="hero__indicator hero__indicator--active" />
-          <span className="hero__indicator" />
-          <span className="hero__indicator" />
-          <span className="hero__indicator" />
-          <span className="hero__indicator" />
+        <div className="retail-hero__art" aria-hidden="true">
+          <img className="retail-hero__mark" src="/images/pheno-hero-mark.png" alt="" />
+          <img className="retail-hero__product retail-hero__product--hoodie" src="/images/type-1-hoodie.jpg" alt="" />
+        </div>
+
+        <div className="retail-hero__indicators" aria-label="Hero slide 1 of 4">
+          <span className="is-active" />
+          <span />
+          <span />
+          <span />
         </div>
       </div>
     </section>
+  );
+}
+
+function RetailProductCard({ product }: { product: Product }) {
+  return (
+    <article className="retail-product-card">
+      <a className="retail-product-card__media" href={`/product/${product.slug}`}>
+        <img src={product.images[0]} alt={`${product.name}, PHENO Sportswear`} />
+      </a>
+      <a className="retail-product-card__details" href={`/product/${product.slug}`}>
+        <span>{product.name}</span>
+        <span>{formatCurrency(product.price)}</span>
+      </a>
+    </article>
+  );
+}
+
+function RetailProductRail() {
+  const products = retailPickSlugs
+    .map((slug) => getProductBySlug(slug))
+    .filter((product): product is Product => Boolean(product));
+  const [startIndex, setStartIndex] = useState(0);
+  const visibleProducts = Array.from({ length: Math.min(3, products.length) }, (_, offset) =>
+    products[(startIndex + offset) % products.length],
+  );
+
+  return (
+    <>
+      <div className="retail-picks__header">
+        <h2>Top picks</h2>
+        <div className="retail-picks__controls">
+          <button type="button" aria-label="Previous top picks" onClick={() => setStartIndex((current) => (current - 1 + products.length) % products.length)}>‹</button>
+          <button type="button" aria-label="Next top picks" onClick={() => setStartIndex((current) => (current + 1) % products.length)}>›</button>
+        </div>
+      </div>
+
+      <div className="retail-product-grid">
+        {visibleProducts.map((product) => <RetailProductCard product={product} key={product.slug} />)}
+      </div>
+
+      <div className="retail-picks__progress" aria-hidden="true">
+        {products.slice(0, 3).map((product, index) => <span className={index === startIndex % 3 ? "is-active" : ""} key={product.slug} />)}
+      </div>
+    </>
   );
 }
 
 function TopPicks() {
   return (
-    <section className="top-picks" id="top-picks" aria-labelledby="top-picks-title">
-      <div className="homepage-section-inner">
-        <HomepageProductRail />
+    <section className="retail-section retail-picks" aria-labelledby="retail-picks-title">
+      <div className="retail-section__inner">
+        <span className="visually-hidden" id="retail-picks-title">Top picks</span>
+        <RetailProductRail />
       </div>
     </section>
   );
 }
 
-function Editorial() {
+function RetailFeatureIcon({ name }: { name: "fabric" | "fit" | "build" | "shipping" | "returns" }) {
+  if (name === "fabric") {
+    return (
+      <svg viewBox="0 0 32 32" aria-hidden="true">
+        <path d="M16 3c2 4 7 5 9 9 3 5-1 12-7 13-7 2-14-3-13-10 1-5 7-7 11-12Z" />
+        <path d="M8 20c4-1 8-4 10-9M12 26c1-3 3-6 6-8" />
+      </svg>
+    );
+  }
+
+  if (name === "fit") {
+    return (
+      <svg viewBox="0 0 32 32" aria-hidden="true">
+        <path d="M8 24c4-7 9-10 16-11M16 7c1 2 3 3 6 3M7 17c3 1 5 0 7-3" />
+        <path d="m21 9 3-3 2 3" />
+      </svg>
+    );
+  }
+
+  if (name === "build") {
+    return (
+      <svg viewBox="0 0 32 32" aria-hidden="true">
+        <path d="m16 3 10 4v8c0 7-4 11-10 14C10 26 6 22 6 15V7l10-4Z" />
+        <path d="m16 9 1.5 3.4 3.5.4-2.6 2.3.8 3.5-3.2-1.8-3.2 1.8.8-3.5-2.6-2.3 3.5-.4L16 9Z" />
+      </svg>
+    );
+  }
+
+  if (name === "shipping") {
+    return (
+      <svg viewBox="0 0 32 32" aria-hidden="true">
+        <path d="M3 8h16v13H3zM19 13h5l5 5v3H19z" />
+        <circle cx="9" cy="24" r="2.5" />
+        <circle cx="25" cy="24" r="2.5" />
+        <path d="M22 13v5h7" />
+      </svg>
+    );
+  }
+
   return (
-    <section className="editorial" aria-labelledby="editorial-title">
-      <div className="homepage-section-inner">
-        <SectionHeading>
-          <span id="editorial-title">Trending now</span>
-        </SectionHeading>
+    <svg viewBox="0 0 32 32" aria-hidden="true">
+      <path d="M25 9a10 10 0 1 0 1 10" />
+      <path d="M25 4v6h-6M7 23v-6h6" />
+    </svg>
+  );
+}
 
-        <div className="editorial__main">
-          <a className="editorial-card editorial-card--main" href="/shop/type-1">
-            <img src="/images/editorial-main.jpg" alt="Athlete training in a bright gym" />
-            <span className="editorial-card__shade" aria-hidden="true" />
-            <span className="editorial-card__copy">
-              <span className="eyebrow">PHENO</span>
-              <strong>Train in the present</strong>
-              <span>Technical pieces for the session in front of you.</span>
-              <span className="editorial-card__cta">Shop now</span>
-            </span>
-          </a>
-        </div>
+const retailFeatures = [
+  ["fabric", "Premium fabrics"],
+  ["fit", "Performance fit"],
+  ["build", "Durable construction"],
+  ["shipping", "Fast & reliable shipping"],
+  ["returns", "Easy returns"],
+] as const;
 
-        <div className="editorial__subgrid">
-          <a className="editorial-card" href="/shop/type-1">
-            <img src="/images/editorial-left.jpg" alt="Athlete running outdoors" />
-            <span className="editorial-card__shade" aria-hidden="true" />
-            <span className="editorial-card__copy">
-              <strong>Type 1 training</strong>
-              <span className="editorial-card__cta">Explore</span>
+function RetailFeatureStrip() {
+  return (
+    <section className="retail-features" aria-label="Why shop PHENO">
+      <div className="retail-features__inner">
+        {retailFeatures.map(([icon, label]) => (
+          <article className="retail-feature" key={label}>
+            <span className="retail-feature__icon">
+              <RetailFeatureIcon name={icon} />
             </span>
-          </a>
-          <a className="editorial-card" href="/our-story">
-            <img src="/images/editorial-right.jpg" alt="Athlete preparing for a workout" />
-            <span className="editorial-card__shade" aria-hidden="true" />
-            <span className="editorial-card__copy">
-              <strong>Pursue the rise</strong>
-              <span className="editorial-card__cta">Our story</span>
-            </span>
-          </a>
-        </div>
+            <h2>{label}</h2>
+          </article>
+        ))}
       </div>
     </section>
   );
 }
 
-function Campaign() {
+function CampaignTile({ href, image, alt, label, title }: { href: string; image: string; alt: string; label: string; title: string }) {
   return (
-    <section className="campaign" aria-labelledby="campaign-title">
-      <span className="campaign__slash" aria-hidden="true" />
-      <div className="homepage-section-inner campaign__inner">
-        <div className="campaign__content">
-          <p className="eyebrow">THE PHENO STORY</p>
-          <h2 id="campaign-title">Rise different</h2>
-          <p>
-            Your starting point does not define where you finish. Build the next
-            version of you, one session at a time.
-          </p>
-          <a className="button button--dark" href="/our-story">
-            Discover PHENO
-          </a>
-        </div>
-        <div className="campaign__visual">
-          <img src="/images/type-1-joggers.jpg" alt="PHENO Type 1 performance joggers" />
-          <span className="campaign__visual-label" aria-hidden="true">
-            TYPE 1
+    <a className="retail-campaign-tile" href={href}>
+      <img src={image} alt={alt} />
+      <span className="retail-campaign-tile__shade" aria-hidden="true" />
+      <span className="retail-campaign-tile__copy">
+        <span>{label}</span>
+        <strong>{title}</strong>
+      </span>
+    </a>
+  );
+}
+
+function TrendingCampaign() {
+  return (
+    <section className="retail-section retail-trending" aria-labelledby="retail-trending-title">
+      <div className="retail-section__inner">
+        <h2 className="retail-section__title" id="retail-trending-title">Trending now</h2>
+        <a className="retail-campaign-feature" href="/shop/type-1">
+          <img src="/images/pheno-banner.jpg" alt="Athlete training on the field in PHENO sportswear" />
+          <span className="retail-campaign-feature__shade" aria-hidden="true" />
+          <span className="retail-campaign-feature__copy">
+            <span className="retail-eyebrow">New collection</span>
+            <strong>Type 1 training</strong>
+            <span>Performance pieces for the work ahead.</span>
+            <span className="retail-campaign-feature__cta">Shop <ArrowIcon /></span>
           </span>
+        </a>
+        <div className="retail-campaign-grid">
+          <CampaignTile href="/shop/bottoms" image="/images/editorial-left.jpg" alt="Runners moving together outdoors" label="Move every day" title="Bottoms that keep up." />
+          <CampaignTile href="/train-with-yousef" image="/images/editorial-right.jpg" alt="Athlete preparing for a workout" label="Built for the work" title="Train with intent." />
         </div>
       </div>
     </section>
@@ -160,10 +361,10 @@ function Campaign() {
 function SocialProof() {
   return (
     <section className="social-proof" aria-labelledby="social-proof-title">
-      <div className="homepage-section-inner">
+      <div className="retail-section__inner">
         <div className="social-proof__intro">
           <div>
-            <p className="eyebrow">THE PHENO COMMUNITY</p>
+          <p className="retail-eyebrow">THE PHENO COMMUNITY</p>
             <h2 id="social-proof-title">The rise, in motion</h2>
           </div>
           <p className="social-proof__intro-copy">
@@ -201,24 +402,166 @@ function SocialProof() {
               </span>
             </a>
           ))}
+
         </div>
       </div>
     </section>
   );
 }
 
+function ProductSpotlight() {
+  const products = retailSpotlightSlugs
+    .map((slug) => getProductBySlug(slug))
+    .filter((product): product is Product => Boolean(product));
+  const [activeIndex, setActiveIndex] = useState(0);
+  const [isSliderPaused, setIsSliderPaused] = useState(false);
+
+  useEffect(() => {
+    if (isSliderPaused || products.length < 2) return;
+
+    const intervalId = window.setInterval(() => {
+      setActiveIndex((current) => (current + 1) % products.length);
+    }, 4500);
+
+    return () => window.clearInterval(intervalId);
+  }, [isSliderPaused, products.length]);
+
+  if (!products.length) return null;
+
+  const spotlightSlides = [-1, 0, 1].map((offset) => {
+    const index = (activeIndex + offset + products.length) % products.length;
+    return {
+      product: products[index],
+      index,
+      position: offset === 0 ? "active" : offset < 0 ? "previous" : "next",
+    } as const;
+  });
+
+  return (
+    <section className="retail-spotlight" aria-labelledby="retail-spotlight-title">
+      <div className="retail-spotlight__inner">
+        <div className="retail-spotlight__copy">
+          <p className="retail-eyebrow">Come and shop</p>
+          <h2 id="retail-spotlight-title">Type 1 by PHENO</h2>
+          <p>Build your rotation with technical layers made for the session and everything after it.</p>
+          <RetailCta href="/shop/type-1" dark>Shop now</RetailCta>
+        </div>
+        <div className="retail-spotlight__art">
+          <img className="retail-spotlight__mark" src="/images/pheno-hero-mark.png" alt="" aria-hidden="true" />
+          <div
+            className="retail-spotlight__slider"
+            role="region"
+            aria-roledescription="carousel"
+            aria-label="Type 1 products"
+            onMouseEnter={() => setIsSliderPaused(true)}
+            onMouseLeave={() => setIsSliderPaused(false)}
+            onFocus={() => setIsSliderPaused(true)}
+            onBlur={() => setIsSliderPaused(false)}
+          >
+            <div className="retail-spotlight__slider-stage" aria-live="polite">
+              {spotlightSlides.map(({ product, index, position }) => (
+                <a
+                  className={`retail-spotlight__slide retail-spotlight__slide--${position}`}
+                  href={`/product/${product.slug}`}
+                  aria-label={`${position === "active" ? "View" : "Show"} ${product.name}`}
+                  aria-current={position === "active" ? "true" : undefined}
+                  onClick={(event) => {
+                    if (position !== "active") {
+                      event.preventDefault();
+                      setActiveIndex(index);
+                    }
+                  }}
+                  key={`${product.slug}-${position}`}
+                >
+                  <span className="retail-spotlight__slide-media">
+                    <img src={product.images[0]} alt={`${product.name}, PHENO Sportswear`} />
+                  </span>
+                </a>
+              ))}
+            </div>
+
+            <div className="retail-spotlight__dots" role="tablist" aria-label="Choose a Type 1 product">
+              {products.map((product, index) => (
+                <button
+                  type="button"
+                  role="tab"
+                  aria-label={`Show ${product.name}`}
+                  aria-selected={index === activeIndex}
+                  onClick={() => setActiveIndex(index)}
+                  key={product.slug}
+                >
+                  <span className={index === activeIndex ? "is-active" : ""} />
+                </button>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+const retailFooterGroups = [
+  { title: "Shop", links: [["Shop all", "/shop"], ["Type 1", "/shop/type-1"], ["Tops", "/shop/tops"], ["Bottoms", "/shop/bottoms"]] },
+  { title: "Our story", links: [["Our philosophy", "/our-story"], ["Founder", "/our-story"], ["Values", "/our-story"], ["FAQs", "/help/faq"]] },
+  { title: "Support", links: [["Shipping", "/help/shipping"], ["Returns", "/help/returns"], ["Size guide", "/help/size-guide"], ["Contact", "/contact"]] },
+] as const;
+
+function SocialIcons() {
+  return (
+    <div className="retail-footer__socials" aria-label="Social media">
+      <a href="https://www.instagram.com/" target="_blank" rel="noreferrer" aria-label="Instagram">◎</a>
+      <a href="https://www.tiktok.com/" target="_blank" rel="noreferrer" aria-label="TikTok">♪</a>
+      <a href="https://www.youtube.com/" target="_blank" rel="noreferrer" aria-label="YouTube">▶</a>
+      <a href="https://x.com/" target="_blank" rel="noreferrer" aria-label="X">×</a>
+    </div>
+  );
+}
+
+function RetailFooter() {
+  return (
+    <footer className="retail-footer">
+      <div className="retail-footer__inner">
+        <div className="retail-footer__top">
+          <a className="retail-footer__brand" href="/" aria-label="PHENO home">
+            <img src="/images/pheno-logo.png" alt="PHENO" />
+            <span>Pursue the rise.</span>
+          </a>
+          {retailFooterGroups.map((group) => (
+            <div className="retail-footer__group" key={group.title}>
+              <h2>{group.title}</h2>
+              <ul>
+                {group.links.map(([label, href]) => <li key={`${group.title}-${label}`}><a href={href}>{label}</a></li>)}
+              </ul>
+            </div>
+          ))}
+          <SocialIcons />
+        </div>
+        <div className="retail-footer__bottom">
+          <span>© 2026 PHENO Sportswear. All rights reserved.</span>
+          <div>
+            <a href="/privacy">Privacy policy</a>
+            <a href="/privacy">Terms &amp; conditions</a>
+          </div>
+        </div>
+      </div>
+    </footer>
+  );
+}
+
 export function Homepage() {
   return (
-    <div className="homepage">
-      <SiteHeader />
-      <main>
-        <Hero />
-        <TopPicks />
-        <Editorial />
-        <Campaign />
-        <SocialProof />
+    <div className="retail-home">
+      <RetailHeader />
+        <main>
+          <RetailHero />
+          <TopPicks />
+          <RetailFeatureStrip />
+          <TrendingCampaign />
+          <ProductSpotlight />
+          <SocialProof />
       </main>
-      <SiteFooter />
+      <RetailFooter />
     </div>
   );
 }
