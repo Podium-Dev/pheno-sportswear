@@ -6,6 +6,34 @@ function SectionHeading({ children }: { children: React.ReactNode }) {
   return <h2 className="section-heading">{children}</h2>;
 }
 
+const socialProofPosts = [
+  {
+    href: "https://www.instagram.com/p/DatW9PiuPDx/",
+    src: "/videos/social-01.mp4",
+    label: "Built for the work",
+  },
+  {
+    href: "https://www.instagram.com/p/DZOB_3WsrKw/",
+    src: "/videos/social-02.mp4",
+    label: "First session",
+  },
+  {
+    href: "https://www.instagram.com/p/DY_rYNJu9nq/",
+    src: "/videos/social-03.mp4",
+    label: "Keep showing up",
+  },
+  {
+    href: "https://www.instagram.com/p/DaLfFyat3JO/",
+    src: "/videos/social-04.mp4",
+    label: "Made to move",
+  },
+  {
+    href: "https://www.instagram.com/p/DaI_gp0uHWF/",
+    src: "/videos/social-05.mp4",
+    label: "Pursue the rise",
+  },
+] as const;
+
 function Hero() {
   return (
     <section className="hero" aria-labelledby="hero-title">
@@ -129,6 +157,56 @@ function Campaign() {
   );
 }
 
+function SocialProof() {
+  return (
+    <section className="social-proof" aria-labelledby="social-proof-title">
+      <div className="homepage-section-inner">
+        <div className="social-proof__intro">
+          <div>
+            <p className="eyebrow">THE PHENO COMMUNITY</p>
+            <h2 id="social-proof-title">The rise, in motion</h2>
+          </div>
+          <p className="social-proof__intro-copy">
+            Real sessions from the people who wear PHENO. Follow @phenosportswear on Instagram and be part of the next one.
+          </p>
+        </div>
+
+        <div className="social-proof__grid">
+          {socialProofPosts.map((post, index) => (
+            <a
+              className="social-proof-card"
+              href={post.href}
+              key={post.href}
+              target="_blank"
+              rel="noreferrer"
+              aria-label={`Open PHENO Instagram post ${index + 1}`}
+            >
+              <video
+                className="social-proof-card__video"
+                src={post.src}
+                autoPlay
+                loop
+                muted
+                playsInline
+                preload="metadata"
+                aria-hidden="true"
+              />
+              <span className="social-proof-card__shade" aria-hidden="true" />
+              <span className="social-proof-card__badge" aria-hidden="true">
+                Instagram
+              </span>
+              <span className="social-proof-card__meta">
+                <strong>{post.label}</strong>
+                <span>View post ↗</span>
+              </span>
+            </a>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
 export function Homepage() {
   return (
     <div className="homepage">
@@ -138,9 +216,9 @@ export function Homepage() {
         <TopPicks />
         <Editorial />
         <Campaign />
+        <SocialProof />
       </main>
       <SiteFooter />
     </div>
   );
 }
-
