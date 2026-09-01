@@ -7968,3 +7968,68 @@ h2 {
     width: 91px;
   }
 }
+
+
+/* Shared primary action system: keep CTA buttons consistent across every page. */
+:root {
+  --button-height: 44px;
+  --button-padding-inline: 16px;
+  --button-font-size: 10px;
+  --button-letter-spacing: 0.08em;
+  --button-gap: 12px;
+}
+
+.button,
+.newsletter-form .button,
+.homepage .hero .button,
+.homepage .campaign .button,
+.homepage .home-newsletter .newsletter-form .button,
+.homepage .home-cta,
+.retail-footer__newsletter .newsletter-form .button,
+.retail-cta,
+.contact-hero__cta,
+.shop-performance-banner__cta {
+  display: inline-flex;
+  min-height: var(--button-height) !important;
+  align-items: center;
+  justify-content: center;
+  gap: var(--button-gap);
+  padding: 0 var(--button-padding-inline) !important;
+  border: 1px solid currentColor !important;
+  border-radius: 0 !important;
+  font-family: var(--body-font);
+  font-size: var(--button-font-size) !important;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: var(--button-letter-spacing);
+  text-transform: uppercase;
+  white-space: nowrap;
+  transition: background-color 180ms ease-out, border-color 180ms ease-out, color 180ms ease-out, transform 180ms ease-out;
+}
+
+.button:hover,
+.button:focus-visible,
+.homepage .home-cta:hover,
+.homepage .home-cta:focus-visible,
+.retail-cta:hover,
+.retail-cta:focus-visible,
+.contact-hero__cta:hover,
+.contact-hero__cta:focus-visible,
+.shop-performance-banner__cta:hover,
+.shop-performance-banner__cta:focus-visible {
+  transform: translateY(-2px);
+}
+
+.button:active,
+.homepage .home-cta:active,
+.retail-cta:active,
+.contact-hero__cta:active,
+.shop-performance-banner__cta:active {
+  transform: translateY(0) scale(0.98);
+}
+
+.button:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+  transform: none;
+}
