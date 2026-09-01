@@ -524,7 +524,7 @@ function RetailFooter() {
       <div className="retail-footer__inner">
         <div className="retail-footer__top">
           <a className="retail-footer__brand" href="/" aria-label="PHENO home">
-            <img src="/images/pheno-logo.png" alt="PHENO" />
+            <img src="/images/pheno-desktop-logo-wide.avif" alt="PHENO" />
             <span>Pursue the rise.</span>
           </a>
           {retailFooterGroups.map((group) => (

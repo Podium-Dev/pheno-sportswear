@@ -7572,3 +7572,22 @@ h2 {
     --type-h2: clamp(26px, 8vw, 36px);
   }
 }
+
+
+/* Footer sizing: keep the retail footer aligned with the header brand. */
+.retail-footer__brand img {
+  width: 220px;
+  max-width: 100%;
+}
+
+.retail-footer__group a {
+  color: rgb(255 255 255 / 0.72);
+  font-size: 12px;
+  line-height: 1.35;
+}
+
+@media (max-width: 720px) {
+  .retail-footer__brand img {
+    width: 91px;
+  }
+}
