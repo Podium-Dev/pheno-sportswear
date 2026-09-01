@@ -2668,6 +2668,10 @@ img {
   gap: 16px;
 }
 
+.story-principles {
+  background: #ffffff;
+}
+
 .story-principles__grid,
 .coaching-audience__grid {
   display: grid;
