@@ -5791,6 +5791,12 @@ h6 {
 }
 
 .retail-header {
+  --retail-white: #ffffff;
+  --retail-soft: #f1f2f0;
+  --retail-ink: #111311;
+  --retail-line: #dfe2df;
+  --retail-yellow: #f5b900;
+  --retail-container-width: 1312px;
   position: relative;
   z-index: 20;
   background: var(--retail-white);
