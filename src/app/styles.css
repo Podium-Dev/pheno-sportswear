@@ -6374,6 +6374,7 @@ h6 {
 }
 
 .retail-hero__art {
+  pointer-events: auto;
   position: absolute;
   top: 0;
   right: 0;
@@ -6389,6 +6390,15 @@ h6 {
   display: block;
   object-fit: contain;
   mix-blend-mode: darken;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 650ms ease, visibility 0ms linear 650ms;
+}
+
+.retail-hero__product.is-active {
+  opacity: 1;
+  visibility: visible;
+  transition-delay: 0ms;
 }
 
 .retail-hero__mark {
@@ -6401,7 +6411,7 @@ h6 {
   height: 125%;
 }
 
-.retail-hero__product--hoodie {
+.retail-hero__product {
   top: 0;
   right: 1%;
   max-width: none;
@@ -6418,15 +6428,31 @@ h6 {
   gap: 5px;
 }
 
-.retail-hero__indicators span {
+.retail-hero__indicators button {
   display: block;
   width: 9px;
   height: 6px;
-  background: #bfc2bf;
+  padding: 0;
+  border: 0;
+  background: transparent;
   transform: skew(-17deg);
 }
 
-.retail-hero__indicators span.is-active {
+.retail-hero__indicators button span {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: #bfc2bf;
+  transition: background-color 180ms ease-out, transform 180ms ease-out;
+}
+
+.retail-hero__indicators button:hover span,
+.retail-hero__indicators button:focus-visible span {
+  background: var(--retail-ink);
+  transform: scaleY(1.35);
+}
+
+.retail-hero__indicators button.is-active span {
   background: var(--retail-yellow);
 }
 
@@ -7356,7 +7382,7 @@ h6 {
     height: auto;
   }
 
-  .retail-hero__product--hoodie {
+  .retail-hero__product {
     top: 0;
     right: 0;
     width: 400px;
@@ -8050,4 +8076,12 @@ h2 {
 
 .storefront-page--contact .contact-page {
   padding-bottom: 0;
+}
+
+
+@media (prefers-reduced-motion: reduce) {
+  .retail-hero__product,
+  .retail-hero__indicators button span {
+    transition: none;
+  }
 }
