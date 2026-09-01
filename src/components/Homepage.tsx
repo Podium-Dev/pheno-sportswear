@@ -2,6 +2,7 @@
 
 import { SiteHeader } from "@/components/SiteHeader";
 import { SiteFooter } from "@/components/SiteFooter";
+import { PhenoCampaignHero } from "@/components/PhenoCampaignHero";
 import { useEffect, useState, type ReactNode } from "react";
 import { getProductBySlug, type Product } from "@/data/products";
 import { formatCurrency } from "@/lib/format";
@@ -452,6 +453,7 @@ export function Homepage() {
     <div className="retail-home">
       <SiteHeader />
         <main>
+          <PhenoCampaignHero />
           <RetailHero />
           <TopPicks />
           <RetailFeatureStrip />

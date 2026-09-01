@@ -6743,6 +6743,198 @@ h6 {
   border-bottom: 0;
 }
 
+.pheno-campaign {
+  overflow: hidden;
+  background: var(--retail-white);
+  color: var(--retail-ink);
+}
+
+.pheno-campaign__marquee {
+  display: flex;
+  min-height: 54px;
+  align-items: center;
+  overflow: hidden;
+  border-bottom: 1px solid var(--retail-line);
+  background: var(--retail-white);
+}
+
+.pheno-campaign__marquee-track {
+  display: flex;
+  width: max-content;
+  flex: 0 0 auto;
+  align-items: center;
+  gap: clamp(28px, 4vw, 62px);
+  padding-inline: 18px;
+  animation: pheno-campaign-marquee 30s linear infinite;
+}
+
+.pheno-campaign__marquee-track span {
+  color: var(--retail-ink);
+  font-size: clamp(11px, 1vw, 14px);
+  font-weight: 700;
+  letter-spacing: 0.115em;
+  line-height: 1;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+@keyframes pheno-campaign-marquee {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pheno-campaign__marquee-track {
+    animation: none;
+  }
+}
+
+.pheno-campaign__stage {
+  position: relative;
+  width: min(100%, var(--retail-container-width));
+  margin-inline: auto;
+}
+
+.pheno-campaign__columns {
+  display: grid;
+  height: clamp(620px, 64vw, 860px);
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 6px;
+  background: var(--retail-white);
+}
+
+.pheno-campaign__look {
+  position: relative;
+  min-width: 0;
+  height: 100%;
+  margin: 0;
+  overflow: hidden;
+  background: var(--retail-soft);
+}
+
+.pheno-campaign__look img {
+  display: block;
+  object-fit: cover;
+  object-position: center top;
+}
+
+.pheno-campaign__logo-panel {
+  position: absolute;
+  top: -24px;
+  left: 50%;
+  z-index: 4;
+  display: grid;
+  width: clamp(208px, 21vw, 286px);
+  justify-items: center;
+  gap: 10px;
+  padding: 24px 28px 20px;
+  background: var(--retail-white);
+  transform: translateX(-50%);
+}
+
+.pheno-campaign__logo-panel img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.pheno-campaign__logo-panel span {
+  color: var(--retail-muted);
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  line-height: 1;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.pheno-campaign__torn-edge {
+  position: absolute;
+  right: 0;
+  bottom: -1px;
+  left: 0;
+  z-index: 3;
+  height: clamp(32px, 4.2vw, 62px);
+  background: var(--retail-white);
+  clip-path: polygon(0 27%, 5% 11%, 10% 23%, 16% 5%, 23% 19%, 31% 8%, 39% 22%, 47% 6%, 56% 18%, 65% 4%, 73% 23%, 81% 9%, 89% 20%, 95% 7%, 100% 24%, 100% 100%, 0 100%);
+}
+
+.pheno-campaign__copy {
+  display: grid;
+  justify-items: center;
+  padding: clamp(70px, 8vw, 112px) var(--retail-section-x) clamp(77px, 9vw, 124px);
+  border-bottom: 1px solid var(--retail-line);
+  background: var(--retail-white);
+  text-align: center;
+}
+
+.pheno-campaign__copy-mark {
+  width: 108px;
+  height: auto;
+  margin-bottom: 22px;
+}
+
+.pheno-campaign__copy h1 {
+  max-width: 14ch;
+  margin: 0;
+  color: var(--retail-ink);
+  font-family: var(--heading-font);
+  font-size: clamp(54px, 8.6vw, 126px);
+  font-weight: 400;
+  letter-spacing: -0.08em;
+  line-height: 0.84;
+  text-transform: uppercase;
+  text-wrap: balance;
+}
+
+.pheno-campaign__collection {
+  margin: 25px 0 0;
+  color: var(--retail-ink);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.pheno-campaign__tagline {
+  margin: 16px 0 0;
+  color: var(--retail-muted);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.13em;
+  line-height: 1.4;
+  text-transform: uppercase;
+}
+
+.pheno-campaign__cta {
+  display: inline-flex;
+  min-height: 40px;
+  align-items: center;
+  gap: 22px;
+  margin-top: 28px;
+  padding: 0 14px 0 17px;
+  background: var(--retail-ink);
+  color: var(--retail-white);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  transition: background-color 180ms ease-out, color 180ms ease-out, transform 180ms ease-out;
+}
+
+.pheno-campaign__cta:hover,
+.pheno-campaign__cta:focus-visible {
+  background: var(--retail-yellow);
+  color: var(--retail-ink);
+  transform: translateY(-2px);
+}
+
 .retail-hero {
   position: relative;
   min-height: 740px;
@@ -7867,6 +8059,28 @@ h6 {
   }
 }
 
+@media (max-width: 860px) and (min-width: 721px) {
+  .pheno-campaign__stage {
+    padding-top: 88px;
+  }
+
+  .pheno-campaign__columns {
+    height: auto;
+    grid-template-columns: 1fr;
+    gap: 6px;
+  }
+
+  .pheno-campaign__look {
+    height: auto;
+    aspect-ratio: 4 / 5;
+  }
+
+  .pheno-campaign__logo-panel {
+    top: 15px;
+    width: clamp(220px, 31vw, 286px);
+  }
+}
+
 @media (max-width: 720px) {
   .retail-home {
     --retail-section-x: 18px;
@@ -7897,6 +8111,79 @@ h6 {
 
   .retail-navigation__mobile-toggle {
     display: inline-flex;
+  }
+
+  .pheno-campaign__marquee {
+    min-height: 43px;
+  }
+
+  .pheno-campaign__marquee-track {
+    gap: 28px;
+    animation-duration: 25s;
+  }
+
+  .pheno-campaign__marquee-track span {
+    font-size: 10px;
+  }
+
+  .pheno-campaign__stage {
+    width: 100%;
+    padding-top: 88px;
+  }
+
+  .pheno-campaign__columns {
+    height: auto;
+    grid-template-columns: 1fr;
+    gap: 6px;
+  }
+
+  .pheno-campaign__look {
+    height: auto;
+    aspect-ratio: 4 / 5;
+  }
+
+  .pheno-campaign__logo-panel {
+    top: 15px;
+    width: min(68vw, 250px);
+    gap: 8px;
+    padding: 20px 22px 17px;
+  }
+
+  .pheno-campaign__logo-panel span {
+    font-size: 7px;
+  }
+
+  .pheno-campaign__torn-edge {
+    height: 34px;
+  }
+
+  .pheno-campaign__copy {
+    padding: 69px 18px 78px;
+  }
+
+  .pheno-campaign__copy-mark {
+    width: 84px;
+    margin-bottom: 18px;
+  }
+
+  .pheno-campaign__copy h1 {
+    max-width: 10ch;
+    font-size: clamp(49px, 15.2vw, 69px);
+  }
+
+  .pheno-campaign__collection {
+    margin-top: 20px;
+    font-size: 10px;
+  }
+
+  .pheno-campaign__tagline {
+    max-width: 31ch;
+    margin-top: 13px;
+    font-size: 9px;
+  }
+
+  .pheno-campaign__cta {
+    margin-top: 23px;
   }
 
   .retail-mobile-menu {
