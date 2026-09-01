@@ -19,16 +19,78 @@ import { SizeGuideModal } from "@/components/SizeGuideModal";
 
 function ProductGallery({ product, colour }: { product: Product; colour: Colour }) {
   const [activeImage, setActiveImage] = useState(getProductImage(product, colour));
+  const [isZoomOpen, setIsZoomOpen] = useState(false);
   const images = product.galleryImagesByColour?.[colour] ?? product.images;
+  const activeImageIndex = Math.max(images.indexOf(activeImage), 0);
+  const displayedImage = images[activeImageIndex] ?? activeImage;
+
+  const moveImage = (direction: -1 | 1) => {
+    if (images.length < 2) return;
+    const nextIndex = (activeImageIndex + direction + images.length) % images.length;
+    setActiveImage(images[nextIndex]);
+  };
 
   useEffect(() => {
     setActiveImage(getProductImage(product, colour));
+    setIsZoomOpen(false);
   }, [colour, product]);
+
+  useEffect(() => {
+    if (!isZoomOpen) return;
+
+    const previousOverflow = document.body.style.overflow;
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setIsZoomOpen(false);
+    };
+
+    document.body.style.overflow = "hidden";
+    document.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      document.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [isZoomOpen]);
 
   return (
     <div className="product-gallery">
       <div className="product-gallery__main">
-        <img src={activeImage} alt={`${product.name} in ${colour}`} />
+        {images.length > 1 ? (
+          <>
+            <button
+              className="product-gallery__main-control product-gallery__main-control--previous"
+              type="button"
+              aria-label={`Previous ${product.name} image`}
+              onClick={() => moveImage(-1)}
+            >
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="m14.5 5-7 7 7 7" />
+              </svg>
+            </button>
+            <button
+              className="product-gallery__main-control product-gallery__main-control--next"
+              type="button"
+              aria-label={`Next ${product.name} image`}
+              onClick={() => moveImage(1)}
+            >
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="m9.5 5 7 7-7 7" />
+              </svg>
+            </button>
+          </>
+        ) : null}
+        <button
+          className="product-gallery__zoom-control"
+          type="button"
+          aria-label={`View ${product.name} image larger`}
+          onClick={() => setIsZoomOpen(true)}
+        >
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <circle cx="10.5" cy="10.5" r="5.5" />
+            <path d="m15 15 5 5M10.5 7.5v6M7.5 10.5h6" />
+          </svg>
+        </button>
+        <img src={displayedImage} alt={`${product.name} in ${colour}`} />
       </div>
       <div className="product-gallery__thumbs" role="list" aria-label="Product images">
         {images.map((image, index) => (
@@ -44,6 +106,32 @@ function ProductGallery({ product, colour }: { product: Product; colour: Colour 
           </button>
         ))}
       </div>
+      {isZoomOpen ? (
+        <div className="product-gallery__lightbox" role="presentation">
+          <button
+            className="product-gallery__lightbox-backdrop"
+            type="button"
+            aria-label="Close larger product image"
+            onClick={() => setIsZoomOpen(false)}
+          />
+          <section
+            className="product-gallery__lightbox-dialog"
+            role="dialog"
+            aria-modal="true"
+            aria-label={`${product.name} larger image`}
+          >
+            <button
+              className="product-gallery__lightbox-close"
+              type="button"
+              aria-label="Close larger product image"
+              onClick={() => setIsZoomOpen(false)}
+            >
+              ×
+            </button>
+            <img src={displayedImage} alt={`${product.name} in ${colour}`} />
+          </section>
+        </div>
+      ) : null}
     </div>
   );
 }
