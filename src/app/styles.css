@@ -2832,7 +2832,18 @@ img {
 }
 
 .storefront-page--coaching .coaching-section {
+  position: relative;
   background: #ffffff;
+}
+
+.storefront-page--coaching .coaching-section::after {
+  position: absolute;
+  right: max(22px, calc((100vw - var(--site-width)) / 2));
+  bottom: 0;
+  left: max(22px, calc((100vw - var(--site-width)) / 2));
+  height: 1px;
+  background: var(--line);
+  content: "";
 }
 
 .storefront-page--coaching .coaching-audience {
