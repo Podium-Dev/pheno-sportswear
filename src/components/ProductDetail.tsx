@@ -3,8 +3,8 @@
 import { useEffect, useMemo, useState, type CSSProperties } from "react";
 import {
   getProductImage,
-  getProductBySlug,
   getVariant,
+  products,
   SIZE_OPTIONS,
   type Colour,
   type Product,
@@ -192,8 +192,8 @@ export function ProductDetail({ product }: { product: Product }) {
   const variant = colour && size ? getVariant(product, colour, size) : undefined;
   const wishlisted = isWishlisted(product.slug);
   const completeTheLook = useMemo(
-    () => product.completeTheLookSlugs.map((slug) => getProductBySlug(slug)).filter((item): item is Product => Boolean(item)),
-    [product.completeTheLookSlugs],
+    () => products.filter((item) => item.slug !== product.slug),
+    [product.slug],
   );
 
   const handleAddToCart = () => {
@@ -358,7 +358,7 @@ export function ProductDetail({ product }: { product: Product }) {
             <a className="text-link" href="/shop/type-1">View Type 1</a>
           </div>
           <div className="product-grid product-grid--recommendations">
-            {completeTheLook.slice(0, 2).map((item) => <ProductCard key={item.slug} product={item} compact />)}
+            {completeTheLook.map((item) => <ProductCard key={item.slug} product={item} compact />)}
           </div>
         </section>
       ) : null}
