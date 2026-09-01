@@ -67,7 +67,27 @@ function RetailCta({ href, children, dark = false }: { href: string; children: R
   );
 }
 
+const retailHeroSlides = [
+  { src: "/images/type-1-hoodie.jpg", alt: "Type 1 Hoodie, PHENO Sportswear" },
+  { src: "/images/type-1-joggers.jpg", alt: "Type 1 Joggers, PHENO Sportswear" },
+  { src: "/images/type-1-shorts.jpg", alt: "Type 1 Shorts, PHENO Sportswear" },
+  { src: "/images/type-1-tank-black.jpg", alt: "Type 1 Tank, PHENO Sportswear" },
+];
+
 function RetailHero() {
+  const [activeHeroIndex, setActiveHeroIndex] = useState(0);
+  const [isHeroPaused, setIsHeroPaused] = useState(false);
+
+  useEffect(() => {
+    if (isHeroPaused) return;
+
+    const interval = window.setInterval(() => {
+      setActiveHeroIndex((current) => (current + 1) % retailHeroSlides.length);
+    }, 5200);
+
+    return () => window.clearInterval(interval);
+  }, [isHeroPaused]);
+
   return (
     <section className="retail-hero" aria-labelledby="retail-hero-title">
       <img className="retail-hero__backdrop" src="/images/campaign-athlete.jpg" alt="" aria-hidden="true" />
@@ -81,16 +101,39 @@ function RetailHero() {
           <RetailCta href="/shop/type-1" dark>Shop the collection</RetailCta>
         </div>
 
-        <div className="retail-hero__art" aria-hidden="true">
+        <div
+          className="retail-hero__art"
+          onMouseEnter={() => setIsHeroPaused(true)}
+          onMouseLeave={() => setIsHeroPaused(false)}
+          onFocus={() => setIsHeroPaused(true)}
+          onBlur={() => setIsHeroPaused(false)}
+        >
           <img className="retail-hero__mark" src="/images/pheno-hero-mark.png" alt="" />
-          <img className="retail-hero__product retail-hero__product--hoodie" src="/images/type-1-hoodie.jpg" alt="" />
+          {retailHeroSlides.map((slide, index) => (
+            <img
+              className={`retail-hero__product${index === activeHeroIndex ? " is-active" : ""}`}
+              src={slide.src}
+              alt={slide.alt}
+              aria-hidden={index === activeHeroIndex ? undefined : true}
+              key={slide.src}
+            />
+          ))}
         </div>
 
-        <div className="retail-hero__indicators" aria-label="Hero slide 1 of 4">
-          <span className="is-active" />
-          <span />
-          <span />
-          <span />
+        <div className="retail-hero__indicators" role="tablist" aria-label="Choose a hero product">
+          {retailHeroSlides.map((slide, index) => (
+            <button
+              type="button"
+              role="tab"
+              aria-label={`Show ${slide.alt.replace(", PHENO Sportswear", "")} (${index + 1} of ${retailHeroSlides.length})`}
+              aria-selected={index === activeHeroIndex}
+              className={index === activeHeroIndex ? "is-active" : ""}
+              onClick={() => setActiveHeroIndex(index)}
+              key={slide.src}
+            >
+              <span aria-hidden="true" />
+            </button>
+          ))}
         </div>
       </div>
     </section>
