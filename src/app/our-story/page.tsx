@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Breadcrumbs, EditorialPageIntro, StorefrontPage } from "@/components/StorefrontPage";
+import { EditorialPageIntro, StorefrontPage } from "@/components/StorefrontPage";
 
 export const metadata: Metadata = {
   title: "Our Story | PHENO Sportswear",
@@ -12,7 +12,7 @@ export default function OurStoryPage() {
   return (
     <StorefrontPage className="storefront-page--story">
       <div className="story-page">
-        <Breadcrumbs current="Our Story" />
+
         <EditorialPageIntro eyebrow="PHENO / THE IDEA" title="Pursue the rise">
           PHENO is built around the belief that your starting point does not determine your potential.
         </EditorialPageIntro>

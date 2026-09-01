@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { InterestForm } from "@/components/Forms";
-import { Breadcrumbs, EditorialPageIntro, StorefrontPage } from "@/components/StorefrontPage";
+import { StorefrontPage } from "@/components/StorefrontPage";
 
 export const metadata: Metadata = {
   title: "Train With Yousef | PHENO Sportswear",
@@ -13,7 +13,7 @@ export default function TrainWithYousefPage() {
   return (
     <StorefrontPage className="storefront-page--coaching">
       <div className="coaching-page">
-        <Breadcrumbs current="Train With Yousef" />
+
         <section className="coaching-hero" aria-labelledby="coaching-title">
           <div className="coaching-hero__copy">
             <p className="eyebrow">PHENO COACHING</p>
