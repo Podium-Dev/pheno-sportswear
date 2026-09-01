@@ -116,12 +116,6 @@ function RetailHeader() {
 
   return (
     <header className="retail-header">
-      <div className="retail-utility">
-        <button className="retail-utility__menu" type="button" aria-label="Open menu" onClick={() => setMobileOpen((open) => !open)}>
-          <MenuIcon />
-        </button>
-        <span>Home page</span>
-      </div>
 
       <div className="retail-navigation">
         <a className="retail-navigation__brand" href="/" aria-label="PHENO home">
