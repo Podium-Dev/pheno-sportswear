@@ -58,9 +58,8 @@ export default function OurStoryPage() {
         </section>
 
         <section className="founder-section" aria-labelledby="founder-title">
-          <div className="founder-section__placeholder">
-            <span>FOUNDER PHOTOGRAPH</span>
-            <small>TO BE PROVIDED</small>
+          <div className="founder-section__media">
+            <img src="/images/pheno-banner.jpg" alt="Athlete training in PHENO sportswear on a field" />
           </div>
           <div>
             <p className="eyebrow">THE FOUNDER</p>
