@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { ContactForm } from "@/components/Forms";
-import { Breadcrumbs, EditorialPageIntro, StorefrontPage } from "@/components/StorefrontPage";
+import { Breadcrumbs, StorefrontPage } from "@/components/StorefrontPage";
 
 export const metadata: Metadata = {
   title: "Contact | PHENO Sportswear",
@@ -14,10 +14,21 @@ export default function ContactPage() {
     <StorefrontPage className="storefront-page--contact">
       <div className="contact-page">
         <Breadcrumbs current="Contact" />
-        <EditorialPageIntro eyebrow="PHENO SUPPORT" title="Contact">
-          Questions about an order, a product, or the next step? We are here to help.
-        </EditorialPageIntro>
-        <div className="contact-page__layout">
+        <section className="contact-hero" aria-labelledby="contact-hero-title">
+          <img className="contact-hero__mark" src="/images/pheno-hero-mark.png" alt="" aria-hidden="true" />
+          <div className="contact-hero__inner">
+            <div className="contact-hero__copy">
+              <p className="contact-hero__eyebrow">PHENO SUPPORT</p>
+              <h1 id="contact-hero-title"><span>Here to</span><span>help.</span></h1>
+              <p>Questions about an order, a product, or the next step? We are here to help.</p>
+              <a className="contact-hero__cta" href="#contact-form">
+                <span>Send a message</span>
+                <span aria-hidden="true">↗</span>
+              </a>
+            </div>
+          </div>
+        </section>
+        <div id="contact-form" className="contact-page__layout">
           <aside className="contact-page__aside">
             <p className="eyebrow">EMAIL</p>
             <a className="contact-page__email" href="mailto:info@phenosportswear.com">info@phenosportswear.com</a>
