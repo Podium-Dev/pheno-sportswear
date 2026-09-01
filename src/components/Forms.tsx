@@ -4,7 +4,7 @@ import { FormEvent, useRef, useState } from "react";
 
 type FormStatus = "idle" | "submitting" | "success" | "error";
 
-async function postForm(endpoint: string, payload: Record<string, string>) {
+export async function postForm(endpoint: string, payload: Record<string, string>) {
   const response = await fetch(endpoint, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
