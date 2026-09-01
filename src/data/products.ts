@@ -37,6 +37,7 @@ export type Product = {
   construction: string;
   features: string[];
   performanceFeatures: ProductFeature[];
+  performanceFeaturesByColour?: Partial<Record<Colour, ProductFeature[]>>;
   images: string[];
   colourImages: Partial<Record<Colour, string>>;
   galleryImagesByColour?: Partial<Record<Colour, string[]>>;
@@ -376,6 +377,59 @@ export const products: Product[] = [
         imageAlt: "Reflective PHENO label detail on the black PHENO Type 1 T-Shirt",
       },
     ],
+    performanceFeaturesByColour: {
+      White: [
+        {
+          id: "breathable",
+          title: "BREATHABLE FABRIC",
+          description: "Built to breathe, keeps you cool.",
+          image: "/images/type-1-tshirt-features/white/breathable-fabric.png",
+          imageAlt: "Breathable knit fabric detail on the white PHENO Type 1 T-Shirt",
+        },
+        {
+          id: "mesh-side-panels",
+          title: "MESH SIDE PANELS",
+          description: "Enhanced airflow where it counts.",
+          image: "/images/type-1-tshirt-features/white/mesh-side-panels.png",
+          imageAlt: "Mesh side panel fabric detail on the white PHENO Type 1 T-Shirt",
+        },
+        {
+          id: "quick-dry",
+          title: "QUICK DRY",
+          description: "Sweat-wicking, fast drying.",
+          image: "/images/type-1-tshirt-features/white/quick-dry.png",
+          imageAlt: "Quick-dry fabric detail on the white PHENO Type 1 T-Shirt",
+        },
+        {
+          id: "cooling-zones",
+          title: "COOLING ZONES",
+          description: "Ventilation engineered for performance.",
+          image: "/images/type-1-tshirt-features/white/cooling-zones.png",
+          imageAlt: "Laser-cut cooling zone detail on the white PHENO Type 1 T-Shirt",
+        },
+        {
+          id: "stretch-jersey",
+          title: "STRETCH JERSEY",
+          description: "Moves with you in every rep.",
+          image: "/images/type-1-tshirt-features/white/stretch-jersey.png",
+          imageAlt: "Stretch jersey fabric detail on the white PHENO Type 1 T-Shirt",
+        },
+        {
+          id: "lightweight",
+          title: "LIGHTWEIGHT",
+          description: "Minimal weight, maximum output.",
+          image: "/images/type-1-tshirt-features/white/lightweight.png",
+          imageAlt: "Lightweight knit fabric detail on the white PHENO Type 1 T-Shirt",
+        },
+        {
+          id: "reflective-detail",
+          title: "REFLECTIVE DETAIL",
+          description: "Train safely, day or night.",
+          image: "/images/type-1-tshirt-features/white/reflective-detail.png",
+          imageAlt: "Reflective PHENO label detail on the white PHENO Type 1 T-Shirt",
+        },
+      ],
+    },
     images: [
       ...galleries.tshirt.Black,
     ],

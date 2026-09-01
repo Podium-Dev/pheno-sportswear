@@ -177,7 +177,9 @@ export function ProductDetail({ product }: { product: Product }) {
         </section>
       </div>
 
-      <ProductFeatureStrip features={product.performanceFeatures} />
+      <ProductFeatureStrip
+        features={product.performanceFeaturesByColour?.[colour || product.colours[0]] ?? product.performanceFeatures}
+      />
 
       <section className="product-information" aria-labelledby="product-information-title">
         <div className="product-information__intro">
