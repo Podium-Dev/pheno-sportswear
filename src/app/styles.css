@@ -2855,6 +2855,10 @@ img {
   border-bottom: 0;
 }
 
+.storefront-page--coaching .coaching-page {
+  padding-bottom: 0;
+}
+
 .interest-section > div:first-child,
 .contact-page__aside {
   display: grid;
