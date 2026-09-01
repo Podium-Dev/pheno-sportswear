@@ -2589,35 +2589,36 @@ img {
   color: var(--paper);
 }
 
-.story-hero__mark {
-  display: grid;
+.story-hero__image {
+  position: relative;
   width: min(100%, 320px);
   aspect-ratio: 1;
+  overflow: hidden;
   justify-self: center;
-  align-content: center;
-  justify-items: center;
-  gap: 13px;
   border: 1px solid oklch(92% 0.004 95 / 0.22);
-  color: var(--accent);
-  transform: rotate(-7deg);
+  background: var(--ink);
 }
 
-.story-hero__mark span {
-  font-size: 90px;
-  font-weight: 300;
-  line-height: 0.7;
+.story-hero__image::after {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, oklch(8% 0.006 95 / 0.04) 35%, oklch(8% 0.006 95 / 0.38) 100%);
+  content: "";
+  pointer-events: none;
 }
 
-.story-hero__mark strong {
-  color: var(--paper);
-  font-size: 19px;
-  letter-spacing: 0.24em;
+.story-hero__image img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  filter: grayscale(1) contrast(1.05);
+  transition: transform 280ms ease-out;
 }
 
-.story-hero__mark small {
-  color: var(--muted-light);
-  font-size: 8px;
-  letter-spacing: 0.16em;
+.story-hero__image:hover img {
+  transform: scale(1.025);
 }
 
 .story-hero__copy {
@@ -3427,7 +3428,7 @@ img {
     padding: 27px;
   }
 
-  .story-hero__mark {
+  .story-hero__image {
     width: min(100%, 255px);
   }
 
