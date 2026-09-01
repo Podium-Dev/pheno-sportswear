@@ -19,7 +19,7 @@ import { SizeGuideModal } from "@/components/SizeGuideModal";
 
 function ProductGallery({ product, colour }: { product: Product; colour: Colour }) {
   const [activeImage, setActiveImage] = useState(getProductImage(product, colour));
-  const images = product.images;
+  const images = product.galleryImagesByColour?.[colour] ?? product.images;
 
   useEffect(() => {
     setActiveImage(getProductImage(product, colour));

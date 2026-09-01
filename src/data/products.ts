@@ -39,6 +39,7 @@ export type Product = {
   performanceFeatures: ProductFeature[];
   images: string[];
   colourImages: Partial<Record<Colour, string>>;
+  galleryImagesByColour?: Partial<Record<Colour, string[]>>;
   colours: Colour[];
   sizes: Size[];
   variants: ProductVariant[];
@@ -62,6 +63,27 @@ function createVariants(
     })),
   );
 }
+
+function createGalleryImages(directory: string, count: number) {
+  return Array.from(
+    { length: count },
+    (_, index) => `${directory}/${String(index + 1).padStart(2, "0")}.jpg`,
+  );
+}
+
+const galleries = {
+  hoodie: createGalleryImages("/images/product-galleries/type-1-hoodie", 6),
+  joggers: createGalleryImages("/images/product-galleries/type-1-joggers", 10),
+  shorts: createGalleryImages("/images/product-galleries/type-1-shorts", 7),
+  tshirt: {
+    Black: createGalleryImages("/images/product-galleries/type-1-tshirt/black", 7),
+    White: createGalleryImages("/images/product-galleries/type-1-tshirt/white", 7),
+  },
+  tank: {
+    Black: createGalleryImages("/images/product-galleries/type-1-tank/black", 7),
+    White: createGalleryImages("/images/product-galleries/type-1-tank/white", 7),
+  },
+} as const;
 
 export const products: Product[] = [
   {
@@ -120,10 +142,9 @@ export const products: Product[] = [
       },
     ],
     images: [
-      "/images/type-1-hoodie.jpg",
-      "/images/type-1-hoodie-detail.jpg",
+      ...galleries.hoodie,
     ],
-    colourImages: { Black: "/images/type-1-hoodie.jpg" },
+    colourImages: { Black: galleries.hoodie[0] },
     colours: ["Black"],
     sizes: [...SIZE_OPTIONS],
     variants: createVariants("pheno-type-1-hoodie", ["Black"], [
@@ -181,10 +202,9 @@ export const products: Product[] = [
       },
     ],
     images: [
-      "/images/type-1-joggers.jpg",
-      "/images/type-1-joggers-detail.jpg",
+      ...galleries.joggers,
     ],
-    colourImages: { Black: "/images/type-1-joggers.jpg" },
+    colourImages: { Black: galleries.joggers[0] },
     colours: ["Black"],
     sizes: [...SIZE_OPTIONS],
     variants: createVariants("pheno-type-1-joggers", ["Black"]),
@@ -248,10 +268,9 @@ export const products: Product[] = [
       },
     ],
     images: [
-      "/images/type-1-shorts.jpg",
-      "/images/type-1-shorts-detail.jpg",
+      ...galleries.shorts,
     ],
-    colourImages: { Black: "/images/type-1-shorts.jpg" },
+    colourImages: { Black: galleries.shorts[0] },
     colours: ["Black"],
     sizes: [...SIZE_OPTIONS],
     variants: createVariants("pheno-type-1-shorts", ["Black"]),
@@ -314,13 +333,13 @@ export const products: Product[] = [
       },
     ],
     images: [
-      "/images/type-1-tshirt.jpg",
-      "/images/type-1-tshirt-white.jpg",
+      ...galleries.tshirt.Black,
     ],
     colourImages: {
-      Black: "/images/type-1-tshirt.jpg",
-      White: "/images/type-1-tshirt-white.jpg",
+      Black: galleries.tshirt.Black[0],
+      White: galleries.tshirt.White[0],
     },
+    galleryImagesByColour: galleries.tshirt,
     colours: ["Black", "White"],
     sizes: [...SIZE_OPTIONS],
     variants: createVariants("pheno-type-1-t-shirt", ["Black", "White"]),
@@ -383,13 +402,13 @@ export const products: Product[] = [
       },
     ],
     images: [
-      "/images/type-1-tank-black.jpg",
-      "/images/type-1-tank-white.jpg",
+      ...galleries.tank.Black,
     ],
     colourImages: {
-      Black: "/images/type-1-tank-black.jpg",
-      White: "/images/type-1-tank-white.jpg",
+      Black: galleries.tank.Black[0],
+      White: galleries.tank.White[0],
     },
+    galleryImagesByColour: galleries.tank,
     colours: ["Black", "White"],
     sizes: [...SIZE_OPTIONS],
     variants: createVariants("pheno-type-1-tank", ["Black", "White"]),
