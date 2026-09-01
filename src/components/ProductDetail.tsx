@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState, type CSSProperties } from "react";
 import {
   getProductImage,
   getProductBySlug,
@@ -148,7 +148,11 @@ function ProductEngineeredDetails({ details }: { details: NonNullable<Product["e
               <li
                 key={detail.number}
                 className={`engineered-details__marker engineered-details__marker--line-${detail.marker.line}`}
-                style={{ top: detail.marker.top, left: detail.marker.left }}
+                style={{
+                  top: detail.marker.top,
+                  left: detail.marker.left,
+                  "--marker-line-length": detail.marker.lineLength,
+                } as CSSProperties}
                 aria-label={`${detail.number}. ${detail.title}`}
               >
                 <span aria-hidden="true">{detail.number}</span>
@@ -167,6 +171,11 @@ function ProductEngineeredDetails({ details }: { details: NonNullable<Product["e
             </li>
           ))}
         </ol>
+      </div>
+      <div className="engineered-details__actions">
+        <a className="button button--dark engineered-details__cta" href="#product-purchase">
+          Buy Now
+        </a>
       </div>
     </section>
   );
@@ -207,7 +216,7 @@ export function ProductDetail({ product }: { product: Product }) {
       <div className="product-detail">
         <ProductGallery product={product} colour={colour || product.colours[0]} />
 
-        <section className="product-purchase" aria-labelledby="product-title">
+        <section className="product-purchase" id="product-purchase" aria-labelledby="product-title">
           <div className="product-purchase__heading">
             <div>
               <p className="eyebrow">TYPE 1 / {product.category.replace("-", " ")}</p>

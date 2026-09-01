@@ -34,6 +34,7 @@ export type ProductEngineeredDetail = {
     top: string;
     left: string;
     line: "left" | "right";
+    lineLength: string;
   };
 };
 
@@ -325,43 +326,43 @@ export const products: Product[] = [
           number: 1,
           title: "ELASTIC WAISTBAND & INTERNAL DRAWCORD",
           description: "Secure, adjustable fit that moves with you.",
-          marker: { top: "25%", left: "11%", line: "right" },
+          marker: { top: "23%", left: "11%", line: "right", lineLength: "clamp(64px, 7.5vw, 112px)" },
         },
         {
           number: 2,
           title: "ZIPPED POCKETS",
           description: "Secure storage for your essentials.",
-          marker: { top: "39%", left: "10%", line: "right" },
+          marker: { top: "39%", left: "10%", line: "right", lineLength: "clamp(52px, 6.5vw, 96px)" },
         },
         {
           number: 3,
           title: "LASER-CUT VENTILATION",
           description: "Strategic perforations for enhanced airflow and cooling.",
-          marker: { top: "39%", left: "89%", line: "left" },
+          marker: { top: "44%", left: "89%", line: "left", lineLength: "clamp(44px, 6vw, 86px)" },
         },
         {
           number: 4,
           title: "4-WAY STRETCH OUTER SHELL",
           description: "Lightweight and flexible fabric for unrestricted movement.",
-          marker: { top: "61%", left: "10%", line: "right" },
+          marker: { top: "61%", left: "10%", line: "right", lineLength: "clamp(40px, 5vw, 70px)" },
         },
         {
           number: 5,
           title: "2-IN-1 COMPRESSION LINER",
           description: "Built-in support reduces chafing and enhances performance.",
-          marker: { top: "72%", left: "88%", line: "left" },
+          marker: { top: "72%", left: "88%", line: "left", lineLength: "clamp(50px, 6.5vw, 96px)" },
         },
         {
           number: 6,
           title: "SPLIT HEM DESIGN",
           description: "Increased range of motion for explosive training.",
-          marker: { top: "78%", left: "63%", line: "right" },
+          marker: { top: "78%", left: "63%", line: "right", lineLength: "clamp(28px, 3.5vw, 52px)" },
         },
         {
           number: 7,
           title: "PHENO PERFORMANCE LOGO",
           description: "Reflective detailing for a premium, athletic finish.",
-          marker: { top: "61%", left: "83%", line: "left" },
+          marker: { top: "61%", left: "83%", line: "left", lineLength: "clamp(45px, 5.5vw, 80px)" },
         },
       ],
     },
