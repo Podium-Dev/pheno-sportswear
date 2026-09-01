@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Breadcrumbs, EditorialPageIntro, StorefrontPage } from "@/components/StorefrontPage";
+import { EditorialPageIntro, StorefrontPage } from "@/components/StorefrontPage";
 
 export const metadata: Metadata = {
   title: "Our Story | PHENO Sportswear",
@@ -12,16 +12,14 @@ export default function OurStoryPage() {
   return (
     <StorefrontPage className="storefront-page--story">
       <div className="story-page">
-        <Breadcrumbs current="Our Story" />
+
         <EditorialPageIntro eyebrow="PHENO / THE IDEA" title="Pursue the rise">
           PHENO is built around the belief that your starting point does not determine your potential.
         </EditorialPageIntro>
 
         <section className="story-hero" aria-labelledby="story-hero-title">
-          <div className="story-hero__mark" aria-hidden="true">
-            <span>↑</span>
-            <strong>PHENO</strong>
-            <small>THE VISIBLE EXPRESSION</small>
+          <div className="story-hero__image">
+            <img src="/images/editorial-right.jpg" alt="Athletes training together with barbells in a gym" />
           </div>
           <div className="story-hero__copy">
             <p className="eyebrow">PHENOTYPE</p>
@@ -58,9 +56,8 @@ export default function OurStoryPage() {
         </section>
 
         <section className="founder-section" aria-labelledby="founder-title">
-          <div className="founder-section__placeholder">
-            <span>FOUNDER PHOTOGRAPH</span>
-            <small>TO BE PROVIDED</small>
+          <div className="founder-section__media">
+            <img src="/images/pheno-banner.jpg" alt="Athlete training in PHENO sportswear on a field" />
           </div>
           <div>
             <p className="eyebrow">THE FOUNDER</p>

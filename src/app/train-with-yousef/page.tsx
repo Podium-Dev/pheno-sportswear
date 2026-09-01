@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { InterestForm } from "@/components/Forms";
-import { Breadcrumbs, EditorialPageIntro, StorefrontPage } from "@/components/StorefrontPage";
+import { StorefrontPage } from "@/components/StorefrontPage";
 
 export const metadata: Metadata = {
   title: "Train With Yousef | PHENO Sportswear",
@@ -13,7 +13,7 @@ export default function TrainWithYousefPage() {
   return (
     <StorefrontPage className="storefront-page--coaching">
       <div className="coaching-page">
-        <Breadcrumbs current="Train With Yousef" />
+
         <section className="coaching-hero" aria-labelledby="coaching-title">
           <div className="coaching-hero__copy">
             <p className="eyebrow">PHENO COACHING</p>
@@ -46,24 +46,34 @@ export default function TrainWithYousefPage() {
         </section>
 
         <section className="coaching-process" aria-labelledby="process-title">
-          <div>
-            <p className="eyebrow">HOW IT WILL WORK</p>
-            <h2 id="process-title">A clear route in.</h2>
+          <div className="coaching-process__visual">
+            <img src="/images/editorial-left.jpg" alt="Runners training together on a track" />
           </div>
-          <ol>
-            <li><span>01</span><div><h3>Register interest</h3><p>Tell us who you are and what you want to train towards.</p></div></li>
-            <li><span>02</span><div><h3>Find the right format</h3><p>We will confirm the coaching format and availability once the booking system is ready.</p></div></li>
-            <li><span>03</span><div><h3>Do the work</h3><p>Arrive prepared, train with intent, and build from the session before.</p></div></li>
-          </ol>
+          <div className="coaching-process__content">
+            <div>
+              <p className="eyebrow">HOW IT WILL WORK</p>
+              <h2 id="process-title">A clear route in.</h2>
+            </div>
+            <ol>
+              <li><span>01</span><div><h3>Register interest</h3><p>Tell us who you are and what you want to train towards.</p></div></li>
+              <li><span>02</span><div><h3>Find the right format</h3><p>We will confirm the coaching format and availability once the booking system is ready.</p></div></li>
+              <li><span>03</span><div><h3>Do the work</h3><p>Arrive prepared, train with intent, and build from the session before.</p></div></li>
+            </ol>
+          </div>
         </section>
 
         <section className="coaching-faq" aria-labelledby="coaching-faq-title">
-          <p className="eyebrow">QUESTIONS</p>
-          <h2 id="coaching-faq-title">Before you register.</h2>
-          <div className="coaching-faq__items">
-            <details><summary>Is this a full booking system?</summary><p>Not yet. This page collects interest while the final coaching formats, rules, and booking experience are confirmed.</p></details>
-            <details><summary>Do I need previous boxing experience?</summary><p>No. The coaching offer will support people at different starting points, with the right level confirmed before booking.</p></details>
-            <details><summary>Where will sessions take place?</summary><p>Location and availability details will be confirmed with the final coaching setup.</p></details>
+          <div className="coaching-faq__copy">
+            <p className="eyebrow">QUESTIONS</p>
+            <h2 id="coaching-faq-title">Before you register.</h2>
+            <div className="coaching-faq__items">
+              <details><summary>Is this a full booking system?</summary><p>Not yet. This page collects interest while the final coaching formats, rules, and booking experience are confirmed.</p></details>
+              <details><summary>Do I need previous boxing experience?</summary><p>No. The coaching offer will support people at different starting points, with the right level confirmed before booking.</p></details>
+              <details><summary>Where will sessions take place?</summary><p>Location and availability details will be confirmed with the final coaching setup.</p></details>
+            </div>
+          </div>
+          <div className="coaching-faq__visual">
+            <img src="/images/editorial-right.jpg" alt="Athletes training with barbells in a gym" />
           </div>
         </section>
 

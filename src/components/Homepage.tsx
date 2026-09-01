@@ -1,16 +1,10 @@
 "use client";
 
+import { SiteHeader } from "@/components/SiteHeader";
+import { SiteFooter } from "@/components/SiteFooter";
 import { useEffect, useState, type ReactNode } from "react";
-import { useCommerce } from "@/components/CommerceProvider";
 import { getProductBySlug, type Product } from "@/data/products";
 import { formatCurrency } from "@/lib/format";
-
-const retailNavLinks = [
-  ["Shop", "/shop"],
-  ["Our story", "/our-story"],
-  ["Train with Yousef", "/train-with-yousef"],
-  ["Contact", "/contact"],
-] as const;
 
 const retailPickSlugs = [
   "pheno-type-1-t-shirt",
@@ -64,33 +58,6 @@ const socialProofPosts = [
   },
 ] as const;
 
-function MenuIcon() {
-  return (
-    <svg viewBox="0 0 20 20" aria-hidden="true">
-      <path d="M3 6h14M3 10h14M3 14h14" />
-    </svg>
-  );
-}
-
-function SearchIcon() {
-  return (
-    <svg viewBox="0 0 24 24" aria-hidden="true">
-      <circle cx="10.5" cy="10.5" r="6.5" />
-      <path d="m16 16 5 5" />
-    </svg>
-  );
-}
-
-function CartIcon() {
-  return (
-    <svg viewBox="0 0 24 24" aria-hidden="true">
-      <path d="M4 6h2l1.7 10.2a2 2 0 0 0 2 1.7h7.6a2 2 0 0 0 2-1.6L21 9H7" />
-      <circle cx="10" cy="21" r="1" />
-      <circle cx="18" cy="21" r="1" />
-    </svg>
-  );
-}
-
 function RetailCta({ href, children, dark = false }: { href: string; children: ReactNode; dark?: boolean }) {
   return (
     <a className={`retail-cta${dark ? " retail-cta--dark" : ""}`} href={href}>
@@ -100,71 +67,27 @@ function RetailCta({ href, children, dark = false }: { href: string; children: R
   );
 }
 
-function RetailHeader() {
-  const { cartCount, setCartOpen, setSearchOpen } = useCommerce();
-  const [mobileOpen, setMobileOpen] = useState(false);
-
-  const openSearch = () => {
-    setMobileOpen(false);
-    setSearchOpen(true);
-  };
-
-  const openCart = () => {
-    setMobileOpen(false);
-    setCartOpen(true);
-  };
-
-  return (
-    <header className="retail-header">
-      <div className="retail-utility">
-        <button className="retail-utility__menu" type="button" aria-label="Open menu" onClick={() => setMobileOpen((open) => !open)}>
-          <MenuIcon />
-        </button>
-        <span>Home page</span>
-      </div>
-
-      <div className="retail-navigation">
-        <a className="retail-navigation__brand" href="/" aria-label="PHENO home">
-          <img src="/images/pheno-desktop-logo-wide.avif" alt="PHENO" />
-        </a>
-
-        <nav className="retail-navigation__links" aria-label="Primary navigation">
-          {retailNavLinks.map(([label, href]) => (
-            <a href={href} key={href}>{label}</a>
-          ))}
-        </nav>
-
-        <div className="retail-navigation__tools" aria-label="Utility navigation">
-          <button type="button" aria-label="Search" onClick={openSearch}>
-            <SearchIcon />
-            <span>Search</span>
-          </button>
-          <button type="button" aria-label={`Cart (${cartCount})`} onClick={openCart}>
-            <CartIcon />
-            <span>My cart ({cartCount})</span>
-          </button>
-        </div>
-
-        <button className="retail-navigation__mobile-toggle" type="button" aria-expanded={mobileOpen} aria-controls="retail-mobile-menu" onClick={() => setMobileOpen((open) => !open)}>
-          <span>{mobileOpen ? "Close" : "Menu"}</span>
-          <MenuIcon />
-        </button>
-      </div>
-
-      {mobileOpen ? (
-        <nav id="retail-mobile-menu" className="retail-mobile-menu" aria-label="Mobile navigation">
-          {retailNavLinks.map(([label, href]) => (
-            <a href={href} key={href} onClick={() => setMobileOpen(false)}>{label}</a>
-          ))}
-          <button type="button" onClick={openSearch}>Search</button>
-          <button type="button" onClick={openCart}>My cart ({cartCount})</button>
-        </nav>
-      ) : null}
-    </header>
-  );
-}
+const retailHeroSlides = [
+  { src: "/images/type-1-hoodie.jpg", alt: "Type 1 Hoodie, PHENO Sportswear" },
+  { src: "/images/type-1-joggers.jpg", alt: "Type 1 Joggers, PHENO Sportswear" },
+  { src: "/images/type-1-shorts.jpg", alt: "Type 1 Shorts, PHENO Sportswear" },
+  { src: "/images/type-1-tank-black.jpg", alt: "Type 1 Tank, PHENO Sportswear" },
+];
 
 function RetailHero() {
+  const [activeHeroIndex, setActiveHeroIndex] = useState(0);
+  const [isHeroPaused, setIsHeroPaused] = useState(false);
+
+  useEffect(() => {
+    if (isHeroPaused) return;
+
+    const interval = window.setInterval(() => {
+      setActiveHeroIndex((current) => (current + 1) % retailHeroSlides.length);
+    }, 5200);
+
+    return () => window.clearInterval(interval);
+  }, [isHeroPaused]);
+
   return (
     <section className="retail-hero" aria-labelledby="retail-hero-title">
       <img className="retail-hero__backdrop" src="/images/campaign-athlete.jpg" alt="" aria-hidden="true" />
@@ -178,16 +101,39 @@ function RetailHero() {
           <RetailCta href="/shop/type-1" dark>Shop the collection</RetailCta>
         </div>
 
-        <div className="retail-hero__art" aria-hidden="true">
+        <div
+          className="retail-hero__art"
+          onMouseEnter={() => setIsHeroPaused(true)}
+          onMouseLeave={() => setIsHeroPaused(false)}
+          onFocus={() => setIsHeroPaused(true)}
+          onBlur={() => setIsHeroPaused(false)}
+        >
           <img className="retail-hero__mark" src="/images/pheno-hero-mark.png" alt="" />
-          <img className="retail-hero__product retail-hero__product--hoodie" src="/images/type-1-hoodie.jpg" alt="" />
+          {retailHeroSlides.map((slide, index) => (
+            <img
+              className={`retail-hero__product${index === activeHeroIndex ? " is-active" : ""}`}
+              src={slide.src}
+              alt={slide.alt}
+              aria-hidden={index === activeHeroIndex ? undefined : true}
+              key={slide.src}
+            />
+          ))}
         </div>
 
-        <div className="retail-hero__indicators" aria-label="Hero slide 1 of 4">
-          <span className="is-active" />
-          <span />
-          <span />
-          <span />
+        <div className="retail-hero__indicators" role="tablist" aria-label="Choose a hero product">
+          {retailHeroSlides.map((slide, index) => (
+            <button
+              type="button"
+              role="tab"
+              aria-label={`Show ${slide.alt.replace(", PHENO Sportswear", "")} (${index + 1} of ${retailHeroSlides.length})`}
+              aria-selected={index === activeHeroIndex}
+              className={index === activeHeroIndex ? "is-active" : ""}
+              onClick={() => setActiveHeroIndex(index)}
+              key={slide.src}
+            >
+              <span aria-hidden="true" />
+            </button>
+          ))}
         </div>
       </div>
     </section>
@@ -252,46 +198,46 @@ function TopPicks() {
 function RetailFeatureIcon({ name }: { name: "fabric" | "fit" | "build" | "shipping" | "returns" }) {
   if (name === "fabric") {
     return (
-      <svg viewBox="0 0 32 32" aria-hidden="true">
-        <path d="M16 3c2 4 7 5 9 9 3 5-1 12-7 13-7 2-14-3-13-10 1-5 7-7 11-12Z" />
-        <path d="M8 20c4-1 8-4 10-9M12 26c1-3 3-6 6-8" />
+      <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+        <path d="M19.25 4.75C12.68 5.08 6 8.11 6 14.1c0 3.1 2.18 5.15 5.18 5.15 5.45 0 8.43-5.24 8.07-14.5Z" />
+        <path d="M4.75 20.25c2.7-4.8 6.37-8.09 11.32-10.65" />
       </svg>
     );
   }
 
   if (name === "fit") {
     return (
-      <svg viewBox="0 0 32 32" aria-hidden="true">
-        <path d="M8 24c4-7 9-10 16-11M16 7c1 2 3 3 6 3M7 17c3 1 5 0 7-3" />
-        <path d="m21 9 3-3 2 3" />
+      <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+        <path d="M3.5 15.25c3.95-.05 6.28-1.38 7.63-3.86 1.06-1.93 2.58-2.64 4.62-2.64h4.75" />
+        <path d="m17 5.25 3.5 3.5-3.5 3.5M3.5 19.25c2.25-.1 4.1-.76 5.52-2.14" />
       </svg>
     );
   }
 
   if (name === "build") {
     return (
-      <svg viewBox="0 0 32 32" aria-hidden="true">
-        <path d="m16 3 10 4v8c0 7-4 11-10 14C10 26 6 22 6 15V7l10-4Z" />
-        <path d="m16 9 1.5 3.4 3.5.4-2.6 2.3.8 3.5-3.2-1.8-3.2 1.8.8-3.5-2.6-2.3 3.5-.4L16 9Z" />
+      <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+        <path d="M12 3.25 19.5 6v5.5c0 4.5-2.4 7.54-7.5 9.25-5.1-1.71-7.5-4.75-7.5-9.25V6L12 3.25Z" />
+        <path d="m12 7.7 1.2 2.42 2.68.39-1.94 1.89.46 2.67L12 13.8l-2.4 1.27.46-2.67-1.94-1.89 2.68-.39L12 7.7Z" />
       </svg>
     );
   }
 
   if (name === "shipping") {
     return (
-      <svg viewBox="0 0 32 32" aria-hidden="true">
-        <path d="M3 8h16v13H3zM19 13h5l5 5v3H19z" />
-        <circle cx="9" cy="24" r="2.5" />
-        <circle cx="25" cy="24" r="2.5" />
-        <path d="M22 13v5h7" />
+      <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+        <path d="M3.5 7.5h10.25v8.75H3.5zM13.75 10.5h3.9l2.85 3.1v2.65h-6.75" />
+        <circle cx="7.5" cy="18" r="1.7" />
+        <circle cx="17.8" cy="18" r="1.7" />
+        <path d="M20.5 13.6h-3.45v-3.1" />
       </svg>
     );
   }
 
   return (
-    <svg viewBox="0 0 32 32" aria-hidden="true">
-      <path d="M25 9a10 10 0 1 0 1 10" />
-      <path d="M25 4v6h-6M7 23v-6h6" />
+    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+      <path d="M19.1 8.5A7.5 7.5 0 1 0 18.75 16" />
+      <path d="m19.1 3.8v4.7h-4.7M4.9 20.2v-4.7h4.7" />
     </svg>
   );
 }
@@ -501,58 +447,10 @@ function ProductSpotlight() {
   );
 }
 
-const retailFooterGroups = [
-  { title: "Shop", links: [["Shop all", "/shop"], ["Type 1", "/shop/type-1"], ["Tops", "/shop/tops"], ["Bottoms", "/shop/bottoms"]] },
-  { title: "Our story", links: [["Our philosophy", "/our-story"], ["Founder", "/our-story"], ["Values", "/our-story"], ["FAQs", "/help/faq"]] },
-  { title: "Support", links: [["Shipping", "/help/shipping"], ["Returns", "/help/returns"], ["Size guide", "/help/size-guide"], ["Contact", "/contact"]] },
-] as const;
-
-function SocialIcons() {
-  return (
-    <div className="retail-footer__socials" aria-label="Social media">
-      <a href="https://www.instagram.com/" target="_blank" rel="noreferrer" aria-label="Instagram">◎</a>
-      <a href="https://www.tiktok.com/" target="_blank" rel="noreferrer" aria-label="TikTok">♪</a>
-      <a href="https://www.youtube.com/" target="_blank" rel="noreferrer" aria-label="YouTube">▶</a>
-      <a href="https://x.com/" target="_blank" rel="noreferrer" aria-label="X">×</a>
-    </div>
-  );
-}
-
-function RetailFooter() {
-  return (
-    <footer className="retail-footer">
-      <div className="retail-footer__inner">
-        <div className="retail-footer__top">
-          <a className="retail-footer__brand" href="/" aria-label="PHENO home">
-            <img src="/images/pheno-logo.png" alt="PHENO" />
-            <span>Pursue the rise.</span>
-          </a>
-          {retailFooterGroups.map((group) => (
-            <div className="retail-footer__group" key={group.title}>
-              <h2>{group.title}</h2>
-              <ul>
-                {group.links.map(([label, href]) => <li key={`${group.title}-${label}`}><a href={href}>{label}</a></li>)}
-              </ul>
-            </div>
-          ))}
-          <SocialIcons />
-        </div>
-        <div className="retail-footer__bottom">
-          <span>© 2026 PHENO Sportswear. All rights reserved.</span>
-          <div>
-            <a href="/privacy">Privacy policy</a>
-            <a href="/privacy">Terms &amp; conditions</a>
-          </div>
-        </div>
-      </div>
-    </footer>
-  );
-}
-
 export function Homepage() {
   return (
     <div className="retail-home">
-      <RetailHeader />
+      <SiteHeader />
         <main>
           <RetailHero />
           <TopPicks />
@@ -561,7 +459,7 @@ export function Homepage() {
           <ProductSpotlight />
           <SocialProof />
       </main>
-      <RetailFooter />
+      <SiteFooter />
     </div>
   );
 }
