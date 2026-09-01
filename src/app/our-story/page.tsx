@@ -18,13 +18,14 @@ export default function OurStoryPage() {
         </EditorialPageIntro>
 
         <section className="story-hero" aria-labelledby="story-hero-title">
-          <div className="story-hero__image">
+          <div className="story-hero__image story-hero__image--video">
             <video
               src="/videos/social-04.mp4"
               autoPlay
               loop
               muted
               playsInline
+              controls
               preload="metadata"
               aria-label="PHENO athlete training for the Pursue the Rise campaign"
             />
