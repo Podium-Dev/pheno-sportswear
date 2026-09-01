@@ -8046,3 +8046,8 @@ h2 {
   margin-inline: calc(50% - 50vw);
   padding-inline: max(22px, calc((100vw - var(--site-width)) / 2));
 }
+
+
+.storefront-page--contact .contact-page {
+  padding-bottom: 0;
+}
