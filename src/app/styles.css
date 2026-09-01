@@ -14,6 +14,10 @@
   --section-gap: 14px;
   --heading-font: var(--font-quantico, Quantico), sans-serif;
   --body-font: var(--font-inter, Inter), sans-serif;
+  --type-h1: clamp(44px, 5.2vw, 72px);
+  --type-h2: clamp(30px, 3.2vw, 42px);
+  --type-body: 15px;
+  --type-body-leading: 1.55;
 }
 
 * {
@@ -30,7 +34,7 @@ body {
   background: var(--canvas);
   color: var(--ink);
   font-family: var(--body-font);
-  font-size: 16px;
+  font-size: var(--type-body);
   font-weight: 400;
   -webkit-font-smoothing: antialiased;
   overflow-x: hidden;
@@ -7465,5 +7469,106 @@ h6 {
   .shop-performance-card {
     min-width: 0;
     scroll-snap-align: start;
+  }
+}
+
+
+/* Shared type scale for every page. Compact navigation and merchandising labels
+   stay on their own UI scale so the content hierarchy remains clear. */
+h1 {
+  font-family: var(--heading-font) !important;
+  font-size: var(--type-h1) !important;
+  font-weight: 400 !important;
+  line-height: 0.93;
+  letter-spacing: -0.055em;
+  text-wrap: balance;
+}
+
+h2 {
+  font-family: var(--heading-font) !important;
+  font-size: var(--type-h2) !important;
+  font-weight: 400 !important;
+  line-height: 0.98;
+  letter-spacing: -0.055em;
+  text-wrap: balance;
+}
+
+.page-intro__summary,
+.placeholder-page__main > p:not(.eyebrow),
+.not-found-page > p:not(.eyebrow),
+.bundle-card__body > p:not(.eyebrow),
+.story-hero__copy > p:not(.eyebrow),
+.story-section__copy p,
+.founder-section p,
+.coaching-section > p,
+.coaching-audience p,
+.coaching-process p,
+.coaching-faq p,
+.interest-section p,
+.product-information__intro > p:not(.eyebrow),
+.product-accordions details > p,
+.contact-page__aside > p:not(.eyebrow),
+.account-page__panel > p:not(.eyebrow),
+.help-content p,
+.faq-group__items details > p,
+.product-purchase__description,
+.sold-out-panel p:not(.eyebrow),
+.coaching-hero__copy > p:not(.eyebrow),
+.homepage .hero__summary,
+.homepage .campaign__content > p:not(.eyebrow),
+.homepage .home-hero__summary,
+.homepage .home-collection__intro > p:not(.home-eyebrow),
+.homepage .home-kit__intro > p:not(.home-eyebrow),
+.homepage .home-social__intro > p:not(.home-eyebrow),
+.homepage .home-performance__content > p:not(.home-eyebrow),
+.homepage .home-story__content > p:not(.home-eyebrow),
+.homepage .home-editorial__description,
+.homepage .home-kit__caption p:last-child,
+.homepage .home-coaching__content > p:not(.home-eyebrow),
+.homepage .home-newsletter p:not(.home-eyebrow),
+.retail-hero__copy > p:not(.retail-eyebrow),
+.retail-spotlight__copy > p:not(.retail-eyebrow),
+.retail-campaign-feature__copy > span:not(.retail-eyebrow):not(.retail-campaign-feature__cta),
+.retail-home .social-proof__intro-copy,
+.shop-performance-banner__copy > p:not(.shop-performance-banner__eyebrow) {
+  font-size: var(--type-body) !important;
+  line-height: var(--type-body-leading) !important;
+}
+
+/* Section labels, footer groups, and overlay titles are interface typography,
+   not editorial H2 content. */
+.section-heading,
+.retail-picks__header h2,
+.retail-section__title {
+  font-size: 18px !important;
+}
+
+.homepage .home-collection .section-heading {
+  font-size: 11px !important;
+}
+
+.retail-feature h2,
+.homepage .home-trust__item h2 {
+  font-size: 11px !important;
+}
+
+.footer-group__title {
+  font-size: 10px !important;
+}
+
+.retail-footer__group h2 {
+  font-size: 9px !important;
+}
+
+.cart-drawer__header h2,
+.search-panel__header h2,
+.overlay-panel__header h2 {
+  font-size: 28px !important;
+}
+
+@media (max-width: 720px) {
+  :root {
+    --type-h1: clamp(38px, 11vw, 52px);
+    --type-h2: clamp(26px, 8vw, 36px);
   }
 }
