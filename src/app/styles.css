@@ -6877,6 +6877,10 @@ h6 {
   transition: color 180ms ease-out;
 }
 
+.retail-footer__bottom {
+  font-size: 12px;
+}
+
 @media (max-width: 980px) {
   .retail-navigation {
     padding-inline: 27px;
