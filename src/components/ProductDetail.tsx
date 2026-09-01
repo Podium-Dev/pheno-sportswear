@@ -14,6 +14,7 @@ import { useCommerce } from "@/components/CommerceProvider";
 import { formatCurrency } from "@/lib/format";
 import { NotifyMeForm } from "@/components/Forms";
 import { ProductCard } from "@/components/ProductCard";
+import { ProductFeatureStrip } from "@/components/ProductFeatureStrip";
 import { SizeGuideModal } from "@/components/SizeGuideModal";
 
 function ProductGallery({ product, colour }: { product: Product; colour: Colour }) {
@@ -175,6 +176,8 @@ export function ProductDetail({ product }: { product: Product }) {
           </div>
         </section>
       </div>
+
+      <ProductFeatureStrip features={product.performanceFeatures} />
 
       <section className="product-information" aria-labelledby="product-information-title">
         <div className="product-information__intro">

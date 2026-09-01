@@ -18,6 +18,14 @@ export type ProductVariant = {
   available: boolean;
 };
 
+export type ProductFeature = {
+  id: string;
+  title: string;
+  description: string;
+  image: string;
+  imageAlt: string;
+};
+
 export type Product = {
   id: string;
   slug: string;
@@ -28,6 +36,7 @@ export type Product = {
   description: string;
   construction: string;
   features: string[];
+  performanceFeatures: ProductFeature[];
   images: string[];
   colourImages: Partial<Record<Colour, string>>;
   colours: Colour[];
@@ -66,6 +75,50 @@ export const products: Product[] = [
       "A performance fleece hoodie built from a 320 GSM knit that balances warmth, stretch, and durability for warm-up, cooldown, and active recovery.",
     construction: "42% cotton, 54% polyester, 4% spandex",
     features: ["Quick-dry", "Enhanced mobility"],
+    performanceFeatures: [
+      {
+        id: "fabric-weight",
+        title: "320 GSM FABRIC",
+        description: "Substantial comfort.",
+        image: "/images/type-1-hoodie.jpg",
+        imageAlt: "Black PHENO Type 1 Hoodie fabric",
+      },
+      {
+        id: "stretch-comfort",
+        title: "STRETCH COMFORT",
+        description: "Built to move.",
+        image: "/images/type-1-hoodie-detail.jpg",
+        imageAlt: "PHENO Type 1 Hoodie worn for movement",
+      },
+      {
+        id: "shape-retention",
+        title: "SHAPE RETENTION",
+        description: "Keeps its structure.",
+        image: "/images/type-1-hoodie.jpg",
+        imageAlt: "Black PHENO Type 1 Hoodie holding its shape",
+      },
+      {
+        id: "warmth",
+        title: "WARMTH",
+        description: "Made for warm-up and recovery.",
+        image: "/images/type-1-hoodie-detail.jpg",
+        imageAlt: "PHENO Type 1 Hoodie built for warm-up",
+      },
+      {
+        id: "quick-dry",
+        title: "QUICK-DRY PERFORMANCE",
+        description: "Ready for repeat sessions.",
+        image: "/images/type-1-hoodie.jpg",
+        imageAlt: "Black PHENO Type 1 Hoodie performance fabric",
+      },
+      {
+        id: "mobility",
+        title: "MOBILITY",
+        description: "Movement without restriction.",
+        image: "/images/type-1-hoodie-detail.jpg",
+        imageAlt: "PHENO Type 1 Hoodie sleeves and body for mobility",
+      },
+    ],
     images: [
       "/images/type-1-hoodie.jpg",
       "/images/type-1-hoodie-detail.jpg",
@@ -90,6 +143,43 @@ export const products: Product[] = [
       "High-stretch woven joggers engineered for mobility, with a smooth matte surface, articulated knees, and a tapered leg for technical everyday movement.",
     construction: "77% nylon, 23% spandex",
     features: ["4-way stretch"],
+    performanceFeatures: [
+      {
+        id: "stretch",
+        title: "4-WAY STRETCH",
+        description: "Moves without restriction.",
+        image: "/images/type-1-joggers.jpg",
+        imageAlt: "Black PHENO Type 1 Joggers stretch woven fabric",
+      },
+      {
+        id: "articulated-knees",
+        title: "ARTICULATED KNEES",
+        description: "Built for mobility.",
+        image: "/images/type-1-joggers.jpg",
+        imageAlt: "Articulated knee construction on PHENO Type 1 Joggers",
+      },
+      {
+        id: "smooth-matte-fabric",
+        title: "SMOOTH MATTE FABRIC",
+        description: "Premium technical feel.",
+        image: "/images/type-1-joggers-detail.jpg",
+        imageAlt: "Smooth matte technical fabric on PHENO Type 1 Joggers",
+      },
+      {
+        id: "tapered-fit",
+        title: "TAPERED PERFORMANCE FIT",
+        description: "Designed to move cleanly.",
+        image: "/images/type-1-joggers.jpg",
+        imageAlt: "Tapered leg construction on PHENO Type 1 Joggers",
+      },
+      {
+        id: "secure-storage",
+        title: "SECURE STORAGE",
+        description: "Keep essentials close.",
+        image: "/images/type-1-joggers-detail.jpg",
+        imageAlt: "Zipped and cargo pocket detail on PHENO Type 1 Joggers",
+      },
+    ],
     images: [
       "/images/type-1-joggers.jpg",
       "/images/type-1-joggers-detail.jpg",
@@ -113,6 +203,50 @@ export const products: Product[] = [
     construction:
       "Shell: 90% polyester, 10% spandex. Liner: 90% polyester, 10% spandex jersey and mesh zones",
     features: ["Supportive compression", "Moisture-wicking", "Targeted ventilation"],
+    performanceFeatures: [
+      {
+        id: "stretch",
+        title: "4-WAY STRETCH",
+        description: "Moves with you.",
+        image: "/images/type-1-shorts.jpg",
+        imageAlt: "Black PHENO Type 1 Shorts stretch shell",
+      },
+      {
+        id: "compression-liner",
+        title: "COMPRESSION LINER",
+        description: "Support and stability.",
+        image: "/images/type-1-shorts-detail.jpg",
+        imageAlt: "White integrated compression liner in PHENO Type 1 Shorts",
+      },
+      {
+        id: "breathable",
+        title: "BREATHABLE",
+        description: "Enhanced ventilation.",
+        image: "/images/type-1-shorts-detail.jpg",
+        imageAlt: "Ventilation detail on black PHENO Type 1 Shorts",
+      },
+      {
+        id: "moisture-wicking",
+        title: "MOISTURE WICKING",
+        description: "Keeps you dry.",
+        image: "/images/type-1-shorts.jpg",
+        imageAlt: "Technical outer material on PHENO Type 1 Shorts",
+      },
+      {
+        id: "secure-pockets",
+        title: "SECURE POCKETS",
+        description: "Essentials stay safe.",
+        image: "/images/type-1-shorts-detail.jpg",
+        imageAlt: "Zipped pocket detail on PHENO Type 1 Shorts",
+      },
+      {
+        id: "lightweight",
+        title: "LIGHTWEIGHT",
+        description: "Maximum performance.",
+        image: "/images/type-1-shorts.jpg",
+        imageAlt: "Lightweight shell of PHENO Type 1 Shorts",
+      },
+    ],
     images: [
       "/images/type-1-shorts.jpg",
       "/images/type-1-shorts-detail.jpg",
@@ -135,6 +269,50 @@ export const products: Product[] = [
       "A lightweight performance top combining smooth jersey knit with micro-perforated mesh side panels for airflow and heat regulation during high-intensity training.",
     construction: "90% polyester, 10% spandex knit with mesh side panels",
     features: ["Breathable ventilation", "Quick-dry", "Cooling zones"],
+    performanceFeatures: [
+      {
+        id: "breathable",
+        title: "BREATHABLE",
+        description: "Built to release heat.",
+        image: "/images/type-1-tshirt.jpg",
+        imageAlt: "Black PHENO Type 1 T-Shirt breathable fabric",
+      },
+      {
+        id: "mesh-side-panels",
+        title: "MESH SIDE PANELS",
+        description: "Targeted airflow.",
+        image: "/images/type-1-tshirt.jpg",
+        imageAlt: "Mesh side panel detail on black PHENO Type 1 T-Shirt",
+      },
+      {
+        id: "quick-dry",
+        title: "QUICK DRY",
+        description: "Ready for hard sessions.",
+        image: "/images/type-1-tshirt.jpg",
+        imageAlt: "Black PHENO Type 1 T-Shirt performance fabric",
+      },
+      {
+        id: "cooling-zones",
+        title: "COOLING ZONES",
+        description: "Ventilation where it matters.",
+        image: "/images/type-1-tshirt.jpg",
+        imageAlt: "Cooling zone detail on black PHENO Type 1 T-Shirt",
+      },
+      {
+        id: "stretch-jersey",
+        title: "STRETCH JERSEY",
+        description: "Moves with you.",
+        image: "/images/type-1-tshirt.jpg",
+        imageAlt: "Stretch jersey fabric on black PHENO Type 1 T-Shirt",
+      },
+      {
+        id: "lightweight",
+        title: "LIGHTWEIGHT",
+        description: "Minimal distraction.",
+        image: "/images/type-1-tshirt.jpg",
+        imageAlt: "Lightweight black PHENO Type 1 T-Shirt",
+      },
+    ],
     images: [
       "/images/type-1-tshirt.jpg",
       "/images/type-1-tshirt-white.jpg",
@@ -160,6 +338,50 @@ export const products: Product[] = [
       "A lightweight training tank made with a smooth stretch knit and mesh side panels to keep airflow moving through demanding sessions.",
     construction: "90% polyester, 10% spandex knit with mesh side panels",
     features: ["Breathable ventilation", "Quick-dry", "Cooling zones"],
+    performanceFeatures: [
+      {
+        id: "breathable",
+        title: "BREATHABLE",
+        description: "Enhanced airflow.",
+        image: "/images/type-1-tank-black.jpg",
+        imageAlt: "Black PHENO Type 1 Tank breathable fabric",
+      },
+      {
+        id: "mesh-side-panels",
+        title: "MESH SIDE PANELS",
+        description: "Ventilation where you need it.",
+        image: "/images/type-1-tank-black.jpg",
+        imageAlt: "Mesh side panel detail on black PHENO Type 1 Tank",
+      },
+      {
+        id: "quick-dry",
+        title: "QUICK DRY",
+        description: "Built for repeat sessions.",
+        image: "/images/type-1-tank-black.jpg",
+        imageAlt: "Black PHENO Type 1 Tank performance fabric",
+      },
+      {
+        id: "cooling-zones",
+        title: "COOLING ZONES",
+        description: "Helps manage heat.",
+        image: "/images/type-1-tank-black.jpg",
+        imageAlt: "Cooling zone detail on black PHENO Type 1 Tank",
+      },
+      {
+        id: "lightweight-stretch",
+        title: "LIGHTWEIGHT STRETCH",
+        description: "Freedom to move.",
+        image: "/images/type-1-tank-black.jpg",
+        imageAlt: "Lightweight stretch fabric on black PHENO Type 1 Tank",
+      },
+      {
+        id: "performance-fit",
+        title: "PERFORMANCE FIT",
+        description: "Made for training.",
+        image: "/images/type-1-tank-black.jpg",
+        imageAlt: "Black PHENO Type 1 Tank performance fit",
+      },
+    ],
     images: [
       "/images/type-1-tank-black.jpg",
       "/images/type-1-tank-white.jpg",

@@ -7467,3 +7467,121 @@ h6 {
     scroll-snap-align: start;
   }
 }
+
+/* Product feature strip: remove this block with ProductFeatureStrip.tsx to revert. */
+.product-feature-strip {
+  margin: -46px 0 64px;
+  padding: 32px 26px 35px;
+  border-block: 1px solid var(--line);
+  background: var(--surface);
+}
+
+.product-feature-strip__list {
+  display: flex;
+  width: 100%;
+  flex-wrap: wrap;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.product-feature-strip__item {
+  display: flex;
+  min-width: 145px;
+  flex: 1 1 145px;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 0 18px;
+  border-right: 1px solid var(--line);
+  text-align: center;
+}
+
+.product-feature-strip__item:last-child {
+  border-right: 0;
+}
+
+.product-feature-strip__item figure {
+  display: grid;
+  width: 100%;
+  max-width: 190px;
+  justify-items: center;
+  gap: 17px;
+  margin: 0;
+}
+
+.product-feature-strip__image {
+  width: clamp(104px, 10vw, 136px);
+  aspect-ratio: 1;
+  overflow: hidden;
+  border-radius: 50%;
+  background: var(--paper);
+}
+
+.product-feature-strip__image img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  mix-blend-mode: multiply;
+}
+
+.product-feature-strip__item figcaption {
+  display: grid;
+  gap: 7px;
+  justify-items: center;
+}
+
+.product-feature-strip__item strong {
+  color: var(--ink);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.07em;
+  line-height: 1.15;
+  text-transform: uppercase;
+}
+
+.product-feature-strip__item figcaption span {
+  max-width: 18ch;
+  color: var(--muted);
+  font-size: 11px;
+  line-height: 1.35;
+}
+
+@media (max-width: 720px) {
+  .product-feature-strip {
+    margin-top: -43px;
+    margin-bottom: 50px;
+    padding: 28px 0 30px;
+  }
+
+  .product-feature-strip__list {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    padding: 0 18px 4px;
+    scrollbar-width: none;
+    scroll-snap-type: x mandatory;
+  }
+
+  .product-feature-strip__list::-webkit-scrollbar {
+    display: none;
+  }
+
+  .product-feature-strip__item {
+    flex: 0 0 min(40vw, 160px);
+    min-width: 0;
+    padding: 0 14px;
+    scroll-snap-align: start;
+  }
+
+  .product-feature-strip__item:last-child {
+    border-right: 0;
+  }
+
+  .product-feature-strip__item figure {
+    max-width: none;
+  }
+
+  .product-feature-strip__image {
+    width: 112px;
+  }
+}
