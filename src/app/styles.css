@@ -2772,7 +2772,8 @@ img {
   pointer-events: none;
 }
 
-.story-hero__image img {
+.story-hero__image img,
+.story-hero__image video {
   display: block;
   width: 100%;
   height: 100%;
