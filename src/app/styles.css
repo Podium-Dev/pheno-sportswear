@@ -2825,7 +2825,8 @@ img {
 
 .storefront-page--coaching .coaching-section,
 .storefront-page--coaching .coaching-audience,
-.storefront-page--coaching .coaching-process {
+.storefront-page--coaching .coaching-process,
+.storefront-page--coaching .coaching-faq {
   margin-inline: calc(50% - 50vw);
   padding-inline: max(22px, calc((100vw - var(--site-width)) / 2));
 }
@@ -2835,7 +2836,7 @@ img {
 }
 
 .storefront-page--coaching .coaching-audience {
-  background: #f1f2f0;
+  background: #ffffff;
 }
 
 .storefront-page--coaching .coaching-process {
@@ -2862,6 +2863,31 @@ img {
 
 .storefront-page--coaching .coaching-process__visual {
   border-color: rgb(255 255 255 / 0.2);
+}
+
+.storefront-page--coaching .coaching-faq {
+  background: #070908;
+  color: var(--paper);
+}
+
+.storefront-page--coaching .coaching-faq h2 {
+  color: var(--paper);
+}
+
+.storefront-page--coaching .coaching-faq .eyebrow {
+  color: var(--accent);
+}
+
+.storefront-page--coaching .coaching-faq summary {
+  color: var(--paper);
+}
+
+.storefront-page--coaching .coaching-faq__items details {
+  border-color: rgb(255 255 255 / 0.2);
+}
+
+.storefront-page--coaching .coaching-faq__items details > p {
+  color: rgb(255 255 255 / 0.7);
 }
 
 .coaching-process li {
