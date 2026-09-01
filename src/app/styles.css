@@ -8033,3 +8033,10 @@ h2 {
   opacity: 0.55;
   transform: none;
 }
+
+
+/* Full-bleed story principles surface. */
+.storefront-page--story .story-principles {
+  margin-inline: calc(50% - 50vw);
+  padding-inline: max(22px, calc((100vw - var(--site-width)) / 2));
+}
