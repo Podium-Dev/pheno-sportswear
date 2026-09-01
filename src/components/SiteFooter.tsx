@@ -87,7 +87,7 @@ export function SiteFooter() {
           <div className="retail-footer__social-column">
             <SocialIcons />
             <div className="retail-footer__newsletter">
-              <NewsletterForm compact submitLabel="Join" />
+              <NewsletterForm compact />
             </div>
           </div>
         </div>
