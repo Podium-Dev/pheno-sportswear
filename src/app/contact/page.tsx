@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { ContactForm } from "@/components/Forms";
-import { Breadcrumbs, StorefrontPage } from "@/components/StorefrontPage";
+import { StorefrontPage } from "@/components/StorefrontPage";
 
 export const metadata: Metadata = {
   title: "Contact | PHENO Sportswear",
@@ -13,7 +13,6 @@ export default function ContactPage() {
   return (
     <StorefrontPage className="storefront-page--contact">
       <div className="contact-page">
-        <Breadcrumbs current="Contact" />
         <section className="contact-hero" aria-labelledby="contact-hero-title">
           <img className="contact-hero__mark" src="/images/pheno-hero-mark.png" alt="" aria-hidden="true" />
           <div className="contact-hero__inner">
