@@ -46,15 +46,20 @@ export default function TrainWithYousefPage() {
         </section>
 
         <section className="coaching-process" aria-labelledby="process-title">
-          <div>
-            <p className="eyebrow">HOW IT WILL WORK</p>
-            <h2 id="process-title">A clear route in.</h2>
+          <div className="coaching-process__visual">
+            <img src="/images/editorial-left.jpg" alt="Runners training together on a track" />
           </div>
-          <ol>
-            <li><span>01</span><div><h3>Register interest</h3><p>Tell us who you are and what you want to train towards.</p></div></li>
-            <li><span>02</span><div><h3>Find the right format</h3><p>We will confirm the coaching format and availability once the booking system is ready.</p></div></li>
-            <li><span>03</span><div><h3>Do the work</h3><p>Arrive prepared, train with intent, and build from the session before.</p></div></li>
-          </ol>
+          <div className="coaching-process__content">
+            <div>
+              <p className="eyebrow">HOW IT WILL WORK</p>
+              <h2 id="process-title">A clear route in.</h2>
+            </div>
+            <ol>
+              <li><span>01</span><div><h3>Register interest</h3><p>Tell us who you are and what you want to train towards.</p></div></li>
+              <li><span>02</span><div><h3>Find the right format</h3><p>We will confirm the coaching format and availability once the booking system is ready.</p></div></li>
+              <li><span>03</span><div><h3>Do the work</h3><p>Arrive prepared, train with intent, and build from the session before.</p></div></li>
+            </ol>
+          </div>
         </section>
 
         <section className="coaching-faq" aria-labelledby="coaching-faq-title">
