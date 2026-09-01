@@ -26,6 +26,24 @@ export type ProductFeature = {
   imageAlt: string;
 };
 
+export type ProductEngineeredDetail = {
+  number: number;
+  title: string;
+  description: string;
+  marker: {
+    top: string;
+    left: string;
+    line: "left" | "right";
+  };
+};
+
+export type ProductEngineeredDetails = {
+  title: string;
+  image: string;
+  imageAlt: string;
+  details: ProductEngineeredDetail[];
+};
+
 export type Product = {
   id: string;
   slug: string;
@@ -38,6 +56,7 @@ export type Product = {
   features: string[];
   performanceFeatures: ProductFeature[];
   performanceFeaturesByColour?: Partial<Record<Colour, ProductFeature[]>>;
+  engineeredDetails?: ProductEngineeredDetails;
   images: string[];
   colourImages: Partial<Record<Colour, string>>;
   galleryImagesByColour?: Partial<Record<Colour, string[]>>;
@@ -297,6 +316,55 @@ export const products: Product[] = [
         imageAlt: "Lightweight shell of PHENO Type 1 Shorts",
       },
     ],
+    engineeredDetails: {
+      title: "ENGINEERED DETAILS",
+      image: "/images/type-1-shorts-detail.jpg",
+      imageAlt: "Black PHENO Type 1 Shorts with numbered engineered construction details",
+      details: [
+        {
+          number: 1,
+          title: "ELASTIC WAISTBAND & INTERNAL DRAWCORD",
+          description: "Secure, adjustable fit that moves with you.",
+          marker: { top: "25%", left: "11%", line: "right" },
+        },
+        {
+          number: 2,
+          title: "ZIPPED POCKETS",
+          description: "Secure storage for your essentials.",
+          marker: { top: "39%", left: "10%", line: "right" },
+        },
+        {
+          number: 3,
+          title: "LASER-CUT VENTILATION",
+          description: "Strategic perforations for enhanced airflow and cooling.",
+          marker: { top: "39%", left: "89%", line: "left" },
+        },
+        {
+          number: 4,
+          title: "4-WAY STRETCH OUTER SHELL",
+          description: "Lightweight and flexible fabric for unrestricted movement.",
+          marker: { top: "61%", left: "10%", line: "right" },
+        },
+        {
+          number: 5,
+          title: "2-IN-1 COMPRESSION LINER",
+          description: "Built-in support reduces chafing and enhances performance.",
+          marker: { top: "72%", left: "88%", line: "left" },
+        },
+        {
+          number: 6,
+          title: "SPLIT HEM DESIGN",
+          description: "Increased range of motion for explosive training.",
+          marker: { top: "78%", left: "63%", line: "right" },
+        },
+        {
+          number: 7,
+          title: "PHENO PERFORMANCE LOGO",
+          description: "Reflective detailing for a premium, athletic finish.",
+          marker: { top: "61%", left: "83%", line: "left" },
+        },
+      ],
+    },
     images: [
       ...galleries.shorts,
     ],

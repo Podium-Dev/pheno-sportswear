@@ -136,6 +136,42 @@ function ProductGallery({ product, colour }: { product: Product; colour: Colour 
   );
 }
 
+function ProductEngineeredDetails({ details }: { details: NonNullable<Product["engineeredDetails"]> }) {
+  return (
+    <section className="engineered-details" aria-labelledby="engineered-details-title">
+      <h2 id="engineered-details-title">{details.title}</h2>
+      <div className="engineered-details__layout">
+        <div className="engineered-details__visual">
+          <img src={details.image} alt={details.imageAlt} loading="lazy" decoding="async" />
+          <ol className="engineered-details__markers" aria-label="Engineered detail markers">
+            {details.details.map((detail) => (
+              <li
+                key={detail.number}
+                className={`engineered-details__marker engineered-details__marker--line-${detail.marker.line}`}
+                style={{ top: detail.marker.top, left: detail.marker.left }}
+                aria-label={`${detail.number}. ${detail.title}`}
+              >
+                <span aria-hidden="true">{detail.number}</span>
+              </li>
+            ))}
+          </ol>
+        </div>
+        <ol className="engineered-details__list" aria-label="Engineered construction details">
+          {details.details.map((detail) => (
+            <li className="engineered-details__item" key={detail.number}>
+              <span className="engineered-details__number" aria-hidden="true">{detail.number}</span>
+              <div>
+                <h3>{detail.title}</h3>
+                <p>{detail.description}</p>
+              </div>
+            </li>
+          ))}
+        </ol>
+      </div>
+    </section>
+  );
+}
+
 export function ProductDetail({ product }: { product: Product }) {
   const { addToCart, isWishlisted, toggleWishlist } = useCommerce();
   const [colour, setColour] = useState<Colour | "">(product.colours[0] || "");
@@ -268,6 +304,8 @@ export function ProductDetail({ product }: { product: Product }) {
       <ProductFeatureStrip
         features={product.performanceFeaturesByColour?.[colour || product.colours[0]] ?? product.performanceFeatures}
       />
+
+      {product.engineeredDetails ? <ProductEngineeredDetails details={product.engineeredDetails} /> : null}
 
       <section className="product-information" aria-labelledby="product-information-title">
         <div className="product-information__intro">
