@@ -128,9 +128,7 @@ export function ProductCard({
         <a className="product-card__text-link" href={`/product/${product.slug}`}>
           <span className="product-card__name">{product.name}</span>
           <span className="product-card__price">{formatCurrency(product.price)}</span>
-          {product.colours.length > 1 ? (
-            <span className="product-card__colours">{product.colours.join(" / ")}</span>
-          ) : null}
+          <span className="product-card__colours">{product.colours.join(" / ")}</span>
         </a>
         <div className="product-card__status" aria-live="polite">
           {!hasAvailableVariant ? "Sold out" : hasUnavailableVariant ? "Some sizes sold out" : "In stock"}

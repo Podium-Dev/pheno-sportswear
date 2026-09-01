@@ -183,7 +183,7 @@ function ProductEngineeredDetails({ details }: { details: NonNullable<Product["e
 
 export function ProductDetail({ product }: { product: Product }) {
   const { addToCart, isWishlisted, toggleWishlist } = useCommerce();
-  const [colour, setColour] = useState<Colour | "">(product.colours[0] || "");
+  const colour: Colour = product.colours[0] ?? "Black";
   const [size, setSize] = useState<Size | "">("");
   const [quantity, setQuantity] = useState(1);
   const [error, setError] = useState("");
@@ -236,23 +236,11 @@ export function ProductDetail({ product }: { product: Product }) {
           <p className="product-purchase__description">{product.description}</p>
 
           <div className="product-options">
-            <fieldset>
-              <legend>Colour{colour ? `, ${colour}` : ""}</legend>
-              <div className="option-row">
-                {product.colours.map((option) => (
-                  <button
-                    className={`option-chip${colour === option ? " option-chip--selected" : ""}`}
-                    key={option}
-                    type="button"
-                    aria-pressed={colour === option}
-                    onClick={() => setColour(option)}
-                  >
-                    {option}
-                  </button>
-                ))}
-              </div>
-            </fieldset>
-
+            <div className="product-colour-readout" aria-label={`Colour, ${colour}`}>
+              <span className="product-colour-readout__label">Colour</span>
+              <span className={`product-colour-readout__swatch product-colour-readout__swatch--${colour.toLowerCase()}`} aria-hidden="true" />
+              <strong>{colour}</strong>
+            </div>
             <fieldset>
               <legend>Size{size ? `, ${size}` : ""}</legend>
               <div className="option-row option-row--sizes">

@@ -106,7 +106,7 @@ const galleries = {
   },
 } as const;
 
-export const products: Product[] = [
+const sourceProducts: Product[] = [
   {
     id: "pheno-type-1-hoodie",
     slug: "pheno-type-1-hoodie",
@@ -688,6 +688,40 @@ export const products: Product[] = [
   },
 ];
 
+function splitProductColours(product: Product): Product[] {
+  if (product.colours.length < 2) {
+    return [product];
+  }
+
+  return product.colours.map((colour) => {
+    const galleryImages = product.galleryImagesByColour?.[colour] ?? [
+      product.colourImages[colour] ?? product.images[0],
+    ];
+    const performanceFeatures =
+      product.performanceFeaturesByColour?.[colour] ?? product.performanceFeatures;
+
+    return {
+      ...product,
+      id: `${product.id}-${colour.toLowerCase()}`,
+      slug: `${product.slug}-${colour.toLowerCase()}`,
+      images: galleryImages,
+      colourImages: { [colour]: galleryImages[0] },
+      galleryImagesByColour: { [colour]: galleryImages },
+      colours: [colour],
+      variants: product.variants.filter((variant) => variant.colour === colour),
+      performanceFeatures,
+      performanceFeaturesByColour: undefined,
+    };
+  });
+}
+
+export const products: Product[] = sourceProducts.flatMap(splitProductColours);
+
+const legacyProductSlugAliases: Record<string, string> = {
+  "pheno-type-1-t-shirt": "pheno-type-1-t-shirt-black",
+  "pheno-type-1-tank": "pheno-type-1-tank-black",
+};
+
 export type ProductBundle = {
   id: string;
   slug: string;
@@ -727,7 +761,8 @@ export const collectionLabels: Record<string, string> = {
 };
 
 export function getProductBySlug(slug: string) {
-  return products.find((product) => product.slug === slug);
+  const resolvedSlug = legacyProductSlugAliases[slug] ?? slug;
+  return products.find((product) => product.slug === resolvedSlug);
 }
 
 export function getBundleProducts(bundle: ProductBundle) {

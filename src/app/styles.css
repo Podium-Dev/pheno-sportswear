@@ -2007,6 +2007,41 @@ img {
   padding: 12px 0 2px;
 }
 
+.product-colour-readout {
+  display: inline-flex;
+  width: max-content;
+  gap: 10px;
+  align-items: center;
+}
+
+.product-colour-readout__label {
+  color: var(--muted);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+}
+
+.product-colour-readout__swatch {
+  display: block;
+  width: 20px;
+  height: 20px;
+  border: 1px solid var(--ink);
+  border-radius: 50%;
+  background: var(--ink);
+}
+
+.product-colour-readout__swatch--white {
+  border-color: var(--line);
+  background: var(--paper);
+}
+
+.product-colour-readout strong {
+  font-size: 10px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
 .product-options fieldset {
   gap: 12px;
 }
