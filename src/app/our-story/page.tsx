@@ -18,10 +18,8 @@ export default function OurStoryPage() {
         </EditorialPageIntro>
 
         <section className="story-hero" aria-labelledby="story-hero-title">
-          <div className="story-hero__mark" aria-hidden="true">
-            <span>↑</span>
-            <strong>PHENO</strong>
-            <small>THE VISIBLE EXPRESSION</small>
+          <div className="story-hero__image">
+            <img src="/images/editorial-right.jpg" alt="Athletes training together with barbells in a gym" />
           </div>
           <div className="story-hero__copy">
             <p className="eyebrow">PHENOTYPE</p>
