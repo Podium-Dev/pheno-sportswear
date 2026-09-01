@@ -1,6 +1,7 @@
 "use client";
 
 import { SiteHeader } from "@/components/SiteHeader";
+import { SiteFooter } from "@/components/SiteFooter";
 import { useEffect, useState, type ReactNode } from "react";
 import { getProductBySlug, type Product } from "@/data/products";
 import { formatCurrency } from "@/lib/format";
@@ -403,54 +404,6 @@ function ProductSpotlight() {
   );
 }
 
-const retailFooterGroups = [
-  { title: "Shop", links: [["Shop all", "/shop"], ["Type 1", "/shop/type-1"], ["Tops", "/shop/tops"], ["Bottoms", "/shop/bottoms"]] },
-  { title: "Our story", links: [["Our philosophy", "/our-story"], ["Founder", "/our-story"], ["Values", "/our-story"], ["FAQs", "/help/faq"]] },
-  { title: "Support", links: [["Shipping", "/help/shipping"], ["Returns", "/help/returns"], ["Size guide", "/help/size-guide"], ["Contact", "/contact"]] },
-] as const;
-
-function SocialIcons() {
-  return (
-    <div className="retail-footer__socials" aria-label="Social media">
-      <a href="https://www.instagram.com/" target="_blank" rel="noreferrer" aria-label="Instagram">◎</a>
-      <a href="https://www.tiktok.com/" target="_blank" rel="noreferrer" aria-label="TikTok">♪</a>
-      <a href="https://www.youtube.com/" target="_blank" rel="noreferrer" aria-label="YouTube">▶</a>
-      <a href="https://x.com/" target="_blank" rel="noreferrer" aria-label="X">×</a>
-    </div>
-  );
-}
-
-function RetailFooter() {
-  return (
-    <footer className="retail-footer">
-      <div className="retail-footer__inner">
-        <div className="retail-footer__top">
-          <a className="retail-footer__brand" href="/" aria-label="PHENO home">
-            <img src="/images/pheno-desktop-logo-wide.avif" alt="PHENO" />
-            <span>Pursue the rise.</span>
-          </a>
-          {retailFooterGroups.map((group) => (
-            <div className="retail-footer__group" key={group.title}>
-              <h2>{group.title}</h2>
-              <ul>
-                {group.links.map(([label, href]) => <li key={`${group.title}-${label}`}><a href={href}>{label}</a></li>)}
-              </ul>
-            </div>
-          ))}
-          <SocialIcons />
-        </div>
-        <div className="retail-footer__bottom">
-          <span>© 2026 PHENO Sportswear. All rights reserved.</span>
-          <div>
-            <a href="/privacy">Privacy policy</a>
-            <a href="/privacy">Terms &amp; conditions</a>
-          </div>
-        </div>
-      </div>
-    </footer>
-  );
-}
-
 export function Homepage() {
   return (
     <div className="retail-home">
@@ -463,7 +416,7 @@ export function Homepage() {
           <ProductSpotlight />
           <SocialProof />
       </main>
-      <RetailFooter />
+      <SiteFooter />
     </div>
   );
 }
