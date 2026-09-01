@@ -1878,45 +1878,45 @@ img {
   position: fixed;
   inset: 0;
   z-index: 110;
-  display: grid;
-  padding: clamp(18px, 4vw, 54px);
-  place-items: center;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  background: oklch(15% 0.006 95 / 0.72);
 }
 
 .product-gallery__lightbox-backdrop {
-  position: absolute;
+  position: fixed;
   inset: 0;
   width: 100%;
   height: 100%;
   border: 0;
-  background: oklch(15% 0.006 95 / 0.72);
+  background: transparent;
   cursor: default;
 }
 
 .product-gallery__lightbox-dialog {
   position: relative;
   z-index: 1;
-  display: grid;
-  width: min(100%, 1200px);
-  height: min(100%, 900px);
-  padding: clamp(48px, 5vw, 74px) clamp(22px, 5vw, 74px) clamp(22px, 5vw, 54px);
+  display: block;
+  width: 100%;
+  min-height: 100%;
+  padding: clamp(68px, 7vw, 100px) 0 clamp(24px, 5vw, 72px);
   background: var(--paper);
-  box-shadow: 0 22px 70px oklch(9% 0.006 95 / 0.28);
-  place-items: center;
   animation: panel-in 180ms ease-out both;
 }
 
 .product-gallery__lightbox-dialog img {
   display: block;
   width: 100%;
-  height: 100%;
-  object-fit: contain;
+  max-width: none;
+  height: auto;
   mix-blend-mode: multiply;
 }
 
 .product-gallery__lightbox-close {
+  position: fixed;
   top: 18px;
   right: 18px;
+  z-index: 2;
   font-size: 25px;
   font-weight: 300;
   line-height: 1;
