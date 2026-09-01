@@ -2819,6 +2819,51 @@ img {
   gap: 27px;
 }
 
+.storefront-page--coaching .coaching-page > section {
+  border-bottom: 0;
+}
+
+.storefront-page--coaching .coaching-section,
+.storefront-page--coaching .coaching-audience,
+.storefront-page--coaching .coaching-process {
+  margin-inline: calc(50% - 50vw);
+  padding-inline: max(22px, calc((100vw - var(--site-width)) / 2));
+}
+
+.storefront-page--coaching .coaching-section {
+  background: #ffffff;
+}
+
+.storefront-page--coaching .coaching-audience {
+  background: #f1f2f0;
+}
+
+.storefront-page--coaching .coaching-process {
+  background: #070908;
+  color: var(--paper);
+}
+
+.storefront-page--coaching .coaching-process h2,
+.storefront-page--coaching .coaching-process h3 {
+  color: var(--paper);
+}
+
+.storefront-page--coaching .coaching-process .eyebrow {
+  color: var(--accent);
+}
+
+.storefront-page--coaching .coaching-process p {
+  color: rgb(255 255 255 / 0.7);
+}
+
+.storefront-page--coaching .coaching-process li {
+  border-color: rgb(255 255 255 / 0.2);
+}
+
+.storefront-page--coaching .coaching-process__visual {
+  border-color: rgb(255 255 255 / 0.2);
+}
+
 .coaching-process li {
   display: grid;
   grid-template-columns: 45px 1fr;
