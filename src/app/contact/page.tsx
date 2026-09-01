@@ -13,29 +13,38 @@ export default function ContactPage() {
   return (
     <StorefrontPage className="storefront-page--contact">
       <div className="contact-page">
-        <section className="contact-hero" aria-labelledby="contact-hero-title">
-          <img className="contact-hero__mark" src="/images/pheno-hero-mark.png" alt="" aria-hidden="true" />
-          <div className="contact-hero__inner">
-            <div className="contact-hero__copy">
-              <p className="contact-hero__eyebrow">PHENO SUPPORT</p>
-              <h1 id="contact-hero-title"><span>Here to</span><span>help.</span></h1>
-              <p>Questions about an order, a product, or the next step? We are here to help.</p>
-              <a className="contact-hero__cta" href="#contact-form">
-                <span>Send a message</span>
-                <span aria-hidden="true">↗</span>
-              </a>
+        <section className="contact-page__split" aria-labelledby="contact-title">
+          <div className="contact-page__panel">
+            <div className="contact-page__panel-inner">
+              <div className="contact-page__intro">
+                <p className="contact-page__eyebrow">GET IN TOUCH</p>
+                <h1 id="contact-title">Here to help.</h1>
+                <p>Questions about an order, a product, or the next step? We are here to help.</p>
+              </div>
+              <aside className="contact-page__aside" aria-label="Contact details">
+                <div className="contact-page__detail">
+                  <p className="contact-page__detail-label">Email</p>
+                  <a className="contact-page__email" href="mailto:info@phenosportswear.com">info@phenosportswear.com</a>
+                </div>
+                <div className="contact-page__detail">
+                  <p className="contact-page__detail-label">Response time</p>
+                  <p>We aim to reply within 24 hours on weekdays.</p>
+                </div>
+                <div className="contact-page__detail contact-page__detail--wide">
+                  <p className="contact-page__detail-label">Coaching enquiries</p>
+                  <p>Visit <a className="text-link" href="/train-with-yousef">Train With Yousef</a>.</p>
+                </div>
+              </aside>
+            </div>
+          </div>
+          <div id="contact-form" className="contact-page__form-pane">
+            <div className="contact-page__form-card">
+              <p className="contact-page__form-eyebrow">SEND A MESSAGE</p>
+              <h2>Tell us what you need.</h2>
+              <ContactForm />
             </div>
           </div>
         </section>
-        <div id="contact-form" className="contact-page__layout">
-          <aside className="contact-page__aside">
-            <p className="eyebrow">EMAIL</p>
-            <a className="contact-page__email" href="mailto:info@phenosportswear.com">info@phenosportswear.com</a>
-            <p>We aim to reply within 24 hours on weekdays.</p>
-            <p>For coaching enquiries, visit <a className="text-link" href="/train-with-yousef">Train With Yousef</a>.</p>
-          </aside>
-          <ContactForm />
-        </div>
       </div>
     </StorefrontPage>
   );
