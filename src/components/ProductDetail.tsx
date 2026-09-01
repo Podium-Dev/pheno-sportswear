@@ -160,22 +160,22 @@ function ProductEngineeredDetails({ details }: { details: NonNullable<Product["e
             ))}
           </ol>
         </div>
-        <ol className="engineered-details__list" aria-label="Engineered construction details">
-          {details.details.map((detail) => (
-            <li className="engineered-details__item" key={detail.number}>
-              <span className="engineered-details__number" aria-hidden="true">{detail.number}</span>
-              <div>
-                <h3>{detail.title}</h3>
-                <p>{detail.description}</p>
-              </div>
-            </li>
-          ))}
-        </ol>
-      </div>
-      <div className="engineered-details__actions">
-        <a className="button button--dark engineered-details__cta" href="#product-purchase">
-          Buy Now
-        </a>
+        <div className="engineered-details__content">
+          <ol className="engineered-details__list" aria-label="Engineered construction details">
+            {details.details.map((detail) => (
+              <li className="engineered-details__item" key={detail.number}>
+                <span className="engineered-details__number" aria-hidden="true">{detail.number}</span>
+                <div>
+                  <h3>{detail.title}</h3>
+                  <p>{detail.description}</p>
+                </div>
+              </li>
+            ))}
+          </ol>
+          <a className="button button--dark engineered-details__cta" href="#product-purchase">
+            Buy Now
+          </a>
+        </div>
       </div>
     </section>
   );
