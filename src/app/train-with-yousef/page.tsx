@@ -58,12 +58,17 @@ export default function TrainWithYousefPage() {
         </section>
 
         <section className="coaching-faq" aria-labelledby="coaching-faq-title">
-          <p className="eyebrow">QUESTIONS</p>
-          <h2 id="coaching-faq-title">Before you register.</h2>
-          <div className="coaching-faq__items">
-            <details><summary>Is this a full booking system?</summary><p>Not yet. This page collects interest while the final coaching formats, rules, and booking experience are confirmed.</p></details>
-            <details><summary>Do I need previous boxing experience?</summary><p>No. The coaching offer will support people at different starting points, with the right level confirmed before booking.</p></details>
-            <details><summary>Where will sessions take place?</summary><p>Location and availability details will be confirmed with the final coaching setup.</p></details>
+          <div className="coaching-faq__copy">
+            <p className="eyebrow">QUESTIONS</p>
+            <h2 id="coaching-faq-title">Before you register.</h2>
+            <div className="coaching-faq__items">
+              <details><summary>Is this a full booking system?</summary><p>Not yet. This page collects interest while the final coaching formats, rules, and booking experience are confirmed.</p></details>
+              <details><summary>Do I need previous boxing experience?</summary><p>No. The coaching offer will support people at different starting points, with the right level confirmed before booking.</p></details>
+              <details><summary>Where will sessions take place?</summary><p>Location and availability details will be confirmed with the final coaching setup.</p></details>
+            </div>
+          </div>
+          <div className="coaching-faq__visual">
+            <img src="/images/editorial-right.jpg" alt="Athletes training with barbells in a gym" />
           </div>
         </section>
 
