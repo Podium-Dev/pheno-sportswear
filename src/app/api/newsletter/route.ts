@@ -3,6 +3,7 @@ import { formNotConfiguredMessage, sendEmail } from "@/lib/email";
 
 export async function POST(request: Request) {
   const body = (await request.json()) as Record<string, unknown>;
+  const firstName = String(body.firstName || "").trim();
   const email = String(body.email || "").trim();
 
   if (!email.includes("@")) {
@@ -15,7 +16,7 @@ export async function POST(request: Request) {
   const result = await sendEmail({
     to: process.env.NEWSLETTER_TO_EMAIL || undefined,
     subject: "New PHENO newsletter interest",
-    text: `Newsletter signup: ${email}`,
+    text: `Newsletter signup${firstName ? ` from ${firstName}` : ""}: ${email}`,
     replyTo: email,
   });
 

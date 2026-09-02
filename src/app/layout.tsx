@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { CommerceProvider } from "@/components/CommerceProvider";
+import { EarlyAccessModal } from "@/components/EarlyAccessModal";
 import { ParallaxEffects } from "@/components/ParallaxEffects";
 import "./styles.css";
 
@@ -30,6 +31,7 @@ export default function RootLayout({
         <CommerceProvider>
           <ParallaxEffects />
           {children}
+          <EarlyAccessModal />
         </CommerceProvider>
       </body>
     </html>

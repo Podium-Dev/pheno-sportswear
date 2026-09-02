@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { CoachingCommunity } from "@/components/CoachingCommunity";
 import { InterestForm } from "@/components/Forms";
 import { StorefrontPage } from "@/components/StorefrontPage";
 
@@ -26,6 +27,8 @@ export default function TrainWithYousefPage() {
             <span>FINAL COACHING PHOTOGRAPH TO BE PROVIDED</span>
           </div>
         </section>
+
+        <CoachingCommunity />
 
         <section className="coaching-section" aria-labelledby="coaching-intro-title">
           <div>
