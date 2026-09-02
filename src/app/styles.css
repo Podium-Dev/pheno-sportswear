@@ -8636,7 +8636,7 @@ h6 {
 .shop-performance-card {
   position: relative;
   display: grid;
-  grid-template-rows: minmax(0, 1fr) 30%;
+  grid-template-rows: 64% 36%;
   aspect-ratio: 0.78;
   overflow: hidden;
   border: 6px solid var(--paper);
@@ -8673,6 +8673,7 @@ h6 {
 
 .shop-performance-card__media {
   position: relative;
+  grid-row: 1;
   min-height: 0;
   overflow: hidden;
 }
@@ -8710,12 +8711,14 @@ h6 {
 
 .shop-performance-card__copy {
   position: relative;
+  grid-row: 2;
   min-height: 0;
   z-index: 2;
   display: grid;
-  align-content: end;
-  gap: 6px;
-  padding: 0 13px 13px;
+  align-content: start;
+  gap: 4px;
+  padding: 9px 13px 12px;
+  background: var(--paper);
 }
 
 .shop-performance-card__copy > span {
