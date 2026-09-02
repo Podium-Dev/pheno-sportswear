@@ -9001,7 +9001,7 @@ h2 {
   border-radius: 50%;
   object-fit: cover;
   mix-blend-mode: multiply;
-  transform: scale(1.08);
+  transform: var(--_feature-icon-transform, scale(1.08));
 }
 
 .product-feature-strip__item figcaption {
