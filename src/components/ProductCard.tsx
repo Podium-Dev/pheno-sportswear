@@ -142,7 +142,10 @@ export function ProductCard({
             aria-expanded={quickAddOpen}
             onClick={() => setQuickAddOpen((open) => !open)}
           >
-            {quickAddOpen ? "Close" : "Quick add"}
+            <span>{quickAddOpen ? "Close" : "Quick add"}</span>
+            <span className="quick-add-trigger__icon" aria-hidden="true">
+              {quickAddOpen ? "−" : "+"}
+            </span>
           </button>
         ) : null}
         {quickAddOpen ? <QuickAddPanel product={product} onAdded={() => setQuickAddOpen(false)} /> : null}

@@ -26,7 +26,9 @@ export function CollectionPage({ collection }: { collection: string }) {
   const isSets = collection === "sets";
 
   return (
-    <StorefrontPage className="storefront-page--catalogue">
+    <StorefrontPage
+      className={`storefront-page--catalogue${collection === "all" ? " storefront-page--catalogue-all" : ""}`}
+    >
       {collection === "all" ? <ShopPerformanceBanner /> : null}
       <div className="catalogue-page">
         <Breadcrumbs current={label} />
