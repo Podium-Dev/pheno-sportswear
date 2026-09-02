@@ -2055,6 +2055,10 @@ img {
   color: var(--accent);
 }
 
+.product-size-chart-trigger {
+  text-align: left;
+}
+
 .product-purchase__actions {
   display: grid;
   grid-template-columns: 116px 1fr;

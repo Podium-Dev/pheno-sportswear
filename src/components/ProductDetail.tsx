@@ -318,8 +318,8 @@ export function ProductDetail({ product }: { product: Product }) {
                   );
                 })}
               </div>
-              <button className="text-button" type="button" onClick={() => setSizeGuideOpen(true)}>
-                Size guide
+              <button className="text-button product-size-chart-trigger" type="button" onClick={() => setSizeGuideOpen(true)}>
+                Check the size chart
               </button>
             </fieldset>
           </div>
@@ -403,7 +403,7 @@ export function ProductDetail({ product }: { product: Product }) {
         </section>
       ) : null}
 
-      <SizeGuideModal open={sizeGuideOpen} onClose={() => setSizeGuideOpen(false)} />
+      <SizeGuideModal open={sizeGuideOpen} onClose={() => setSizeGuideOpen(false)} category={product.category} />
     </>
   );
 }
