@@ -9590,3 +9590,76 @@ h2 {
     min-height: 137px;
   }
 }
+
+
+/* Product template: keep the dark feature band and yellow action language from the reference. */
+.storefront-page--product {
+  --product-accent: #ffcb58;
+  --product-dark: #070908;
+}
+
+.storefront-page--product .product-page .eyebrow,
+.storefront-page--product .engineered-details__title-accent {
+  color: var(--product-accent);
+}
+
+.storefront-page--product .product-feature-strip {
+  border-block-color: rgb(255 255 255 / 0.18);
+  background: var(--product-dark);
+  color: #ffffff;
+}
+
+.storefront-page--product .product-feature-strip__item {
+  border-right-color: rgb(255 255 255 / 0.18);
+}
+
+.storefront-page--product .product-feature-strip__image {
+  border: 1px solid rgb(255 203 88 / 0.42);
+  background: var(--product-dark);
+}
+
+.storefront-page--product .product-feature-strip__image img {
+  filter: invert(1) sepia(0.58) saturate(7) hue-rotate(334deg) brightness(1.04) contrast(1.05);
+  mix-blend-mode: screen;
+}
+
+.storefront-page--product .product-feature-strip__item strong {
+  color: #ffffff;
+}
+
+.storefront-page--product .product-feature-strip__item figcaption span {
+  color: rgb(255 255 255 / 0.68);
+}
+
+.storefront-page--product .engineered-details__marker,
+.storefront-page--product .engineered-details__number {
+  background: var(--product-accent);
+  color: var(--product-dark);
+}
+
+.storefront-page--product .engineered-details__marker::after {
+  border-top-color: rgb(7 9 8 / 0.42);
+}
+
+.storefront-page--product .engineered-details__marker::before {
+  background: var(--product-dark);
+}
+
+.storefront-page--product .product-page .button--dark {
+  border-color: var(--product-accent) !important;
+  background: var(--product-accent);
+  color: var(--product-dark);
+}
+
+.storefront-page--product .product-page .button--dark:hover,
+.storefront-page--product .product-page .button--dark:focus-visible {
+  border-color: #e9b44a !important;
+  background: #e9b44a;
+  color: var(--product-dark);
+}
+
+.storefront-page--product .product-page .option-chip--selected {
+  border-color: var(--product-accent);
+  background: var(--product-accent);
+  color: var(--product-dark);
+}

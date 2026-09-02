@@ -137,9 +137,14 @@ function ProductGallery({ product, colour }: { product: Product; colour: Colour 
 }
 
 function ProductEngineeredDetails({ details }: { details: NonNullable<Product["engineeredDetails"]> }) {
+  const [titleLead, ...titleRest] = details.title.split(" ");
+
   return (
     <section className="engineered-details" aria-labelledby="engineered-details-title">
-      <h2 id="engineered-details-title">{details.title}</h2>
+      <h2 id="engineered-details-title">
+        <span className="engineered-details__title-accent">{titleLead}</span>
+        {titleRest.length ? ` ${titleRest.join(" ")}` : null}
+      </h2>
       <div className="engineered-details__layout">
         <div className="engineered-details__visual">
           <img src={details.image} alt={details.imageAlt} loading="lazy" decoding="async" />
