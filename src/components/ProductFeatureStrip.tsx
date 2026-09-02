@@ -1,3 +1,4 @@
+import type { CSSProperties } from "react";
 import type { ProductFeature } from "@/data/products";
 
 export function ProductFeatureStrip({ features }: { features: ProductFeature[] }) {
@@ -5,7 +6,11 @@ export function ProductFeatureStrip({ features }: { features: ProductFeature[] }
 
   return (
     <section className="product-feature-strip" aria-label="Product performance features">
-      <ul className="product-feature-strip__list" role="list">
+      <ul
+        className="product-feature-strip__list"
+        role="list"
+        style={{ "--_feature-count": features.length } as CSSProperties}
+      >
         {features.map((feature) => (
           <li className="product-feature-strip__item" key={feature.id}>
             <figure>

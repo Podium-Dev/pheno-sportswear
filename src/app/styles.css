@@ -8952,9 +8952,9 @@ h2 {
 }
 
 .product-feature-strip__list {
-  display: flex;
+  display: grid;
   width: 100%;
-  flex-wrap: wrap;
+  grid-template-columns: repeat(var(--_feature-count), minmax(0, 1fr));
   margin: 0;
   padding: 0;
   list-style: none;
@@ -8962,8 +8962,7 @@ h2 {
 
 .product-feature-strip__item {
   display: flex;
-  min-width: 145px;
-  flex: 1 1 145px;
+  min-width: 0;
   align-items: flex-start;
   justify-content: center;
   padding: 0 18px;
@@ -8976,16 +8975,19 @@ h2 {
 }
 
 .product-feature-strip__item figure {
-  display: grid;
+  display: flex;
   width: 100%;
   max-width: 190px;
-  justify-items: center;
+  min-height: 13.3rem;
+  flex-direction: column;
+  align-items: center;
   gap: 17px;
   margin: 0;
 }
 
 .product-feature-strip__image {
-  width: clamp(104px, 10vw, 136px);
+  display: grid;
+  width: clamp(7rem, 9.5vw, 8.5rem);
   aspect-ratio: 1;
   overflow: hidden;
   border-radius: 50%;
@@ -8996,14 +8998,18 @@ h2 {
   display: block;
   width: 100%;
   height: 100%;
+  border-radius: 50%;
   object-fit: cover;
   mix-blend-mode: multiply;
+  transform: scale(1.08);
 }
 
 .product-feature-strip__item figcaption {
-  display: grid;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   gap: 7px;
-  justify-items: center;
+  text-align: center;
 }
 
 .product-feature-strip__item strong {
@@ -9022,14 +9028,9 @@ h2 {
   line-height: 1.35;
 }
 
-@media (max-width: 720px) {
-  .product-feature-strip {
-    margin-top: -43px;
-    margin-bottom: 50px;
-    padding: 28px 0 30px;
-  }
-
+@media (max-width: 1080px) {
   .product-feature-strip__list {
+    display: flex;
     flex-wrap: nowrap;
     overflow-x: auto;
     padding: 0 18px 4px;
@@ -9058,6 +9059,14 @@ h2 {
 
   .product-feature-strip__image {
     width: 112px;
+  }
+}
+
+@media (max-width: 720px) {
+  .product-feature-strip {
+    margin-top: -43px;
+    margin-bottom: 50px;
+    padding: 28px 0 30px;
   }
 }
 
