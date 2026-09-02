@@ -8983,7 +8983,7 @@ h2 {
   display: block;
   width: 100%;
   height: 100%;
-  border-radius: 50%;
+  border-radius: 0;
   object-fit: cover;
   mix-blend-mode: multiply;
   transform: var(--_feature-icon-transform, scale(1.08));
