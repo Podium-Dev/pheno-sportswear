@@ -2,14 +2,62 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { FaqAccordions, SizeGuideContent } from "@/components/InfoBlocks";
 import { Breadcrumbs, EditorialPageIntro, StorefrontPage } from "@/components/StorefrontPage";
-import { shippingConfig } from "@/data/site";
 
 const topics = {
   faq: { title: "FAQ", eyebrow: "PHENO HELP", description: "Useful answers about orders, sizing, products, and contact." },
   "size-guide": { title: "Size Guide", eyebrow: "PHENO FIT", description: "Use the current measurement guide to choose your PHENO size." },
-  shipping: { title: "Shipping", eyebrow: "PHENO DELIVERY", description: "Current shipping information, with international rules kept ready to update." },
+  shipping: { title: "Shipping & Delivery", eyebrow: "PHENO DELIVERY", description: "Read the PHENO shipping and delivery policy, including delivery times, rates, and tracking." },
   returns: { title: "Refunds & Returns", eyebrow: "PHENO SUPPORT", description: "Read the PHENO returns and refund policy, including eligibility, exchanges, and defective items." },
 } as const;
+
+const shippingDeliverySections = [
+  {
+    title: "United Kingdom",
+    paragraphs: [],
+    items: [
+      "Shipping Method: Royal Mail Tracked 48",
+      "Standard Delivery: £4.95 (Free on orders over £75)",
+      "Delivery Time: 2–3 working days",
+      "Dispatch Time: Within 1 working day (excluding weekends)",
+      "Tracking: Provided via email upon dispatch",
+    ],
+  },
+  {
+    title: "International Shipping",
+    paragraphs: ["We currently ship to:"],
+    items: [
+      "Europe (Selected EU countries - free delivery on orders over £85)",
+      "North America (USA, Canada)",
+      "Middle East (UAE, Lebanon, Qatar)",
+      "Australia & New Zealand",
+    ],
+  },
+  {
+    title: "International Rates",
+    paragraphs: [
+      "Europe | £11.95 | 2–11 working days (free on orders over £85)",
+      "USA & Canada | £15.99 | 6–10 working days",
+      "Middle East | £15.99 | 6–10 working days",
+      "Australia/NZ | £15.99 | 7–12 working days",
+      "*Note: Customs duties or local taxes (if applicable) are the responsibility of the customer.*",
+    ],
+    items: [],
+  },
+  {
+    title: "Dispatch & Processing",
+    paragraphs: [],
+    items: [
+      "Orders are dispatched within 1 working day (excluding weekends)",
+      "Tracking details are sent via email once dispatched",
+      "Weekend/holiday orders ship the next working day",
+    ],
+  },
+  {
+    title: "Undelivered Parcels",
+    paragraphs: ["If your order is returned due to an incorrect address or failed delivery:"],
+    items: ["We will contact you to arrange redelivery (a re-shipping fee may apply)"],
+  },
+] as const;
 
 const refundsReturnsSections = [
   {
@@ -80,20 +128,36 @@ export default async function HelpPage({ params }: { params: Promise<{ topic: st
   const detail = topics[topic as keyof typeof topics];
   if (!detail) notFound();
 
+  const isPolicyPage = topic === "returns" || topic === "shipping";
+  const policyPageClass = topic === "returns" ? "storefront-page--help-returns" : topic === "shipping" ? "storefront-page--help-shipping" : "";
+
   return (
-    <StorefrontPage className={`storefront-page--help ${topic === "returns" ? "storefront-page--help-returns" : ""}`}>
+    <StorefrontPage className={`storefront-page--help ${policyPageClass}`}>
       <div className="help-page">
         <Breadcrumbs current={detail.title} />
-        <EditorialPageIntro eyebrow={detail.eyebrow} title={detail.title}>{topic === "returns" ? null : detail.description}</EditorialPageIntro>
+        <EditorialPageIntro eyebrow={detail.eyebrow} title={detail.title}>{isPolicyPage ? null : detail.description}</EditorialPageIntro>
         {topic === "faq" ? <FaqAccordions /> : null}
         {topic === "size-guide" ? <SizeGuideContent /> : null}
         {topic === "shipping" ? (
-          <div className="help-content">
-            <h2>Current delivery information</h2>
-            <p>{shippingConfig.uk}</p>
-            <h2>Europe and international</h2>
-            <p>{shippingConfig.international}</p>
-            <p>For an existing order, email <a className="text-link" href="mailto:info@phenosportswear.com">info@phenosportswear.com</a>.</p>
+          <div className="help-content help-content--policy">
+            <p className="help-policy__label">PHENO SHIPPING &amp; DELIVERY POLICY</p>
+            <p className="help-policy__lead">We offer fast, tracked delivery to customers across the UK, Ireland, and selected international regions. Below you’ll find information about shipping methods, estimated delivery times, and rates.</p>
+            {shippingDeliverySections.map((section) => (
+              <section className="help-policy__section" key={section.title}>
+                <h2>{section.title}</h2>
+                {section.paragraphs.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
+                {section.items.length ? (
+                  <ul className="help-policy__list">
+                    {section.items.map((item) => <li key={item}>{item}</li>)}
+                  </ul>
+                ) : null}
+              </section>
+            ))}
+            <section className="help-policy__section">
+              <h2>Questions</h2>
+              <p>For delivery support or order tracking, please contact:</p>
+              <p><a className="text-link" href="mailto:info@phenosportswear.com">info@phenosportswear.com</a></p>
+            </section>
           </div>
         ) : null}
         {topic === "returns" ? (

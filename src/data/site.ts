@@ -1,9 +1,9 @@
 import type { ProductCategory } from "@/data/products";
 
 export const shippingConfig = {
-  uk: "Free UK shipping on orders over £75. Orders are aimed to ship within 1 working day.",
+  uk: "Royal Mail Tracked 48 costs £4.95, with free UK delivery on orders over £75. Delivery takes 2–3 working days after dispatch, and orders are dispatched within 1 working day excluding weekends.",
   international:
-    "European and international delivery rules are being confirmed. We will publish the final destinations, charges, and timings here before launch.",
+    "We currently ship to selected EU countries, North America, the Middle East, Australia, and New Zealand. Rates and delivery windows vary by region; see Shipping & Delivery for the full policy.",
   returns:
     "Returns information will be confirmed with the final PHENO commerce setup. Contact info@phenosportswear.com if you need help with an existing order.",
 };

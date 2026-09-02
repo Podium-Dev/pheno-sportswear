@@ -22,7 +22,7 @@ const footerGroups = [
   {
     title: "Support",
     links: [
-      ["Shipping", "/help/shipping"],
+      ["Shipping & Delivery", "/help/shipping"],
       ["Refunds & Returns", "/help/returns"],
       ["Size guide", "/help/size-guide"],
       ["Contact", "/contact"],

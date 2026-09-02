@@ -3717,6 +3717,10 @@ img {
   margin: 0;
 }
 
+.help-policy__lead {
+  max-width: 95ch;
+}
+
 .help-policy__list {
   display: grid;
   gap: 9px;
@@ -3736,7 +3740,8 @@ img {
   content: "- ";
 }
 
-.storefront-page--help-returns .page-intro h1 {
+.storefront-page--help-returns .page-intro h1,
+.storefront-page--help-shipping .page-intro h1 {
   text-transform: none;
 }
 
