@@ -9575,6 +9575,8 @@ h2 {
   flex-direction: column;
   gap: 0;
   padding: 13px 12px 11px;
+  background: #070908;
+  color: #f8f8f5;
 }
 
 .storefront-page--catalogue .catalogue-grid .product-card__text-link {
@@ -9584,7 +9586,7 @@ h2 {
 }
 
 .storefront-page--catalogue .catalogue-grid .product-card__name {
-  color: #070908;
+  color: #f8f8f5;
   font-size: 12px;
   font-weight: 700;
   line-height: 1.25;
@@ -9592,7 +9594,7 @@ h2 {
 
 .storefront-page--catalogue .catalogue-grid .product-card__price,
 .storefront-page--catalogue .catalogue-grid .product-card__colours {
-  color: #777b76;
+  color: #b7bbb4;
   font-size: 10px;
   line-height: 1.2;
 }
@@ -9600,7 +9602,7 @@ h2 {
 .storefront-page--catalogue .catalogue-grid .product-card__status {
   margin-top: 7px;
   padding: 0;
-  color: #777b76;
+  color: #b7bbb4;
   font-size: 9px;
   line-height: 1.2;
 }
