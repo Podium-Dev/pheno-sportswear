@@ -65,7 +65,7 @@ export function SizeGuideModal({
   const productChart = category ? productSizeCharts[category] : undefined;
 
   return (
-    <div className="overlay-layer" role="presentation">
+    <div className="overlay-layer overlay-layer--centered" role="presentation">
       <button className="overlay-layer__backdrop" type="button" aria-label="Close size guide" onClick={onClose} />
       <section className="size-guide-modal" role="dialog" aria-modal="true" aria-labelledby="size-guide-title">
         <header className="overlay-panel__header">

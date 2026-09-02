@@ -2338,6 +2338,10 @@ img {
   justify-content: flex-end;
 }
 
+.overlay-layer--centered {
+  justify-content: center;
+}
+
 .overlay-layer__backdrop {
   position: absolute;
   inset: 0;
