@@ -8635,12 +8635,13 @@ h6 {
 
 .shop-performance-card {
   position: relative;
-  display: block;
+  display: grid;
+  grid-template-rows: minmax(0, 1fr) 30%;
   aspect-ratio: 0.78;
   overflow: hidden;
   border: 6px solid var(--paper);
   background: var(--paper);
-  color: var(--paper);
+  color: var(--ink);
   box-shadow: 0 16px 24px oklch(0% 0 0 / 0.22);
   isolation: isolate;
   transition: transform 240ms ease-out, box-shadow 240ms ease-out;
@@ -8670,10 +8671,10 @@ h6 {
   outline-offset: 5px;
 }
 
-.shop-performance-card__media,
-.shop-performance-card__shade {
-  position: absolute;
-  inset: 0;
+.shop-performance-card__media {
+  position: relative;
+  min-height: 0;
+  overflow: hidden;
 }
 
 .shop-performance-card__media {
@@ -8696,11 +8697,6 @@ h6 {
   transform: scale(1.045);
 }
 
-.shop-performance-card__shade {
-  z-index: 1;
-  background: linear-gradient(180deg, transparent 39%, oklch(8% 0.006 95 / 0.08) 48%, oklch(8% 0.006 95 / 0.88) 100%);
-}
-
 .shop-performance-card__number {
   position: absolute;
   top: 13px;
@@ -8713,13 +8709,13 @@ h6 {
 }
 
 .shop-performance-card__copy {
-  position: absolute;
-  right: 13px;
-  bottom: 13px;
-  left: 13px;
+  position: relative;
+  min-height: 0;
   z-index: 2;
   display: grid;
+  align-content: end;
   gap: 6px;
+  padding: 0 13px 13px;
 }
 
 .shop-performance-card__copy > span {
@@ -8741,7 +8737,7 @@ h6 {
 
 .shop-performance-card__copy small {
   max-width: 24ch;
-  color: oklch(89% 0.003 95);
+  color: var(--muted);
   font-size: 9px;
   line-height: 1.32;
 }

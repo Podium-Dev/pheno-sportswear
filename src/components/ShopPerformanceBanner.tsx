@@ -3,9 +3,8 @@ const performanceFeatures = [
     number: "01",
     title: "Breathable ventilation",
     description: "Targeted mesh panels keep air moving through demanding sessions.",
-    image: "/images/shop-performance/breathable-ventilation.png",
-    alt: "Perforated PHENO performance fabric for breathable ventilation",
-    objectPosition: "52% 48%",
+    image: "/images/type-1-shorts.jpg",
+    alt: "PHENO Type 1 Shorts",
     href: "/product/pheno-type-1-shorts",
     product: "Type 1 Shorts",
   },
@@ -13,9 +12,8 @@ const performanceFeatures = [
     number: "02",
     title: "Quick-dry",
     description: "A lightweight performance knit helps moisture move away from the skin.",
-    image: "/images/shop-performance/quick-dry.png",
-    alt: "PHENO quick-dry performance knit texture",
-    objectPosition: "50% 48%",
+    image: "/images/type-1-tshirt.jpg",
+    alt: "PHENO Type 1 T-Shirt",
     href: "/product/pheno-type-1-t-shirt",
     product: "Type 1 T-Shirt",
   },
@@ -23,9 +21,8 @@ const performanceFeatures = [
     number: "03",
     title: "Cooling zones",
     description: "Breathable side panels release heat when the intensity rises.",
-    image: "/images/shop-performance/cooling-zones.png",
-    alt: "Perforated PHENO fabric panel for cooling zones",
-    objectPosition: "50% 45%",
+    image: "/images/type-1-tank-black.jpg",
+    alt: "PHENO Type 1 Tank",
     href: "/product/pheno-type-1-tank",
     product: "Type 1 Tank",
   },
@@ -56,10 +53,8 @@ export function ShopPerformanceBanner() {
                 <img
                   src={feature.image}
                   alt={feature.alt}
-                  style={{ objectPosition: feature.objectPosition }}
                 />
               </span>
-              <span className="shop-performance-card__shade" aria-hidden="true" />
               <span className="shop-performance-card__number">{feature.number}</span>
               <span className="shop-performance-card__copy">
                 <span>{feature.product}</span>
