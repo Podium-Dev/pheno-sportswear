@@ -15,7 +15,7 @@ const campaignLooks = [
   },
   {
     id: "look-3",
-    src: "/images/pheno-campaign/look-3.png",
+    src: "/images/pheno-campaign/look-3-studio.png",
     alt: "PHENO athlete wearing the white Type 1 t-shirt and black joggers",
     objectPosition: "50% 23%",
   },
