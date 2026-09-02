@@ -6749,51 +6749,6 @@ h6 {
   color: var(--retail-ink);
 }
 
-.pheno-campaign__marquee {
-  display: flex;
-  min-height: 54px;
-  align-items: center;
-  overflow: hidden;
-  border-bottom: 1px solid var(--retail-line);
-  background: var(--retail-white);
-}
-
-.pheno-campaign__marquee-track {
-  display: flex;
-  width: max-content;
-  flex: 0 0 auto;
-  align-items: center;
-  gap: clamp(28px, 4vw, 62px);
-  padding-inline: 18px;
-  animation: pheno-campaign-marquee 30s linear infinite;
-}
-
-.pheno-campaign__marquee-track span {
-  color: var(--retail-ink);
-  font-size: clamp(11px, 1vw, 14px);
-  font-weight: 700;
-  letter-spacing: 0.115em;
-  line-height: 1;
-  text-transform: uppercase;
-  white-space: nowrap;
-}
-
-@keyframes pheno-campaign-marquee {
-  from {
-    transform: translateX(0);
-  }
-
-  to {
-    transform: translateX(-50%);
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .pheno-campaign__marquee-track {
-    animation: none;
-  }
-}
-
 .pheno-campaign__stage {
   position: relative;
   width: 100%;
@@ -6822,36 +6777,6 @@ h6 {
   display: block;
   object-fit: cover;
   object-position: center top;
-}
-
-.pheno-campaign__logo-panel {
-  position: absolute;
-  top: -24px;
-  left: 50%;
-  z-index: 4;
-  display: grid;
-  width: clamp(208px, 21vw, 286px);
-  justify-items: center;
-  gap: 10px;
-  padding: 24px 28px 20px;
-  background: var(--retail-white);
-  transform: translateX(-50%);
-}
-
-.pheno-campaign__logo-panel img {
-  display: block;
-  width: 100%;
-  height: auto;
-}
-
-.pheno-campaign__logo-panel span {
-  color: var(--retail-muted);
-  font-size: 8px;
-  font-weight: 700;
-  letter-spacing: 0.16em;
-  line-height: 1;
-  text-transform: uppercase;
-  white-space: nowrap;
 }
 
 .pheno-campaign__torn-edge {
@@ -8061,10 +7986,6 @@ h6 {
 }
 
 @media (max-width: 860px) and (min-width: 721px) {
-  .pheno-campaign__stage {
-    padding-top: 88px;
-  }
-
   .pheno-campaign__columns {
     height: auto;
     grid-template-columns: 1fr;
@@ -8076,10 +7997,6 @@ h6 {
     aspect-ratio: 4 / 5;
   }
 
-  .pheno-campaign__logo-panel {
-    top: 15px;
-    width: clamp(220px, 31vw, 286px);
-  }
 }
 
 @media (max-width: 720px) {
@@ -8114,22 +8031,8 @@ h6 {
     display: inline-flex;
   }
 
-  .pheno-campaign__marquee {
-    min-height: 43px;
-  }
-
-  .pheno-campaign__marquee-track {
-    gap: 28px;
-    animation-duration: 25s;
-  }
-
-  .pheno-campaign__marquee-track span {
-    font-size: 10px;
-  }
-
   .pheno-campaign__stage {
     width: 100%;
-    padding-top: 88px;
   }
 
   .pheno-campaign__columns {
@@ -8141,17 +8044,6 @@ h6 {
   .pheno-campaign__look {
     height: auto;
     aspect-ratio: 4 / 5;
-  }
-
-  .pheno-campaign__logo-panel {
-    top: 15px;
-    width: min(68vw, 250px);
-    gap: 8px;
-    padding: 20px 22px 17px;
-  }
-
-  .pheno-campaign__logo-panel span {
-    font-size: 7px;
   }
 
   .pheno-campaign__torn-edge {

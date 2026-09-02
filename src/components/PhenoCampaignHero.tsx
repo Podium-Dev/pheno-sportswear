@@ -21,22 +21,9 @@ const campaignLooks = [
   },
 ] as const;
 
-const marqueeItems = Array.from({ length: 6 }, (_, index) => ({
-  id: `marquee-${index}`,
-  label: "Pursue the rise",
-}));
-
 export function PhenoCampaignHero() {
   return (
     <section className="pheno-campaign" aria-labelledby="pheno-campaign-title">
-      <div className="pheno-campaign__marquee" aria-hidden="true">
-        <div className="pheno-campaign__marquee-track">
-          {[...marqueeItems, ...marqueeItems].map((item, index) => (
-            <span key={`${item.id}-${index}`}>{item.label}</span>
-          ))}
-        </div>
-      </div>
-
       <div className="pheno-campaign__stage">
         <div className="pheno-campaign__columns">
           {campaignLooks.map((look, index) => (
@@ -51,16 +38,6 @@ export function PhenoCampaignHero() {
               />
             </figure>
           ))}
-        </div>
-
-        <div className="pheno-campaign__logo-panel">
-          <Image
-            src="/images/pheno-desktop-logo-wide.avif"
-            alt="PHENO Sportswear"
-            width={559}
-            height={62}
-          />
-          <span>Performance apparel</span>
         </div>
 
         <span className="pheno-campaign__torn-edge" aria-hidden="true" />
