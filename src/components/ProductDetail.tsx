@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState, type CSSProperties } from "react";
+import { useEffect, useMemo, useRef, useState, type CSSProperties } from "react";
 import {
   getProductImage,
   getVariant,
@@ -186,6 +186,55 @@ function ProductEngineeredDetails({ details }: { details: NonNullable<Product["e
   );
 }
 
+function ProductRecommendations({ products: recommendedProducts }: { products: Product[] }) {
+  const railRef = useRef<HTMLDivElement>(null);
+
+  const scrollProducts = (direction: -1 | 1) => {
+    const rail = railRef.current;
+    if (!rail) return;
+
+    const card = rail.querySelector<HTMLElement>(".product-card");
+    const gap = Number.parseFloat(window.getComputedStyle(rail).columnGap) || 0;
+    const distance = (card?.getBoundingClientRect().width ?? rail.clientWidth * 0.8) + gap;
+
+    rail.scrollBy({ left: direction * distance, behavior: "smooth" });
+  };
+
+  return (
+    <div className="complete-look__rail">
+      <button
+        className="complete-look__control complete-look__control--previous"
+        type="button"
+        aria-label="Previous recommended products"
+        aria-controls="complete-look-products"
+        onClick={() => scrollProducts(-1)}
+      >
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="m14.5 5-7 7 7 7" />
+        </svg>
+      </button>
+      <div
+        className="product-grid product-grid--recommendations"
+        id="complete-look-products"
+        ref={railRef}
+      >
+        {recommendedProducts.map((item) => <ProductCard key={item.slug} product={item} compact />)}
+      </div>
+      <button
+        className="complete-look__control complete-look__control--next"
+        type="button"
+        aria-label="Next recommended products"
+        aria-controls="complete-look-products"
+        onClick={() => scrollProducts(1)}
+      >
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="m9.5 5 7 7-7 7" />
+        </svg>
+      </button>
+    </div>
+  );
+}
+
 export function ProductDetail({ product }: { product: Product }) {
   const { addToCart, isWishlisted, toggleWishlist } = useCommerce();
   const colour: Colour = product.colours[0] ?? "Black";
@@ -350,9 +399,7 @@ export function ProductDetail({ product }: { product: Product }) {
             </div>
             <a className="text-link" href="/shop/type-1">View Type 1</a>
           </div>
-          <div className="product-grid product-grid--recommendations">
-            {completeTheLook.map((item) => <ProductCard key={item.slug} product={item} compact />)}
-          </div>
+          <ProductRecommendations products={completeTheLook} />
         </section>
       ) : null}
 

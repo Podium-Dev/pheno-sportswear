@@ -37,6 +37,15 @@ function CartIcon() {
   );
 }
 
+function AccountIcon() {
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+      <circle cx="12" cy="8" r="3.25" />
+      <path d="M5 20c.8-3.4 3.2-5.2 7-5.2s6.2 1.8 7 5.2" />
+    </svg>
+  );
+}
+
 export function SiteHeader() {
   const { cartCount, setCartOpen, setSearchOpen } = useCommerce();
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -76,6 +85,9 @@ export function SiteHeader() {
         </nav>
 
         <div className="retail-navigation__tools" aria-label="Utility navigation">
+          <a className="retail-navigation__account" href="/account" aria-label="Account">
+            <AccountIcon />
+          </a>
           <button type="button" aria-label="Search" onClick={openSearch}>
             <SearchIcon />
             <span>Search</span>
@@ -97,6 +109,7 @@ export function SiteHeader() {
           {retailNavLinks.map(([label, href]) => (
             <a href={href} key={href} onClick={() => setMobileOpen(false)}>{label}</a>
           ))}
+          <a href="/account" onClick={() => setMobileOpen(false)}>Account</a>
           <button type="button" onClick={openSearch}>Search</button>
           <button type="button" onClick={openCart}>My cart ({cartCount})</button>
         </nav>
