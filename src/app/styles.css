@@ -2275,6 +2275,10 @@ img {
   left: 0;
 }
 
+.complete-look__control--next {
+  right: 0;
+}
+
 .complete-look__control svg {
   width: 17px;
   height: 17px;
@@ -2295,6 +2299,11 @@ img {
 .complete-look__control--previous:hover,
 .complete-look__control--previous:focus-visible {
   transform: translateX(-2px);
+}
+
+.complete-look__control--next:hover,
+.complete-look__control--next:focus-visible {
+  transform: translateX(2px);
 }
 
 .product-grid--recommendations {
@@ -4120,6 +4129,10 @@ img {
 
   .complete-look__control--previous {
     left: 8px;
+  }
+
+  .complete-look__control--next {
+    right: 8px;
   }
 
   .notify-form__row,
