@@ -40,24 +40,24 @@ export function PhenoCampaignHero() {
           ))}
         </div>
 
-        <span className="pheno-campaign__torn-edge" aria-hidden="true" />
-      </div>
+        <div className="pheno-campaign__copy">
+          <Image
+            className="pheno-campaign__copy-mark"
+            src="/images/pheno-logo.png"
+            alt="PHENO"
+            width={160}
+            height={18}
+          />
+          <h1 id="pheno-campaign-title">PHENO SPORTSWEAR</h1>
+          <p className="pheno-campaign__collection">TYPE 1 COLLECTION</p>
+          <p className="pheno-campaign__tagline">ENGINEERED FOR PERFORMANCE. DESIGNED TO RISE.</p>
+          <a className="pheno-campaign__cta" href="/shop/type-1">
+            <span>Shop Type 1</span>
+            <span aria-hidden="true">↗</span>
+          </a>
+        </div>
 
-      <div className="pheno-campaign__copy">
-        <Image
-          className="pheno-campaign__copy-mark"
-          src="/images/pheno-logo.png"
-          alt="PHENO"
-          width={160}
-          height={18}
-        />
-        <h1 id="pheno-campaign-title">PHENO SPORTSWEAR</h1>
-        <p className="pheno-campaign__collection">TYPE 1 COLLECTION</p>
-        <p className="pheno-campaign__tagline">ENGINEERED FOR PERFORMANCE. DESIGNED TO RISE.</p>
-        <a className="pheno-campaign__cta" href="/shop/type-1">
-          <span>Shop Type 1</span>
-          <span aria-hidden="true">↗</span>
-        </a>
+        <span className="pheno-campaign__torn-edge" aria-hidden="true" />
       </div>
     </section>
   );
