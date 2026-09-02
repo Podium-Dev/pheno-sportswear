@@ -3,8 +3,9 @@ const performanceFeatures = [
     number: "01",
     title: "Breathable ventilation",
     description: "Targeted mesh panels keep air moving through demanding sessions.",
-    image: "/images/type-1-shorts.jpg",
-    alt: "PHENO Type 1 Shorts",
+    image: "/images/shop-performance/breathable-ventilation.png",
+    alt: "Perforated PHENO performance fabric for breathable ventilation",
+    objectPosition: "52% 48%",
     href: "/product/pheno-type-1-shorts",
     product: "Type 1 Shorts",
   },
@@ -12,8 +13,9 @@ const performanceFeatures = [
     number: "02",
     title: "Quick-dry",
     description: "A lightweight performance knit helps moisture move away from the skin.",
-    image: "/images/type-1-tshirt.jpg",
-    alt: "PHENO Type 1 T-Shirt",
+    image: "/images/shop-performance/quick-dry.png",
+    alt: "PHENO quick-dry performance knit texture",
+    objectPosition: "50% 48%",
     href: "/product/pheno-type-1-t-shirt",
     product: "Type 1 T-Shirt",
   },
@@ -21,8 +23,9 @@ const performanceFeatures = [
     number: "03",
     title: "Cooling zones",
     description: "Breathable side panels release heat when the intensity rises.",
-    image: "/images/type-1-tank-black.jpg",
-    alt: "PHENO Type 1 Tank",
+    image: "/images/shop-performance/cooling-zones.png",
+    alt: "Perforated PHENO fabric panel for cooling zones",
+    objectPosition: "50% 45%",
     href: "/product/pheno-type-1-tank",
     product: "Type 1 Tank",
   },
@@ -50,7 +53,11 @@ export function ShopPerformanceBanner() {
           {performanceFeatures.map((feature) => (
             <a className="shop-performance-card" href={feature.href} key={feature.number}>
               <span className="shop-performance-card__media">
-                <img src={feature.image} alt={feature.alt} />
+                <img
+                  src={feature.image}
+                  alt={feature.alt}
+                  style={{ objectPosition: feature.objectPosition }}
+                />
               </span>
               <span className="shop-performance-card__shade" aria-hidden="true" />
               <span className="shop-performance-card__number">{feature.number}</span>
