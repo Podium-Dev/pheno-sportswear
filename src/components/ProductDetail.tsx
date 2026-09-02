@@ -220,17 +220,6 @@ function ProductRecommendations({ products: recommendedProducts }: { products: P
       >
         {recommendedProducts.map((item) => <ProductCard key={item.slug} product={item} compact />)}
       </div>
-      <button
-        className="complete-look__control complete-look__control--next"
-        type="button"
-        aria-label="Next recommended products"
-        aria-controls="complete-look-products"
-        onClick={() => scrollProducts(1)}
-      >
-        <svg viewBox="0 0 24 24" aria-hidden="true">
-          <path d="m9.5 5 7 7-7 7" />
-        </svg>
-      </button>
     </div>
   );
 }
