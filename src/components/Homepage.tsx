@@ -69,10 +69,10 @@ function RetailCta({ href, children, dark = false }: { href: string; children: R
 }
 
 const retailHeroSlides = [
-  { src: "/images/type-1-hoodie.jpg", alt: "Type 1 Hoodie, PHENO Sportswear" },
-  { src: "/images/type-1-joggers.jpg", alt: "Type 1 Joggers, PHENO Sportswear" },
-  { src: "/images/type-1-shorts.jpg", alt: "Type 1 Shorts, PHENO Sportswear" },
-  { src: "/images/type-1-tank-black.jpg", alt: "Type 1 Tank, PHENO Sportswear" },
+  { src: "/images/type-1-hoodie.jpg", alt: "Type 1 Hoodie, PHENO Sportswear", isCutout: false },
+  { src: "/images/type-1-joggers.jpg", alt: "Type 1 Joggers, PHENO Sportswear", isCutout: false },
+  { src: "/images/type-1-shorts-hero-cutout.png", alt: "Type 1 Shorts, PHENO Sportswear", isCutout: true },
+  { src: "/images/type-1-tank-black.jpg", alt: "Type 1 Tank, PHENO Sportswear", isCutout: false },
 ];
 
 function RetailHero() {
@@ -112,7 +112,7 @@ function RetailHero() {
           <img className="retail-hero__mark" src="/images/pheno-hero-mark.png" alt="" />
           {retailHeroSlides.map((slide, index) => (
             <img
-              className={`retail-hero__product${index === activeHeroIndex ? " is-active" : ""}`}
+              className={`retail-hero__product${index === activeHeroIndex ? " is-active" : ""}${slide.isCutout ? " retail-hero__product--cutout" : ""}`}
               src={slide.src}
               alt={slide.alt}
               aria-hidden={index === activeHeroIndex ? undefined : true}
