@@ -9546,8 +9546,9 @@ h2 {
   min-width: 0;
   flex-direction: column;
   overflow: hidden;
-  border: 1px solid #eff0ec;
+  border: 1px solid #d5d8d3;
   background: #ffffff;
+  box-shadow: 0 2px 8px rgb(7 9 8 / 0.06);
 }
 
 .storefront-page--catalogue .catalogue-grid .product-card__media-wrap,
