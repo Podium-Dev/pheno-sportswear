@@ -12,7 +12,7 @@ export function CheckoutButton() {
         type="button"
         onClick={() =>
           setCheckoutMessage(
-            "Online checkout is not connected yet. Shopify Storefront credentials are required before payment can be enabled.",
+            "Online checkout is not connected yet. Configure the Shopify or Medusa cart/checkout adapter before payment can be enabled.",
           )
         }
       >

@@ -4,7 +4,6 @@ import { useEffect, useMemo, useRef, useState, type CSSProperties } from "react"
 import {
   getProductImage,
   getVariant,
-  products,
   SIZE_OPTIONS,
   type Colour,
   type Product,
@@ -235,19 +234,20 @@ function ProductRecommendations({ products: recommendedProducts }: { products: P
   );
 }
 
-export function ProductDetail({ product }: { product: Product }) {
+export function ProductDetail({ product, catalogProducts }: { product: Product; catalogProducts: Product[] }) {
   const { addToCart, isWishlisted, toggleWishlist } = useCommerce();
   const colour: Colour = product.colours[0] ?? "Black";
   const [size, setSize] = useState<Size | "">("");
   const [quantity, setQuantity] = useState(1);
   const [error, setError] = useState("");
   const [sizeGuideOpen, setSizeGuideOpen] = useState(false);
+  const sizeOptions = product.sizes.length ? product.sizes : SIZE_OPTIONS;
 
   const variant = colour && size ? getVariant(product, colour, size) : undefined;
   const wishlisted = isWishlisted(product.slug);
   const completeTheLook = useMemo(
-    () => products.filter((item) => item.slug !== product.slug),
-    [product.slug],
+    () => catalogProducts.filter((item) => item.slug !== product.slug),
+    [catalogProducts, product.slug],
   );
 
   const handleAddToCart = () => {
@@ -286,7 +286,7 @@ export function ProductDetail({ product }: { product: Product }) {
               {wishlisted ? "♥" : "♡"}
             </button>
           </div>
-          <p className="product-purchase__price">{formatCurrency(product.price)}</p>
+          <p className="product-purchase__price">{formatCurrency(product.price, product.currencyCode)}</p>
           <p className="product-purchase__description">{product.description}</p>
 
           <div className="product-options">
@@ -298,7 +298,7 @@ export function ProductDetail({ product }: { product: Product }) {
             <fieldset>
               <legend>Size{size ? `, ${size}` : ""}</legend>
               <div className="option-row option-row--sizes">
-                {SIZE_OPTIONS.map((option) => {
+                {sizeOptions.map((option) => {
                   const optionVariant = colour ? getVariant(product, colour, option) : undefined;
                   const unavailable = !optionVariant?.available;
                   return (

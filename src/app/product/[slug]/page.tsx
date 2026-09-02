@@ -2,15 +2,16 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { Breadcrumbs, StorefrontPage } from "@/components/StorefrontPage";
 import { ProductDetail } from "@/components/ProductDetail";
-import { getProductBySlug, products } from "@/data/products";
+import { getCatalogProductBySlug, getCatalogProducts } from "@/lib/commerce/catalog";
 
-export function generateStaticParams() {
-  return products.map((product) => ({ slug: product.slug }));
+export async function generateStaticParams() {
+  const catalogProducts = await getCatalogProducts();
+  return catalogProducts.map((product) => ({ slug: product.slug }));
 }
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params;
-  const product = getProductBySlug(slug);
+  const product = await getCatalogProductBySlug(slug);
   if (!product) return { title: "Product not found | PHENO Sportswear" };
   return {
     title: `${product.name} | PHENO Sportswear`,
@@ -22,7 +23,10 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
 
 export default async function ProductPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  const product = getProductBySlug(slug);
+  const [product, catalogProducts] = await Promise.all([
+    getCatalogProductBySlug(slug),
+    getCatalogProducts(),
+  ]);
   if (!product) notFound();
 
   const productStructuredData = {
@@ -34,7 +38,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
     brand: { "@type": "Brand", name: "PHENO" },
     offers: {
       "@type": "Offer",
-      priceCurrency: "GBP",
+      priceCurrency: product.currencyCode || "GBP",
       price: product.price.toFixed(2),
       availability: product.variants.some((variant) => variant.available)
         ? "https://schema.org/InStock"
@@ -47,7 +51,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
     <StorefrontPage className="storefront-page--product">
       <div className="product-page">
         <Breadcrumbs current={product.name} />
-        <ProductDetail product={product} />
+        <ProductDetail product={product} catalogProducts={catalogProducts} />
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(productStructuredData) }} />
       </div>
     </StorefrontPage>

@@ -52,6 +52,7 @@ export type Product = {
   collection: "type-1";
   category: ProductCategory;
   price: number;
+  currencyCode?: string;
   description: string;
   construction: string;
   features: string[];

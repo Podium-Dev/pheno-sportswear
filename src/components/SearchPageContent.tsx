@@ -1,13 +1,14 @@
 "use client";
 
 import { FormEvent, useState } from "react";
-import { searchProducts } from "@/data/products";
+import type { Product } from "@/data/products";
 import { ProductCard } from "@/components/ProductCard";
+import { searchCatalogProducts } from "@/lib/commerce/catalog-utils";
 
-export function SearchPageContent({ initialQuery }: { initialQuery: string }) {
+export function SearchPageContent({ initialQuery, products }: { initialQuery: string; products: Product[] }) {
   const [query, setQuery] = useState(initialQuery);
   const [submittedQuery, setSubmittedQuery] = useState(initialQuery);
-  const results = searchProducts(submittedQuery);
+  const results = searchCatalogProducts(products, submittedQuery);
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();

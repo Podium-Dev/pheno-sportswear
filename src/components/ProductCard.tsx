@@ -23,6 +23,7 @@ export function QuickAddPanel({
   const [colour, setColour] = useState<Colour | "">(product.colours[0] || "");
   const [size, setSize] = useState<Size | "">("");
   const [error, setError] = useState("");
+  const sizeOptions = product.sizes.length ? product.sizes : SIZE_OPTIONS;
 
   const handleAdd = () => {
     if (!colour || !size) {
@@ -64,7 +65,7 @@ export function QuickAddPanel({
       <fieldset>
         <legend>Size</legend>
         <div className="option-row option-row--sizes">
-          {SIZE_OPTIONS.map((option) => {
+          {sizeOptions.map((option) => {
             const variant = colour ? getVariant(product, colour, option) : undefined;
             const unavailable = !variant?.available;
             return (
@@ -127,7 +128,7 @@ export function ProductCard({
       <div className="product-card__details">
         <a className="product-card__text-link" href={`/product/${product.slug}`}>
           <span className="product-card__name">{product.name}</span>
-          <span className="product-card__price">{formatCurrency(product.price)}</span>
+          <span className="product-card__price">{formatCurrency(product.price, product.currencyCode)}</span>
           <span className="product-card__colours">{product.colours.join(" / ")}</span>
         </a>
         <div className="product-card__status" aria-live="polite">

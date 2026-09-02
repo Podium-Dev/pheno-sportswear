@@ -1,12 +1,13 @@
 import {
   bundles,
   collectionLabels,
-  getProductsForCollection,
 } from "@/data/products";
 import { BundleCard } from "@/components/BundleCard";
 import { ProductGrid } from "@/components/ProductGrid";
 import { ShopPerformanceBanner } from "@/components/ShopPerformanceBanner";
 import { Breadcrumbs, EditorialPageIntro, StorefrontPage } from "@/components/StorefrontPage";
+import { getCatalogProducts } from "@/lib/commerce/catalog";
+import { getProductsForCollection } from "@/lib/commerce/catalog-utils";
 
 const collectionDescriptions: Record<string, string> = {
   all: "The current PHENO range, built around the Type 1 performance system.",
@@ -20,9 +21,10 @@ const collectionDescriptions: Record<string, string> = {
   joggers: "A tapered, high-stretch layer for training and recovery.",
 };
 
-export function CollectionPage({ collection }: { collection: string }) {
+export async function CollectionPage({ collection }: { collection: string }) {
   const label = collectionLabels[collection] || "Shop";
-  const products = getProductsForCollection(collection);
+  const catalogProducts = await getCatalogProducts();
+  const products = getProductsForCollection(catalogProducts, collection);
   const isSets = collection === "sets";
 
   return (
@@ -40,7 +42,7 @@ export function CollectionPage({ collection }: { collection: string }) {
 
         {isSets ? (
           <div className="bundle-grid">
-            {bundles.map((bundle) => <BundleCard key={bundle.id} bundle={bundle} />)}
+            {bundles.map((bundle) => <BundleCard key={bundle.id} bundle={bundle} products={catalogProducts} />)}
           </div>
         ) : (
           <>

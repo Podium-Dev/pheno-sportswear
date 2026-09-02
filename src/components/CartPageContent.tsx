@@ -32,7 +32,7 @@ export function CartPageContent() {
               <div className="cart-page__line-content">
                 <a href={`/product/${line.productSlug}`}><h3>{line.name}</h3></a>
                 <p>{line.colour} / {line.size}</p>
-                <strong>{formatCurrency(line.price)}</strong>
+                <strong>{formatCurrency(line.price, line.currencyCode)}</strong>
                 <div className="cart-page__line-actions">
                   <div className="quantity-control" aria-label={`Quantity for ${line.name}`}>
                     <button type="button" aria-label={`Decrease quantity of ${line.name}`} onClick={() => updateCartLine(line.id, line.quantity - 1)}>−</button>
@@ -49,10 +49,10 @@ export function CartPageContent() {
 
       <aside className="cart-page__summary" id="checkout">
         <p className="eyebrow">ORDER SUMMARY</p>
-        <div className="cart-page__summary-row"><span>Subtotal</span><strong>{formatCurrency(cartSubtotal)}</strong></div>
+        <div className="cart-page__summary-row"><span>Subtotal</span><strong>{formatCurrency(cartSubtotal, cart[0]?.currencyCode)}</strong></div>
         <p className="cart-page__delivery">Free UK shipping on orders over £75. European and international rules will be confirmed before launch.</p>
         <CheckoutButton />
-        <p className="cart-page__checkout-note">This preview cart is persistent, but payment is not enabled until the Shopify connection is supplied.</p>
+        <p className="cart-page__checkout-note">This preview cart is persistent, but payment is not enabled until the selected Shopify or Medusa connection is supplied.</p>
       </aside>
     </div>
   );

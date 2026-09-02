@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { CommerceProvider } from "@/components/CommerceProvider";
 import { EarlyAccessModal } from "@/components/EarlyAccessModal";
 import { ParallaxEffects } from "@/components/ParallaxEffects";
+import { getCatalogProducts } from "@/lib/commerce/catalog";
 import "./styles.css";
 
 export const metadata: Metadata = {
@@ -20,15 +21,17 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const catalogProducts = await getCatalogProducts();
+
   return (
     <html lang="en-GB">
       <body>
-        <CommerceProvider>
+        <CommerceProvider catalogProducts={catalogProducts}>
           <ParallaxEffects />
           {children}
           <EarlyAccessModal />

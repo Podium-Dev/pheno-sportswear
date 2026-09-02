@@ -1,13 +1,14 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import { getProductBySlug } from "@/data/products";
 import { useCommerce } from "@/components/CommerceProvider";
 import { formatCurrency } from "@/lib/format";
 import { QuickAddPanel } from "@/components/ProductCard";
+import { findCatalogProduct } from "@/lib/commerce/catalog-utils";
 
 export function CartDrawer() {
   const {
+    catalogProducts,
     cart,
     cartCount,
     cartOpen,
@@ -42,12 +43,12 @@ export function CartDrawer() {
 
   const recommendation = useMemo(() => {
     const sourceLine = cart.at(-1);
-    const sourceProduct = sourceLine ? getProductBySlug(sourceLine.productSlug) : undefined;
+    const sourceProduct = sourceLine ? findCatalogProduct(catalogProducts, sourceLine.productSlug) : undefined;
     const recommendedSlug = sourceProduct?.completeTheLookSlugs.find(
       (slug) => !cart.some((line) => line.productSlug === slug),
     );
-    return recommendedSlug ? getProductBySlug(recommendedSlug) : undefined;
-  }, [cart]);
+    return recommendedSlug ? findCatalogProduct(catalogProducts, recommendedSlug) : undefined;
+  }, [catalogProducts, cart]);
 
   if (!cartOpen) {
     return null;
@@ -95,7 +96,7 @@ export function CartDrawer() {
                     <span className="cart-line__meta">
                       {line.colour} / {line.size}
                     </span>
-                    <span className="cart-line__price">{formatCurrency(line.price)}</span>
+                    <span className="cart-line__price">{formatCurrency(line.price, line.currencyCode)}</span>
                     <div className="cart-line__actions">
                       <div className="quantity-control" aria-label={`Quantity for ${line.name}`}>
                         <button
@@ -134,7 +135,7 @@ export function CartDrawer() {
                   <a href={`/product/${recommendation.slug}`} onClick={() => setCartOpen(false)}>
                     {recommendation.name}
                   </a>
-                  <span>{formatCurrency(recommendation.price)}</span>
+                  <span>{formatCurrency(recommendation.price, recommendation.currencyCode)}</span>
                 </div>
                 <button className="quick-add-trigger" type="button" aria-expanded={recommendationOpen} onClick={() => setRecommendationOpen((open) => !open)}>
                   {recommendationOpen ? "Close" : "Quick add"}
@@ -146,7 +147,7 @@ export function CartDrawer() {
             <div className="cart-drawer__footer">
               <div className="cart-drawer__subtotal">
                 <span>Subtotal</span>
-                <strong>{formatCurrency(cartSubtotal)}</strong>
+                <strong>{formatCurrency(cartSubtotal, cart[0]?.currencyCode)}</strong>
               </div>
               <p className="cart-drawer__shipping">
                 Free UK shipping on orders over £75. Delivery rules will be confirmed before launch.
@@ -159,7 +160,7 @@ export function CartDrawer() {
                 type="button"
                 onClick={() =>
                   setCheckoutMessage(
-                    "Online checkout is not connected yet. Shopify Storefront credentials are required before payment can be enabled.",
+                    "Online checkout is not connected yet. Configure the Shopify or Medusa cart/checkout adapter before payment can be enabled.",
                   )
                 }
               >

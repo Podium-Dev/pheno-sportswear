@@ -1,15 +1,15 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { searchProducts } from "@/data/products";
 import { useCommerce } from "@/components/CommerceProvider";
 import { formatCurrency } from "@/lib/format";
+import { searchCatalogProducts } from "@/lib/commerce/catalog-utils";
 
 export function SearchOverlay() {
-  const { searchOpen, setSearchOpen } = useCommerce();
+  const { catalogProducts, searchOpen, setSearchOpen } = useCommerce();
   const [query, setQuery] = useState("");
   const inputRef = useRef<HTMLInputElement>(null);
-  const results = searchProducts(query);
+  const results = searchCatalogProducts(catalogProducts, query);
 
   useEffect(() => {
     if (!searchOpen) {
@@ -101,7 +101,7 @@ export function SearchOverlay() {
                       <img src={product.images[0]} alt="" />
                       <span>
                         <strong>{product.name}</strong>
-                        <small>{formatCurrency(product.price)}</small>
+                        <small>{formatCurrency(product.price, product.currencyCode)}</small>
                       </span>
                     </a>
                   </li>

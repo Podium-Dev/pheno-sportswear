@@ -1,9 +1,10 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { getProductBySlug, type Product } from "@/data/products";
+import type { Product } from "@/data/products";
 import { useCommerce } from "@/components/CommerceProvider";
 import { formatCurrency } from "@/lib/format";
+import { findCatalogProduct } from "@/lib/commerce/catalog-utils";
 
 const topPickSlugs = [
   "pheno-type-1-shorts",
@@ -37,18 +38,20 @@ function HomepageProductCard({ product }: { product: Product }) {
       </div>
       <a className="product-card__text-link" href={`/product/${product.slug}`}>
         <span className="product-card__name">{product.name}</span>
-        <span className="product-card__price">{formatCurrency(product.price)}</span>
+        <span className="product-card__price">{formatCurrency(product.price, product.currencyCode)}</span>
       </a>
     </article>
   );
 }
 
-export function HomepageProductRail() {
+export function HomepageProductRail({ products }: { products: Product[] }) {
   const allTopPicks = useMemo(
-    () => topPickSlugs.map((slug) => getProductBySlug(slug)).filter((product): product is Product => Boolean(product)),
-    [],
+    () => topPickSlugs.map((slug) => findCatalogProduct(products, slug)).filter((product): product is Product => Boolean(product)),
+    [products],
   );
   const [startIndex, setStartIndex] = useState(0);
+
+  if (!allTopPicks.length) return null;
 
   const visibleProducts = [0, 1, 2].map((offset) => allTopPicks[(startIndex + offset) % allTopPicks.length]);
 

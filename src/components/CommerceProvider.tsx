@@ -14,17 +14,20 @@ import { SearchOverlay } from "@/components/SearchOverlay";
 
 export type CartLine = {
   id: string;
+  productId?: string;
   productSlug: string;
   variantId: string;
   name: string;
   colour: string;
   size: string;
   price: number;
+  currencyCode?: string;
   image: string;
   quantity: number;
 };
 
 type CommerceContextValue = {
+  catalogProducts: Product[];
   cart: CartLine[];
   cartCount: number;
   cartSubtotal: number;
@@ -62,7 +65,13 @@ export function useCommerce() {
   return context;
 }
 
-export function CommerceProvider({ children }: { children: React.ReactNode }) {
+export function CommerceProvider({
+  children,
+  catalogProducts,
+}: {
+  children: React.ReactNode;
+  catalogProducts: Product[];
+}) {
   const [cart, setCart] = useState<CartLine[]>([]);
   const [wishlist, setWishlist] = useState<string[]>([]);
   const [cartOpen, setCartOpen] = useState(false);
@@ -125,12 +134,14 @@ export function CommerceProvider({ children }: { children: React.ReactNode }) {
       const lineId = `${product.slug}-${variant.colour}-${variant.size}`;
       const cartLine: CartLine = {
         id: lineId,
+        productId: product.id,
         productSlug: product.slug,
         variantId: variant.id,
         name: product.name,
         colour: variant.colour,
         size: variant.size,
         price: product.price,
+        currencyCode: product.currencyCode,
         image: product.colourImages[variant.colour] ?? product.images[0],
         quantity,
       };
@@ -187,6 +198,7 @@ export function CommerceProvider({ children }: { children: React.ReactNode }) {
 
   const value = useMemo<CommerceContextValue>(
     () => ({
+      catalogProducts,
       cart,
       cartCount: cart.reduce((total, line) => total + line.quantity, 0),
       cartSubtotal: cart.reduce(
@@ -208,6 +220,7 @@ export function CommerceProvider({ children }: { children: React.ReactNode }) {
     }),
     [
       addToCart,
+      catalogProducts,
       cart,
       cartOpen,
       checkoutMessage,

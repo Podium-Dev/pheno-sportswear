@@ -4,8 +4,9 @@ import { SiteHeader } from "@/components/SiteHeader";
 import { SiteFooter } from "@/components/SiteFooter";
 import { PhenoCampaignHero } from "@/components/PhenoCampaignHero";
 import { useEffect, useState, type ReactNode } from "react";
-import { getProductBySlug, type Product } from "@/data/products";
+import type { Product } from "@/data/products";
 import { formatCurrency } from "@/lib/format";
+import { findCatalogProduct } from "@/lib/commerce/catalog-utils";
 
 const retailPickSlugs = [
   "pheno-type-1-t-shirt",
@@ -149,15 +150,15 @@ function RetailProductCard({ product }: { product: Product }) {
       </a>
       <a className="retail-product-card__details" href={`/product/${product.slug}`}>
         <span>{product.name}</span>
-        <span>{formatCurrency(product.price)}</span>
+        <span>{formatCurrency(product.price, product.currencyCode)}</span>
       </a>
     </article>
   );
 }
 
-function RetailProductRail() {
+function RetailProductRail({ catalogProducts }: { catalogProducts: Product[] }) {
   const products = retailPickSlugs
-    .map((slug) => getProductBySlug(slug))
+    .map((slug) => findCatalogProduct(catalogProducts, slug))
     .filter((product): product is Product => Boolean(product));
   const [startIndex, setStartIndex] = useState(0);
   const visibleProducts = Array.from({ length: Math.min(3, products.length) }, (_, offset) =>
@@ -185,12 +186,12 @@ function RetailProductRail() {
   );
 }
 
-function TopPicks() {
+function TopPicks({ products }: { products: Product[] }) {
   return (
     <section className="retail-section retail-picks" aria-labelledby="retail-picks-title">
       <div className="retail-section__inner">
         <span className="visually-hidden" id="retail-picks-title">Top picks</span>
-        <RetailProductRail />
+        <RetailProductRail catalogProducts={products} />
       </div>
     </section>
   );
@@ -356,9 +357,9 @@ function SocialProof() {
   );
 }
 
-function ProductSpotlight() {
+function ProductSpotlight({ catalogProducts }: { catalogProducts: Product[] }) {
   const products = retailSpotlightSlugs
-    .map((slug) => getProductBySlug(slug))
+    .map((slug) => findCatalogProduct(catalogProducts, slug))
     .filter((product): product is Product => Boolean(product));
   const [activeIndex, setActiveIndex] = useState(0);
   const [isSliderPaused, setIsSliderPaused] = useState(false);
@@ -448,17 +449,17 @@ function ProductSpotlight() {
   );
 }
 
-export function Homepage() {
+export function Homepage({ products }: { products: Product[] }) {
   return (
     <div className="retail-home">
       <SiteHeader />
         <main>
           <PhenoCampaignHero />
           <RetailHero />
-          <TopPicks />
+          <TopPicks products={products} />
           <RetailFeatureStrip />
           <TrendingCampaign />
-          <ProductSpotlight />
+          <ProductSpotlight catalogProducts={products} />
           <SocialProof />
       </main>
       <SiteFooter />

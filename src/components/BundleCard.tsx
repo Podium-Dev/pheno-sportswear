@@ -2,20 +2,24 @@
 
 import { useMemo, useState } from "react";
 import {
-  getBundleProducts,
   getProductImage,
   getVariant,
   SIZE_OPTIONS,
   type Colour,
   type ProductBundle,
+  type Product,
   type Size,
 } from "@/data/products";
 import { useCommerce } from "@/components/CommerceProvider";
 import { formatCurrency } from "@/lib/format";
+import { findCatalogProduct } from "@/lib/commerce/catalog-utils";
 
-export function BundleCard({ bundle }: { bundle: ProductBundle }) {
+export function BundleCard({ bundle, products }: { bundle: ProductBundle; products: Product[] }) {
   const { addToCart, setCartOpen } = useCommerce();
-  const bundleProducts = useMemo(() => getBundleProducts(bundle), [bundle]);
+  const bundleProducts = useMemo(
+    () => bundle.productSlugs.map((slug) => findCatalogProduct(products, slug)).filter((product): product is Product => Boolean(product)),
+    [bundle.productSlugs, products],
+  );
   const [open, setOpen] = useState(false);
   const [sizes, setSizes] = useState<Record<string, Size | "">>({});
   const [colours, setColours] = useState<Record<string, Colour>>({});
@@ -60,7 +64,7 @@ export function BundleCard({ bundle }: { bundle: ProductBundle }) {
         <h2>{bundle.name}</h2>
         <p>{bundle.description}</p>
         <div className="bundle-card__meta">
-          <span>{formatCurrency(total)}</span>
+          <span>{formatCurrency(total, bundleProducts[0]?.currencyCode)}</span>
           <span>{bundleProducts.length} pieces</span>
         </div>
         <button
@@ -104,7 +108,7 @@ export function BundleCard({ bundle }: { bundle: ProductBundle }) {
                     }
                   >
                     <option value="">Select size</option>
-                    {SIZE_OPTIONS.map((size) => {
+                    {(product.sizes.length ? product.sizes : SIZE_OPTIONS).map((size) => {
                       const colour = colours[product.slug] || product.colours[0];
                       const variant = getVariant(product, colour, size);
                       return <option key={size} value={size} disabled={!variant?.available}>{size}{!variant?.available ? " · sold out" : ""}</option>;
