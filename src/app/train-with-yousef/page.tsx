@@ -3,6 +3,8 @@ import { CoachingCommunity } from "@/components/CoachingCommunity";
 import { InterestForm } from "@/components/Forms";
 import { StorefrontPage } from "@/components/StorefrontPage";
 
+const PODIUM_CAL_BOOKING_URL = process.env.NEXT_PUBLIC_PODIUM_CAL_BOOKING_URL || "https://podium-cal-staging.up.railway.app/book/pheno";
+
 export const metadata: Metadata = {
   title: "Train With Yousef | PHENO Sportswear",
   description: "Register your interest in boxing coaching with Yousef Jaafar.",
@@ -20,7 +22,10 @@ export default function TrainWithYousefPage() {
             <p className="eyebrow">PHENO COACHING</p>
             <h1 id="coaching-title">Train with Yousef.</h1>
             <p>Boxing coaching built around your goals, your level, and the work required to move forward.</p>
-            <a className="button button--dark" href="#register-interest">Register interest</a>
+            <div className="coaching-hero__actions">
+              <a className="button button--dark" href={PODIUM_CAL_BOOKING_URL}>Book a 1:1</a>
+              <a className="text-link" href="#register-interest">Register interest</a>
+            </div>
           </div>
           <div className="coaching-hero__visual">
             <img src="/images/campaign-athlete.jpg" alt="Athlete preparing for a training session" />
@@ -35,7 +40,7 @@ export default function TrainWithYousefPage() {
             <p className="eyebrow">THE APPROACH</p>
             <h2 id="coaching-intro-title">Learn the craft. Build the engine.</h2>
           </div>
-          <p>Training is for people who want a clear process, focused coaching, and a place to keep showing up. The future booking experience will make it simple to choose the right format and commit to the work.</p>
+          <p>Training is for people who want a clear process, focused coaching, and a place to keep showing up. Choose a weekday one to one session with Yousef and commit to the work.</p>
         </section>
 
         <section className="coaching-audience" aria-labelledby="audience-title">
@@ -59,7 +64,7 @@ export default function TrainWithYousefPage() {
             </div>
             <ol>
               <li><span>01</span><div><h3>Register interest</h3><p>Tell us who you are and what you want to train towards.</p></div></li>
-              <li><span>02</span><div><h3>Find the right format</h3><p>We will confirm the coaching format and availability once the booking system is ready.</p></div></li>
+              <li><span>02</span><div><h3>Book your session</h3><p>Choose a weekday and a one to one time that works for you.</p></div></li>
               <li><span>03</span><div><h3>Do the work</h3><p>Arrive prepared, train with intent, and build from the session before.</p></div></li>
             </ol>
           </div>
@@ -70,9 +75,9 @@ export default function TrainWithYousefPage() {
             <p className="eyebrow">QUESTIONS</p>
             <h2 id="coaching-faq-title">Before you register.</h2>
             <div className="coaching-faq__items">
-              <details><summary>Is this a full booking system?</summary><p>Not yet. This page collects interest while the final coaching formats, rules, and booking experience are confirmed.</p></details>
+              <details><summary>Is this a full booking system?</summary><p>Yes. Choose a one to one session, select a weekday and time, then send your details to confirm the booking request.</p></details>
               <details><summary>Do I need previous boxing experience?</summary><p>No. The coaching offer will support people at different starting points, with the right level confirmed before booking.</p></details>
-              <details><summary>Where will sessions take place?</summary><p>Location and availability details will be confirmed with the final coaching setup.</p></details>
+              <details><summary>Where will sessions take place?</summary><p>Yousef will share the session details after your booking request has been received.</p></details>
             </div>
           </div>
           <div className="coaching-faq__visual">

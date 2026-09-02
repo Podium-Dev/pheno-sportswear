@@ -3180,6 +3180,14 @@ img {
   line-height: 1.45;
 }
 
+.coaching-hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 18px;
+  margin-top: 2px;
+}
+
 .coaching-hero__visual {
   position: relative;
   min-height: 480px;
