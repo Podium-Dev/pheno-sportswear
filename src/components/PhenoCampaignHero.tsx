@@ -57,7 +57,6 @@ export function PhenoCampaignHero() {
           </a>
         </div>
 
-        <span className="pheno-campaign__torn-edge" aria-hidden="true" />
       </div>
     </section>
   );

@@ -6968,17 +6968,6 @@ h6 {
   object-position: center top;
 }
 
-.pheno-campaign__torn-edge {
-  position: absolute;
-  right: 0;
-  bottom: -1px;
-  left: 0;
-  z-index: 3;
-  height: clamp(32px, 4.2vw, 62px);
-  background: var(--retail-white);
-  clip-path: polygon(0 27%, 5% 11%, 10% 23%, 16% 5%, 23% 19%, 31% 8%, 39% 22%, 47% 6%, 56% 18%, 65% 4%, 73% 23%, 81% 9%, 89% 20%, 95% 7%, 100% 24%, 100% 100%, 0 100%);
-}
-
 .pheno-campaign__copy {
   position: absolute;
   inset: 0;
@@ -8251,10 +8240,6 @@ h6 {
   .pheno-campaign__look {
     height: auto;
     aspect-ratio: 4 / 5;
-  }
-
-  .pheno-campaign__torn-edge {
-    height: 34px;
   }
 
   .pheno-campaign__copy {
