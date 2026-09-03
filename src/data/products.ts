@@ -554,8 +554,9 @@ const sourceProducts: Product[] = [
     ],
     engineeredDetails: {
       title: "ENGINEERED DETAILS",
-      image: "/images/type-1-shorts-detail.jpg",
+      image: "/images/product-anatomies/type-1-shorts-callouts.png",
       imageAlt: "Black PHENO Type 1 Shorts with numbered engineered construction details",
+      artworkHasEmbeddedCallouts: true,
       details: [
         {
           number: 1,
