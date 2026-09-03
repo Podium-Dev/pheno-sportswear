@@ -3815,6 +3815,80 @@ img {
   gap: 32px;
 }
 
+.full-size-guide__chart {
+  display: grid;
+  grid-template-columns: minmax(320px, 0.8fr) minmax(0, 1.6fr);
+  gap: 24px;
+  align-items: stretch;
+}
+
+.full-size-guide__garments {
+  display: grid;
+  gap: 14px;
+  min-width: 0;
+  padding: 14px;
+  background: #f2f2ef;
+  border: 1px solid #deded9;
+}
+
+.full-size-guide__garments--1 {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.full-size-guide__garments--2 {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.full-size-guide__garment {
+  display: grid;
+  align-content: start;
+  min-width: 0;
+  color: #080a08;
+  transition: opacity 180ms ease-out;
+}
+
+.full-size-guide__garment:hover,
+.full-size-guide__garment:focus-visible {
+  opacity: 0.72;
+}
+
+.full-size-guide__garment:focus-visible {
+  outline: 3px solid #ffcb58;
+  outline-offset: 3px;
+}
+
+.full-size-guide__garment-image {
+  aspect-ratio: 1;
+  overflow: hidden;
+  background: #fff;
+}
+
+.full-size-guide__garment-image img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.full-size-guide__garment-meta {
+  display: grid;
+  gap: 5px;
+  padding: 12px 2px 1px;
+}
+
+.full-size-guide__garment-meta strong {
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.full-size-guide__garment-meta span {
+  color: #686868;
+  font-size: 10px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
 .full-size-guide__scroll {
   max-width: 100%;
   overflow-x: auto;
@@ -3880,6 +3954,15 @@ img {
 
   .full-size-guide__charts {
     gap: 24px;
+  }
+
+  .full-size-guide__chart {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .full-size-guide__garment-image {
+    aspect-ratio: 1.15;
   }
 
   .full-size-guide__table {
