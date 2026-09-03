@@ -9963,13 +9963,19 @@ h2 {
   background: linear-gradient(180deg, rgb(11 13 12 / 0.02) 48%, rgb(11 13 12 / 0.42) 100%);
 }
 
-.storefront-page--story .story-hero__image img {
+.storefront-page--story .story-hero__image img,
+.storefront-page--story .story-hero__image video {
   position: relative;
   z-index: 1;
   object-fit: cover;
   object-position: center 44%;
   background: var(--story-black);
   filter: grayscale(1) contrast(1.1) brightness(0.82);
+}
+
+.storefront-page--story .story-hero__image:hover img,
+.storefront-page--story .story-hero__image:hover video {
+  transform: scale(1.025);
 }
 
 .storefront-page--story .story-hero__media-meta {
@@ -10372,6 +10378,7 @@ h2 {
 
 @media (prefers-reduced-motion: reduce) {
   .storefront-page--story .story-hero__image img,
+  .storefront-page--story .story-hero__image video,
   .storefront-page--story .founder-section__media img,
   .storefront-page--story .story-principles article {
     transition: none;
