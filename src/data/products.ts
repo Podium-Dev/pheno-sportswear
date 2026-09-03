@@ -59,6 +59,7 @@ export type Product = {
   performanceFeatures: ProductFeature[];
   performanceFeaturesByColour?: Partial<Record<Colour, ProductFeature[]>>;
   engineeredDetails?: ProductEngineeredDetails;
+  engineeredDetailsByColour?: Partial<Record<Colour, ProductEngineeredDetails>>;
   images: string[];
   colourImages: Partial<Record<Colour, string>>;
   galleryImagesByColour?: Partial<Record<Colour, string[]>>;
@@ -106,6 +107,172 @@ const galleries = {
     White: createGalleryImages("/images/product-galleries/type-1-tank/white", 7),
   },
 } as const;
+
+function createEngineeredDetails(
+  image: string,
+  imageAlt: string,
+  details: ProductEngineeredDetail[],
+): ProductEngineeredDetails {
+  return {
+    title: "ENGINEERED DETAILS",
+    image,
+    imageAlt,
+    details,
+  };
+}
+
+const hoodieEngineeredDetails = createEngineeredDetails(
+  galleries.hoodie[0],
+  "Black PHENO Type 1 Hoodie with numbered engineered construction details",
+  [
+    {
+      number: 1,
+      title: "320 GSM FABRIC",
+      description: "Heavyweight feel for warmth without compromising mobility.",
+      marker: { top: "24%", left: "20%", line: "right", lineLength: "clamp(52px, 6vw, 88px)" },
+    },
+    {
+      number: 2,
+      title: "STRETCH COMFORT",
+      description: "Engineered stretch for unrestricted movement.",
+      marker: { top: "43%", left: "17%", line: "right", lineLength: "clamp(52px, 6vw, 88px)" },
+    },
+    {
+      number: 3,
+      title: "SHAPE RETENTION",
+      description: "Keeps its shape, wear after wear.",
+      marker: { top: "42%", left: "82%", line: "left", lineLength: "clamp(42px, 5vw, 74px)" },
+    },
+    {
+      number: 4,
+      title: "KANGAROO POCKET WITH ZIP ENTRY",
+      description: "Secure storage with a clean, minimal look.",
+      marker: { top: "61%", left: "72%", line: "left", lineLength: "clamp(42px, 5vw, 74px)" },
+    },
+    {
+      number: 5,
+      title: "RIBBED CUFFS",
+      description: "Locked-in fit that holds its shape.",
+      marker: { top: "81%", left: "20%", line: "right", lineLength: "clamp(42px, 5vw, 74px)" },
+    },
+    {
+      number: 6,
+      title: "PHENO PERFORMANCE LOGO",
+      description: "Subtle, reflective detailing.",
+      marker: { top: "39%", left: "83%", line: "left", lineLength: "clamp(42px, 5vw, 74px)" },
+    },
+    {
+      number: 7,
+      title: "ADJUSTABLE HOOD",
+      description: "Coverage and comfort when you need it.",
+      marker: { top: "14%", left: "73%", line: "left", lineLength: "clamp(34px, 4vw, 60px)" },
+    },
+  ],
+);
+
+const joggersEngineeredDetails = createEngineeredDetails(
+  galleries.joggers[0],
+  "Black PHENO Type 1 Joggers with numbered engineered construction details",
+  [
+    {
+      number: 1,
+      title: "4-WAY STRETCH FABRIC",
+      description: "High-stretch woven fabric for total movement.",
+      marker: { top: "16%", left: "28%", line: "right", lineLength: "clamp(48px, 5.5vw, 82px)" },
+    },
+    {
+      number: 2,
+      title: "ARTICULATED KNEES",
+      description: "Shaped for natural movement and mobility.",
+      marker: { top: "71%", left: "29%", line: "right", lineLength: "clamp(48px, 5.5vw, 82px)" },
+    },
+    {
+      number: 3,
+      title: "SECURE ZIP POCKETS",
+      description: "Zipped side pockets keep essentials safe.",
+      marker: { top: "30%", left: "29%", line: "right", lineLength: "clamp(48px, 5.5vw, 82px)" },
+    },
+    {
+      number: 4,
+      title: "CARGO POCKETS",
+      description: "Spacious side pockets for everyday storage.",
+      marker: { top: "45%", left: "29%", line: "right", lineLength: "clamp(48px, 5.5vw, 82px)" },
+    },
+    {
+      number: 5,
+      title: "TAPERED PERFORMANCE FIT",
+      description: "Tapers through the leg for a clean, athletic silhouette.",
+      marker: { top: "46%", left: "72%", line: "left", lineLength: "clamp(42px, 5vw, 74px)" },
+    },
+    {
+      number: 6,
+      title: "RIBBED CUFFS",
+      description: "Lock-in fit at the ankle for comfort and focus.",
+      marker: { top: "82%", left: "72%", line: "left", lineLength: "clamp(42px, 5vw, 74px)" },
+    },
+    {
+      number: 7,
+      title: "PHENO PERFORMANCE LOGO",
+      description: "Subtle, reflective branding for a premium finish.",
+      marker: { top: "30%", left: "70%", line: "left", lineLength: "clamp(32px, 4vw, 58px)" },
+    },
+  ],
+);
+
+function createPerformanceTopEngineeredDetails(
+  image: string,
+  productName: "T-Shirt" | "Tank",
+  colour: Colour,
+): ProductEngineeredDetails {
+  return createEngineeredDetails(
+    image,
+    `${colour} PHENO Type 1 ${productName} with numbered engineered construction details`,
+    [
+      {
+        number: 1,
+        title: "BREATHABLE FABRIC",
+        description: "Advanced knit material allows airflow to keep you cool.",
+        marker: { top: "23%", left: "24%", line: "right", lineLength: "clamp(48px, 5.5vw, 82px)" },
+      },
+      {
+        number: 2,
+        title: "MESH SIDE PANELS",
+        description: "Strategic mesh panels enhance ventilation where you need it.",
+        marker: { top: "41%", left: "21%", line: "right", lineLength: "clamp(48px, 5.5vw, 82px)" },
+      },
+      {
+        number: 3,
+        title: "QUICK DRY",
+        description: "Moisture-wicking technology pulls sweat away fast.",
+        marker: { top: "47%", left: "79%", line: "left", lineLength: "clamp(46px, 5vw, 74px)" },
+      },
+      {
+        number: 4,
+        title: "COOLING ZONES",
+        description: "Engineered zones help regulate heat during intense training.",
+        marker: { top: "64%", left: "79%", line: "left", lineLength: "clamp(46px, 5vw, 74px)" },
+      },
+      {
+        number: 5,
+        title: "STRETCH JERSEY",
+        description: "4-way stretch fabric moves with you in every direction.",
+        marker: { top: "78%", left: "23%", line: "right", lineLength: "clamp(48px, 5.5vw, 82px)" },
+      },
+      {
+        number: 6,
+        title: "LIGHTWEIGHT",
+        description: "Minimal weight, maximum performance.",
+        marker: { top: "29%", left: "79%", line: "left", lineLength: "clamp(46px, 5vw, 74px)" },
+      },
+      {
+        number: 7,
+        title: "REFLECTIVE DETAIL",
+        description: "Subtle reflective branding for visibility in low light.",
+        marker: { top: "80%", left: "78%", line: "left", lineLength: "clamp(46px, 5vw, 74px)" },
+      },
+    ],
+  );
+}
 
 const sourceProducts: Product[] = [
   {
@@ -178,6 +345,7 @@ const sourceProducts: Product[] = [
         imageAlt: "Adjustable hood detail on the black PHENO Type 1 Hoodie",
       },
     ],
+    engineeredDetails: hoodieEngineeredDetails,
     images: [
       ...galleries.hoodie,
     ],
@@ -252,6 +420,7 @@ const sourceProducts: Product[] = [
         imageAlt: "High-stretch construction detail on the black PHENO Type 1 Joggers",
       },
     ],
+    engineeredDetails: joggersEngineeredDetails,
     images: [
       ...galleries.joggers,
     ],
@@ -273,7 +442,14 @@ const sourceProducts: Product[] = [
       "A 2-in-1 training short combining a lightweight stretch woven shell with a supportive compression liner and ventilated mesh zones for high-output sessions.",
     construction:
       "Shell: 90% polyester, 10% spandex. Liner: 90% polyester, 10% spandex jersey and mesh zones",
-    features: ["Supportive compression", "Moisture-wicking", "Targeted ventilation"],
+    features: [
+      "4-way stretch",
+      "Compression liner",
+      "Breathable ventilation",
+      "Moisture wicking",
+      "Secure pockets",
+      "Lightweight shell",
+    ],
     performanceFeatures: [
       {
         id: "stretch",
@@ -500,6 +676,18 @@ const sourceProducts: Product[] = [
         },
       ],
     },
+    engineeredDetailsByColour: {
+      Black: createPerformanceTopEngineeredDetails(
+        galleries.tshirt.Black[0],
+        "T-Shirt",
+        "Black",
+      ),
+      White: createPerformanceTopEngineeredDetails(
+        galleries.tshirt.White[0],
+        "T-Shirt",
+        "White",
+      ),
+    },
     images: [
       ...galleries.tshirt.Black,
     ],
@@ -524,55 +712,70 @@ const sourceProducts: Product[] = [
     description:
       "A lightweight training tank made with a smooth stretch knit and mesh side panels to keep airflow moving through demanding sessions.",
     construction: "90% polyester, 10% spandex knit with mesh side panels",
-    features: ["Breathable ventilation", "Quick-dry", "Cooling zones"],
+    features: [
+      "Breathable fabric",
+      "Mesh side panels",
+      "Quick dry",
+      "Cooling zones",
+      "Stretch jersey",
+      "Lightweight",
+      "Reflective detail",
+    ],
     performanceFeatures: [
       {
         id: "breathable",
-        title: "BREATHABLE",
-        description: "Enhanced airflow.",
-        image: "/images/type-1-tank-black.jpg",
-        imageAlt: "Black PHENO Type 1 Tank breathable fabric",
+        title: "BREATHABLE FABRIC",
+        description: "Built to breathe, keeps you cool.",
+        image: "/images/type-1-tank-features/black/breathable-fabric.png",
+        imageAlt: "Breathable fabric detail on the black PHENO Type 1 Tank",
       },
       {
         id: "mesh-side-panels",
         title: "MESH SIDE PANELS",
-        description: "Ventilation where you need it.",
-        image: "/images/type-1-tank-black.jpg",
-        imageAlt: "Mesh side panel detail on black PHENO Type 1 Tank",
+        description: "Enhanced airflow where it counts.",
+        image: "/images/type-1-tank-features/black/mesh-side-panels.png",
+        imageAlt: "Mesh side panel detail on the black PHENO Type 1 Tank",
       },
       {
         id: "quick-dry",
         title: "QUICK DRY",
-        description: "Built for repeat sessions.",
-        image: "/images/type-1-tank-black.jpg",
-        imageAlt: "Black PHENO Type 1 Tank performance fabric",
+        description: "Sweat-wicking, fast drying.",
+        image: "/images/type-1-tank-features/black/quick-dry.png",
+        imageAlt: "Quick-dry fabric detail on the black PHENO Type 1 Tank",
       },
       {
         id: "cooling-zones",
         title: "COOLING ZONES",
-        description: "Helps manage heat.",
-        image: "/images/type-1-tank-black.jpg",
+        description: "Laser-cut ventilation zones regulate body temperature.",
+        image: "/images/type-1-tank-features/black/cooling-zones.png",
         imageAlt: "Cooling zone detail on black PHENO Type 1 Tank",
       },
       {
-        id: "lightweight-stretch",
-        title: "LIGHTWEIGHT STRETCH",
-        description: "Freedom to move.",
-        image: "/images/type-1-tank-black.jpg",
-        imageAlt: "Lightweight stretch fabric on black PHENO Type 1 Tank",
+        id: "stretch-jersey",
+        title: "STRETCH JERSEY",
+        description: "4-way stretch fabric allows full range of motion.",
+        image: "/images/type-1-tank-features/black/lightweight-stretch.png",
+        imageAlt: "Stretch jersey fabric detail on the black PHENO Type 1 Tank",
       },
       {
-        id: "performance-fit",
-        title: "PERFORMANCE FIT",
-        description: "Made for training.",
-        image: "/images/type-1-tank-black.jpg",
-        imageAlt: "Black PHENO Type 1 Tank performance fit",
+        id: "lightweight",
+        title: "LIGHTWEIGHT",
+        description: "Ultra-light construction for unrestricted performance.",
+        image: "/images/type-1-tank-features/black/performance-fit.png",
+        imageAlt: "Lightweight fabric detail on the black PHENO Type 1 Tank",
+      },
+      {
+        id: "reflective-detail",
+        title: "REFLECTIVE DETAIL",
+        description: "Subtle reflective details keep you visible in low light.",
+        image: "/images/type-1-tank-features/black/reflective-detail.png",
+        imageAlt: "Reflective PHENO label detail on the black PHENO Type 1 Tank",
       },
     ],
     performanceFeaturesByColour: {
       Black: [
         {
-          id: "breathable-fabric",
+          id: "breathable",
           title: "BREATHABLE FABRIC",
           description: "Built to breathe, keeps you cool.",
           image: "/images/type-1-tank-features/black/breathable-fabric.png",
@@ -595,23 +798,23 @@ const sourceProducts: Product[] = [
         {
           id: "cooling-zones",
           title: "COOLING ZONES",
-          description: "Ventilation engineered for performance.",
+          description: "Laser-cut ventilation zones regulate body temperature.",
           image: "/images/type-1-tank-features/black/cooling-zones.png",
           imageAlt: "Cooling zone detail on the black PHENO Type 1 Tank",
         },
         {
-          id: "lightweight-stretch",
-          title: "LIGHTWEIGHT STRETCH",
-          description: "Moves with you in every rep.",
+          id: "stretch-jersey",
+          title: "STRETCH JERSEY",
+          description: "4-way stretch fabric allows full range of motion.",
           image: "/images/type-1-tank-features/black/lightweight-stretch.png",
-          imageAlt: "Lightweight stretch fabric detail on the black PHENO Type 1 Tank",
+          imageAlt: "Stretch jersey fabric detail on the black PHENO Type 1 Tank",
         },
         {
-          id: "performance-fit",
-          title: "PERFORMANCE FIT",
-          description: "Athletic fit, built to move.",
+          id: "lightweight",
+          title: "LIGHTWEIGHT",
+          description: "Ultra-light construction for unrestricted performance.",
           image: "/images/type-1-tank-features/black/performance-fit.png",
-          imageAlt: "Performance fit detail on the black PHENO Type 1 Tank",
+          imageAlt: "Lightweight fabric detail on the black PHENO Type 1 Tank",
         },
         {
           id: "reflective-detail",
@@ -623,7 +826,7 @@ const sourceProducts: Product[] = [
       ],
       White: [
         {
-          id: "breathable-fabric",
+          id: "breathable",
           title: "BREATHABLE FABRIC",
           description: "Built to breathe, keeps you cool.",
           image: "/images/type-1-tank-features/white/breathable-fabric.png",
@@ -646,21 +849,21 @@ const sourceProducts: Product[] = [
         {
           id: "cooling-zones",
           title: "COOLING ZONES",
-          description: "Ventilation engineered for performance.",
+          description: "Laser-cut ventilation zones regulate body temperature.",
           image: "/images/type-1-tank-features/white/cooling-zones.png",
           imageAlt: "Cooling zone detail on the white PHENO Type 1 Tank",
         },
         {
           id: "stretch-jersey",
           title: "STRETCH JERSEY",
-          description: "Moves with you in every rep.",
+          description: "4-way stretch fabric allows full range of motion.",
           image: "/images/type-1-tank-features/white/stretch-jersey.png",
           imageAlt: "Stretch jersey fabric detail on the white PHENO Type 1 Tank",
         },
         {
           id: "lightweight",
           title: "LIGHTWEIGHT",
-          description: "Minimal weight, maximum output.",
+          description: "Ultra-light construction for unrestricted performance.",
           image: "/images/type-1-tank-features/white/lightweight.png",
           imageAlt: "Lightweight fabric detail on the white PHENO Type 1 Tank",
         },
@@ -672,6 +875,18 @@ const sourceProducts: Product[] = [
           imageAlt: "Reflective PHENO label detail on the white PHENO Type 1 Tank",
         },
       ],
+    },
+    engineeredDetailsByColour: {
+      Black: createPerformanceTopEngineeredDetails(
+        galleries.tank.Black[0],
+        "Tank",
+        "Black",
+      ),
+      White: createPerformanceTopEngineeredDetails(
+        galleries.tank.White[0],
+        "Tank",
+        "White",
+      ),
     },
     images: [
       ...galleries.tank.Black,
@@ -712,6 +927,8 @@ function splitProductColours(product: Product): Product[] {
       variants: product.variants.filter((variant) => variant.colour === colour),
       performanceFeatures,
       performanceFeaturesByColour: undefined,
+      engineeredDetails: product.engineeredDetailsByColour?.[colour] ?? product.engineeredDetails,
+      engineeredDetailsByColour: undefined,
     };
   });
 }

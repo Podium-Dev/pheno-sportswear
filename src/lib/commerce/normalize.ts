@@ -100,6 +100,7 @@ function buildFallbackProduct(
     performanceFeatures: localProduct?.performanceFeatures || [],
     performanceFeaturesByColour: localProduct?.performanceFeaturesByColour,
     engineeredDetails: localProduct?.engineeredDetails,
+    engineeredDetailsByColour: localProduct?.engineeredDetailsByColour,
     images,
     colourImages: { [colours[0] || "Black"]: images[0] || fallbackImage },
     galleryImagesByColour: { [colours[0] || "Black"]: images },
