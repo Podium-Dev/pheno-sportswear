@@ -10054,7 +10054,7 @@ h2 {
   position: relative;
   grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
   gap: clamp(52px, 9vw, 142px);
-  padding: clamp(90px, 10vw, 148px) clamp(8px, 2vw, 32px);
+  padding: clamp(56px, 6vw, 84px) clamp(8px, 2vw, 32px);
   border-bottom: 0;
 }
 
@@ -10335,7 +10335,7 @@ h2 {
   .storefront-page--story .story-section {
     grid-template-columns: 1fr;
     gap: 44px;
-    padding-block: 78px 88px;
+    padding-block: 56px 64px;
   }
 
   .storefront-page--story .story-section__copy {
