@@ -8966,6 +8966,7 @@ h2 {
   object-fit: cover;
   mix-blend-mode: multiply;
   transform: var(--_feature-icon-transform, scale(1.08));
+  scale: var(--_feature-icon-scale, 1);
 }
 
 .product-feature-strip__item figcaption {
@@ -9781,7 +9782,7 @@ h2 {
 }
 
 .storefront-page--product .product-feature-strip__image {
-  border: 1px solid rgb(255 203 88 / 0.42);
+  border: 1px solid var(--paper);
   background: var(--product-dark);
 }
 

@@ -90,6 +90,17 @@ const FEATURE_ICON_TRANSFORMS: Record<string, string> = {
     "translate(13.3%, 5.1%) scale(1.08)",
 };
 
+function getFeatureIconScale(image: string) {
+  const featurePath = image.replace(/^\/images\//, "");
+
+  if (featurePath.startsWith("type-1-hoodie-features/")) return "1.11";
+  if (featurePath.startsWith("type-1-joggers-features/")) return "1.06";
+  if (featurePath.startsWith("type-1-tshirt-features/")) return "1.05";
+  if (featurePath.startsWith("type-1-tank-features/")) return "1.03";
+
+  return "1";
+}
+
 export function ProductFeatureStrip({ features }: { features: ProductFeature[] }) {
   if (!features.length) return null;
 
@@ -113,6 +124,7 @@ export function ProductFeatureStrip({ features }: { features: ProductFeature[] }
                     {
                       "--_feature-icon-transform":
                         FEATURE_ICON_TRANSFORMS[feature.image.replace(/^\/images\//, "")],
+                      "--_feature-icon-scale": getFeatureIconScale(feature.image),
                     } as CSSProperties
                   }
                 />
