@@ -11,12 +11,11 @@ const footerGroups = [
     ],
   },
   {
-    title: "Our story",
+    title: "Quick links",
     links: [
-      ["Our philosophy", "/our-story"],
-      ["Founder", "/our-story"],
-      ["Values", "/our-story"],
-      ["FAQs", "/help/faq"],
+      ["Our story", "/our-story"],
+      ["Train with Yousef", "/train-with-yousef"],
+      ["Core values", "/our-story#principles-title"],
     ],
   },
   {
