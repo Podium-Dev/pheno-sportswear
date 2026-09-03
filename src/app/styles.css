@@ -8674,20 +8674,10 @@ h6 {
   display: block;
   width: 100%;
   height: 100%;
-  object-fit: contain;
+  object-fit: cover;
+  object-position: center;
   mix-blend-mode: multiply;
   transition: transform 280ms ease-out;
-}
-
-.shop-performance-card__number {
-  position: absolute;
-  top: 13px;
-  left: 13px;
-  z-index: 2;
-  color: var(--accent);
-  font-size: 9px;
-  font-weight: 700;
-  letter-spacing: 0.08em;
 }
 
 .shop-performance-card__copy {

@@ -1,6 +1,5 @@
 const performanceFeatures = [
   {
-    number: "01",
     title: "Breathable ventilation",
     description: "Targeted mesh panels keep air moving through demanding sessions.",
     image: "/images/shop-performance/breathable-ventilation.png",
@@ -8,7 +7,6 @@ const performanceFeatures = [
     product: "Type 1 Shorts",
   },
   {
-    number: "02",
     title: "Quick-dry",
     description: "A lightweight performance knit helps moisture move away from the skin.",
     image: "/images/shop-performance/quick-dry.png",
@@ -16,7 +14,6 @@ const performanceFeatures = [
     product: "Type 1 T-Shirt",
   },
   {
-    number: "03",
     title: "Cooling zones",
     description: "Breathable side panels release heat when the intensity rises.",
     image: "/images/shop-performance/cooling-zones.png",
@@ -45,14 +42,13 @@ export function ShopPerformanceBanner() {
 
         <div className="shop-performance-banner__cards">
           {performanceFeatures.map((feature) => (
-            <article className="shop-performance-card" key={feature.number}>
+            <article className="shop-performance-card" key={feature.product}>
               <span className="shop-performance-card__media">
                 <img
                   src={feature.image}
                   alt={feature.alt}
                 />
               </span>
-              <span className="shop-performance-card__number">{feature.number}</span>
               <span className="shop-performance-card__copy">
                 <span>{feature.product}</span>
                 <strong>{feature.title}</strong>
