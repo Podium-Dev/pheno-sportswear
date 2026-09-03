@@ -85,9 +85,6 @@ export function SiteHeader() {
         </nav>
 
         <div className="retail-navigation__tools" aria-label="Utility navigation">
-          <a className="retail-navigation__account" href="/account" aria-label="Account">
-            <AccountIcon />
-          </a>
           <button type="button" aria-label="Search" onClick={openSearch}>
             <SearchIcon />
             <span>Search</span>
@@ -96,6 +93,9 @@ export function SiteHeader() {
             <CartIcon />
             <span>My cart ({cartCount})</span>
           </button>
+          <a className="retail-navigation__account" href="/account" aria-label="Account">
+            <AccountIcon />
+          </a>
         </div>
 
         <button className="retail-navigation__mobile-toggle" type="button" aria-expanded={mobileOpen} aria-controls="retail-mobile-menu" onClick={() => setMobileOpen((open) => !open)}>
@@ -109,9 +109,9 @@ export function SiteHeader() {
           {retailNavLinks.map(([label, href]) => (
             <a href={href} key={href} onClick={() => setMobileOpen(false)}>{label}</a>
           ))}
-          <a href="/account" onClick={() => setMobileOpen(false)}>Account</a>
           <button type="button" onClick={openSearch}>Search</button>
           <button type="button" onClick={openCart}>My cart ({cartCount})</button>
+          <a href="/account" onClick={() => setMobileOpen(false)}>Account</a>
         </nav>
       ) : null}
     </header>
