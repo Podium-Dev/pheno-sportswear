@@ -9788,7 +9788,7 @@ h2 {
 
 .storefront-page--product .product-feature-strip__image img {
   filter: none;
-  mix-blend-mode: multiply;
+  mix-blend-mode: normal;
 }
 
 .storefront-page--product .product-feature-strip__image--light {

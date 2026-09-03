@@ -93,12 +93,12 @@ const FEATURE_ICON_TRANSFORMS: Record<string, string> = {
 function getFeatureIconScale(image: string) {
   const featurePath = image.replace(/^\/images\//, "");
 
-  if (featurePath.startsWith("type-1-hoodie-features/")) return "1.11";
-  if (featurePath.startsWith("type-1-joggers-features/")) return "1.06";
-  if (featurePath.startsWith("type-1-tshirt-features/")) return "1.05";
-  if (featurePath.startsWith("type-1-tank-features/")) return "1.03";
+  if (featurePath.startsWith("type-1-hoodie-features/")) return "1.19";
+  if (featurePath.startsWith("type-1-joggers-features/")) return "1.14";
+  if (featurePath.startsWith("type-1-tshirt-features/")) return "1.13";
+  if (featurePath.startsWith("type-1-tank-features/")) return "1.1";
 
-  return "1";
+  return "1.08";
 }
 
 export function ProductFeatureStrip({ features }: { features: ProductFeature[] }) {
