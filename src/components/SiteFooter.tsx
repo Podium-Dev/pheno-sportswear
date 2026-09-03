@@ -33,28 +33,16 @@ const footerGroups = [
 function SocialIcons() {
   return (
     <nav className="retail-footer__socials" aria-label="Social media">
-      <a href="https://www.instagram.com/" aria-label="Instagram" target="_blank" rel="noreferrer">
+      <a href="https://www.facebook.com/phenosportswearni" aria-label="Facebook" target="_blank" rel="noreferrer">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M13.5 21v-8h2.75l.45-3H13.5V8.1c0-.87.28-1.46 1.55-1.46h1.65V4a22 22 0 0 0-2.4-.13c-2.38 0-4 1.45-4 4.08V10H8v3h2.3v8h3.2Z" className="retail-footer__social-fill" />
+        </svg>
+      </a>
+      <a href="https://www.instagram.com/phenosportswear/" aria-label="Instagram" target="_blank" rel="noreferrer">
         <svg viewBox="0 0 24 24" aria-hidden="true">
           <rect x="4" y="4" width="16" height="16" rx="4" />
           <circle cx="12" cy="12" r="3.5" />
           <circle cx="17.5" cy="6.5" r=".8" className="retail-footer__social-dot" />
-        </svg>
-      </a>
-      <a href="https://www.tiktok.com/" aria-label="TikTok" target="_blank" rel="noreferrer">
-        <svg viewBox="0 0 24 24" aria-hidden="true">
-          <path d="M14 4v10.2a3.8 3.8 0 1 1-3-3.7" />
-          <path d="M14 4c1.1 2.7 2.7 4 5.5 4" />
-        </svg>
-      </a>
-      <a href="https://www.youtube.com/" aria-label="YouTube" target="_blank" rel="noreferrer">
-        <svg viewBox="0 0 24 24" aria-hidden="true">
-          <rect x="3" y="6.5" width="18" height="11" rx="3" />
-          <path d="m10 9 5 3-5 3V9Z" className="retail-footer__social-fill" />
-        </svg>
-      </a>
-      <a href="https://x.com/" aria-label="X" target="_blank" rel="noreferrer">
-        <svg viewBox="0 0 24 24" aria-hidden="true">
-          <path d="m5 4 14 16M19 4 5 20" />
         </svg>
       </a>
     </nav>
