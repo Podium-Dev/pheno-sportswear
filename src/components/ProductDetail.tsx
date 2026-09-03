@@ -137,9 +137,13 @@ function ProductGallery({ product, colour }: { product: Product; colour: Colour 
 
 function ProductEngineeredDetails({ details }: { details: NonNullable<Product["engineeredDetails"]> }) {
   const [titleLead, ...titleRest] = details.title.split(" ");
+  const sectionClassName = [
+    "engineered-details",
+    details.artworkHasEmbeddedCallouts ? "engineered-details--reference-artwork" : "",
+  ].filter(Boolean).join(" ");
 
   return (
-    <section className="engineered-details" aria-labelledby="engineered-details-title">
+    <section className={sectionClassName} aria-labelledby="engineered-details-title">
       <h2 id="engineered-details-title">
         <span className="engineered-details__title-accent">{titleLead}</span>
         {titleRest.length ? ` ${titleRest.join(" ")}` : null}
@@ -148,20 +152,25 @@ function ProductEngineeredDetails({ details }: { details: NonNullable<Product["e
         <div className="engineered-details__visual">
           <img src={details.image} alt={details.imageAlt} loading="lazy" decoding="async" />
           <ol className="engineered-details__markers" aria-label="Engineered detail markers">
-            {details.details.map((detail) => (
-              <li
-                key={detail.number}
-                className={`engineered-details__marker engineered-details__marker--line-${detail.marker.line}`}
-                style={{
-                  top: detail.marker.top,
-                  left: detail.marker.left,
-                  "--marker-line-length": detail.marker.lineLength,
-                } as CSSProperties}
-                aria-label={`${detail.number}. ${detail.title}`}
-              >
-                <span aria-hidden="true">{detail.number}</span>
-              </li>
-            ))}
+            {details.details.map((detail) => {
+              if (!detail.marker) return null;
+
+              return (
+                <li
+                  key={detail.number}
+                  className={`engineered-details__marker engineered-details__marker--line-${detail.marker.line}`}
+                  style={{
+                    top: detail.marker.top,
+                    left: detail.marker.left,
+                    "--marker-line-length": detail.marker.lineLength,
+                    "--marker-size": details.markerSize,
+                  } as CSSProperties}
+                  aria-label={`${detail.number}. ${detail.title}`}
+                >
+                  <span aria-hidden="true">{detail.number}</span>
+                </li>
+              );
+            })}
           </ol>
         </div>
         <div className="engineered-details__content">

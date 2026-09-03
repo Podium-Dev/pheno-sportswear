@@ -30,7 +30,7 @@ export type ProductEngineeredDetail = {
   number: number;
   title: string;
   description: string;
-  marker: {
+  marker?: {
     top: string;
     left: string;
     line: "left" | "right";
@@ -43,6 +43,8 @@ export type ProductEngineeredDetails = {
   image: string;
   imageAlt: string;
   details: ProductEngineeredDetail[];
+  artworkHasEmbeddedCallouts?: boolean;
+  markerSize?: string;
 };
 
 export type Product = {
@@ -112,163 +114,224 @@ function createEngineeredDetails(
   image: string,
   imageAlt: string,
   details: ProductEngineeredDetail[],
+  options: Pick<ProductEngineeredDetails, "artworkHasEmbeddedCallouts" | "markerSize"> = {},
 ): ProductEngineeredDetails {
   return {
     title: "ENGINEERED DETAILS",
     image,
     imageAlt,
     details,
+    ...options,
   };
 }
 
-const hoodieEngineeredDetails = createEngineeredDetails(
-  galleries.hoodie[0],
+function createReferenceEngineeredDetails(
+  image: string,
+  imageAlt: string,
+  markerSize: string,
+  details: ProductEngineeredDetail[],
+): ProductEngineeredDetails {
+  return createEngineeredDetails(image, imageAlt, details, {
+    artworkHasEmbeddedCallouts: true,
+    markerSize,
+  });
+}
+
+const hoodieEngineeredDetails = createReferenceEngineeredDetails(
+  "/images/product-anatomies/type-1-hoodie.png",
   "Black PHENO Type 1 Hoodie with numbered engineered construction details",
+  "30px",
   [
     {
       number: 1,
       title: "320 GSM FABRIC",
       description: "Heavyweight feel for warmth without compromising mobility.",
-      marker: { top: "24%", left: "20%", line: "right", lineLength: "clamp(52px, 6vw, 88px)" },
+      marker: { top: "38%", left: "16%", line: "right", lineLength: "0px" },
     },
     {
       number: 2,
       title: "STRETCH COMFORT",
       description: "Engineered stretch for unrestricted movement.",
-      marker: { top: "43%", left: "17%", line: "right", lineLength: "clamp(52px, 6vw, 88px)" },
+      marker: { top: "55%", left: "11%", line: "right", lineLength: "0px" },
     },
     {
       number: 3,
       title: "SHAPE RETENTION",
       description: "Keeps its shape, wear after wear.",
-      marker: { top: "42%", left: "82%", line: "left", lineLength: "clamp(42px, 5vw, 74px)" },
+      marker: undefined,
     },
     {
       number: 4,
       title: "KANGAROO POCKET WITH ZIP ENTRY",
       description: "Secure storage with a clean, minimal look.",
-      marker: { top: "61%", left: "72%", line: "left", lineLength: "clamp(42px, 5vw, 74px)" },
+      marker: { top: "72%", left: "87%", line: "left", lineLength: "0px" },
     },
     {
       number: 5,
       title: "RIBBED CUFFS",
       description: "Locked-in fit that holds its shape.",
-      marker: { top: "81%", left: "20%", line: "right", lineLength: "clamp(42px, 5vw, 74px)" },
+      marker: { top: "93%", left: "11%", line: "right", lineLength: "0px" },
     },
     {
       number: 6,
       title: "PHENO PERFORMANCE LOGO",
       description: "Subtle, reflective detailing.",
-      marker: { top: "39%", left: "83%", line: "left", lineLength: "clamp(42px, 5vw, 74px)" },
+      marker: { top: "50%", left: "86%", line: "left", lineLength: "0px" },
     },
     {
       number: 7,
       title: "ADJUSTABLE HOOD",
       description: "Coverage and comfort when you need it.",
-      marker: { top: "14%", left: "73%", line: "left", lineLength: "clamp(34px, 4vw, 60px)" },
+      marker: { top: "22%", left: "76%", line: "left", lineLength: "0px" },
     },
   ],
 );
 
-const joggersEngineeredDetails = createEngineeredDetails(
-  galleries.joggers[0],
+const joggersEngineeredDetails = createReferenceEngineeredDetails(
+  "/images/product-anatomies/type-1-joggers.png",
   "Black PHENO Type 1 Joggers with numbered engineered construction details",
+  "26px",
   [
     {
       number: 1,
       title: "4-WAY STRETCH FABRIC",
       description: "High-stretch woven fabric for total movement.",
-      marker: { top: "16%", left: "28%", line: "right", lineLength: "clamp(48px, 5.5vw, 82px)" },
+      marker: { top: "16%", left: "24%", line: "right", lineLength: "0px" },
     },
     {
       number: 2,
       title: "ARTICULATED KNEES",
       description: "Shaped for natural movement and mobility.",
-      marker: { top: "71%", left: "29%", line: "right", lineLength: "clamp(48px, 5.5vw, 82px)" },
+      marker: { top: "59%", left: "24%", line: "right", lineLength: "0px" },
     },
     {
       number: 3,
       title: "SECURE ZIP POCKETS",
       description: "Zipped side pockets keep essentials safe.",
-      marker: { top: "30%", left: "29%", line: "right", lineLength: "clamp(48px, 5.5vw, 82px)" },
+      marker: { top: "23%", left: "24%", line: "right", lineLength: "0px" },
     },
     {
       number: 4,
       title: "CARGO POCKETS",
       description: "Spacious side pockets for everyday storage.",
-      marker: { top: "45%", left: "29%", line: "right", lineLength: "clamp(48px, 5.5vw, 82px)" },
+      marker: { top: "41%", left: "24%", line: "right", lineLength: "0px" },
     },
     {
       number: 5,
       title: "TAPERED PERFORMANCE FIT",
       description: "Tapers through the leg for a clean, athletic silhouette.",
-      marker: { top: "46%", left: "72%", line: "left", lineLength: "clamp(42px, 5vw, 74px)" },
+      marker: { top: "51%", left: "72%", line: "left", lineLength: "0px" },
     },
     {
       number: 6,
       title: "RIBBED CUFFS",
       description: "Lock-in fit at the ankle for comfort and focus.",
-      marker: { top: "82%", left: "72%", line: "left", lineLength: "clamp(42px, 5vw, 74px)" },
+      marker: { top: "88%", left: "72%", line: "left", lineLength: "0px" },
     },
     {
       number: 7,
       title: "PHENO PERFORMANCE LOGO",
       description: "Subtle, reflective branding for a premium finish.",
-      marker: { top: "30%", left: "70%", line: "left", lineLength: "clamp(32px, 4vw, 58px)" },
+      marker: { top: "32%", left: "71%", line: "left", lineLength: "0px" },
     },
   ],
 );
 
 function createPerformanceTopEngineeredDetails(
-  image: string,
   productName: "T-Shirt" | "Tank",
   colour: Colour,
 ): ProductEngineeredDetails {
-  return createEngineeredDetails(
-    image,
+  const imagePath =
+    productName === "T-Shirt"
+      ? `/images/product-anatomies/type-1-tshirt-${colour.toLowerCase()}.png`
+      : `/images/product-anatomies/type-1-tank-${colour.toLowerCase()}.png`;
+  const markerPositions =
+    productName === "T-Shirt"
+      ? colour === "White"
+          ? [
+              { top: "21%", left: "13%", line: "right" },
+              { top: "48%", left: "16%", line: "right" },
+              { top: "58%", left: "77%", line: "left" },
+              { top: "71%", left: "77%", line: "left" },
+              { top: "81%", left: "16%", line: "right" },
+              { top: "30%", left: "87%", line: "left" },
+              { top: "86%", left: "77%", line: "left" },
+            ] as const
+        : [
+              { top: "23%", left: "11%", line: "right" },
+              { top: "48%", left: "14%", line: "right" },
+              { top: "55%", left: "73%", line: "left" },
+              { top: "71%", left: "74%", line: "left" },
+              { top: "83%", left: "13%", line: "right" },
+              { top: "29%", left: "86%", line: "left" },
+              { top: "84%", left: "74%", line: "left" },
+            ] as const
+      : colour === "White"
+        ? [
+              { top: "16%", left: "15%", line: "right" },
+              { top: "44%", left: "12%", line: "right" },
+              { top: "42%", left: "82%", line: "left" },
+              { top: "60%", left: "82%", line: "left" },
+              { top: "76%", left: "12%", line: "right" },
+              { top: "10%", left: "80%", line: "left" },
+              { top: "80%", left: "84%", line: "left" },
+            ] as const
+        : [
+              { top: "16%", left: "16%", line: "right" },
+              { top: "45%", left: "11%", line: "right" },
+              { top: "47%", left: "84%", line: "left" },
+              { top: "62%", left: "84%", line: "left" },
+              { top: "81%", left: "12%", line: "right" },
+              { top: "8%", left: "79%", line: "left" },
+              { top: "82%", left: "85%", line: "left" },
+            ] as const;
+
+  return createReferenceEngineeredDetails(
+    imagePath,
     `${colour} PHENO Type 1 ${productName} with numbered engineered construction details`,
+    "28px",
     [
       {
         number: 1,
         title: "BREATHABLE FABRIC",
         description: "Advanced knit material allows airflow to keep you cool.",
-        marker: { top: "23%", left: "24%", line: "right", lineLength: "clamp(48px, 5.5vw, 82px)" },
+        marker: { ...markerPositions[0], lineLength: "0px" },
       },
       {
         number: 2,
         title: "MESH SIDE PANELS",
         description: "Strategic mesh panels enhance ventilation where you need it.",
-        marker: { top: "41%", left: "21%", line: "right", lineLength: "clamp(48px, 5.5vw, 82px)" },
+        marker: { ...markerPositions[1], lineLength: "0px" },
       },
       {
         number: 3,
         title: "QUICK DRY",
         description: "Moisture-wicking technology pulls sweat away fast.",
-        marker: { top: "47%", left: "79%", line: "left", lineLength: "clamp(46px, 5vw, 74px)" },
+        marker: { ...markerPositions[2], lineLength: "0px" },
       },
       {
         number: 4,
         title: "COOLING ZONES",
         description: "Engineered zones help regulate heat during intense training.",
-        marker: { top: "64%", left: "79%", line: "left", lineLength: "clamp(46px, 5vw, 74px)" },
+        marker: { ...markerPositions[3], lineLength: "0px" },
       },
       {
         number: 5,
         title: "STRETCH JERSEY",
         description: "4-way stretch fabric moves with you in every direction.",
-        marker: { top: "78%", left: "23%", line: "right", lineLength: "clamp(48px, 5.5vw, 82px)" },
+        marker: { ...markerPositions[4], lineLength: "0px" },
       },
       {
         number: 6,
         title: "LIGHTWEIGHT",
         description: "Minimal weight, maximum performance.",
-        marker: { top: "29%", left: "79%", line: "left", lineLength: "clamp(46px, 5vw, 74px)" },
+        marker: { ...markerPositions[5], lineLength: "0px" },
       },
       {
         number: 7,
         title: "REFLECTIVE DETAIL",
         description: "Subtle reflective branding for visibility in low light.",
-        marker: { top: "80%", left: "78%", line: "left", lineLength: "clamp(46px, 5vw, 74px)" },
+        marker: { ...markerPositions[6], lineLength: "0px" },
       },
     ],
   );
@@ -678,12 +741,10 @@ const sourceProducts: Product[] = [
     },
     engineeredDetailsByColour: {
       Black: createPerformanceTopEngineeredDetails(
-        galleries.tshirt.Black[0],
         "T-Shirt",
         "Black",
       ),
       White: createPerformanceTopEngineeredDetails(
-        galleries.tshirt.White[0],
         "T-Shirt",
         "White",
       ),
@@ -878,12 +939,10 @@ const sourceProducts: Product[] = [
     },
     engineeredDetailsByColour: {
       Black: createPerformanceTopEngineeredDetails(
-        galleries.tank.Black[0],
         "Tank",
         "Black",
       ),
       White: createPerformanceTopEngineeredDetails(
-        galleries.tank.White[0],
         "Tank",
         "White",
       ),

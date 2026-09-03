@@ -9086,8 +9086,9 @@ h2 {
 .engineered-details__marker {
   position: absolute;
   display: grid;
-  width: 34px;
-  height: 34px;
+  z-index: 1;
+  width: var(--marker-size, 34px);
+  height: var(--marker-size, 34px);
   transform: translate(-50%, -50%);
   border-radius: 50%;
   background: var(--ink);
@@ -9097,6 +9098,20 @@ h2 {
   line-height: 1;
   place-items: center;
   --marker-line-length: clamp(20px, 3vw, 42px);
+}
+
+.engineered-details--reference-artwork .engineered-details__visual > img {
+  object-fit: contain;
+  mix-blend-mode: normal;
+}
+
+.engineered-details--reference-artwork .engineered-details__marker {
+  box-shadow: 0 0 0 1px var(--product-accent);
+}
+
+.engineered-details--reference-artwork .engineered-details__marker::after,
+.engineered-details--reference-artwork .engineered-details__marker::before {
+  display: none;
 }
 
 .engineered-details__marker::after {
