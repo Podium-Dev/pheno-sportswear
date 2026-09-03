@@ -128,6 +128,17 @@ export default async function HelpPage({ params }: { params: Promise<{ topic: st
   const detail = topics[topic as keyof typeof topics];
   if (!detail) notFound();
 
+  if (topic === "size-guide") {
+    return (
+      <StorefrontPage className="storefront-page--size-guide">
+        <div className="full-size-guide-page">
+          <h1>Pheno Size guide</h1>
+          <SizeGuideContent />
+        </div>
+      </StorefrontPage>
+    );
+  }
+
   const isPolicyPage = topic === "returns" || topic === "shipping";
   const policyPageClass = topic === "returns" ? "storefront-page--help-returns" : topic === "shipping" ? "storefront-page--help-shipping" : "";
 
@@ -137,7 +148,6 @@ export default async function HelpPage({ params }: { params: Promise<{ topic: st
         <Breadcrumbs current={detail.title} />
         <EditorialPageIntro eyebrow={detail.eyebrow} title={detail.title}>{isPolicyPage ? null : detail.description}</EditorialPageIntro>
         {topic === "faq" ? <FaqAccordions /> : null}
-        {topic === "size-guide" ? <SizeGuideContent /> : null}
         {topic === "shipping" ? (
           <div className="help-content help-content--policy">
             <p className="help-policy__label">PHENO SHIPPING &amp; DELIVERY POLICY</p>

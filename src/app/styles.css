@@ -3762,6 +3762,142 @@ img {
   text-transform: uppercase;
 }
 
+.storefront-page--size-guide main {
+  background: #fff;
+}
+
+.full-size-guide-page {
+  --type-h1: clamp(28px, 3vw, 44px);
+  width: min(72%, 1280px);
+  margin-inline: auto;
+  padding: 64px 0 120px;
+}
+
+.full-size-guide-page > h1 {
+  margin: 0;
+  font-size: clamp(28px, 3vw, 44px);
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: -0.035em;
+  text-transform: none;
+}
+
+.full-size-guide {
+  max-width: 1200px;
+  margin-inline: auto;
+}
+
+.full-size-guide__brand {
+  display: grid;
+  gap: 8px;
+  justify-items: center;
+  padding: 112px 0 80px;
+  color: #080a08;
+}
+
+.full-size-guide__brand span:first-child {
+  padding-left: 0.42em;
+  font-size: clamp(36px, 5vw, 64px);
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: 0.42em;
+}
+
+.full-size-guide__brand span:last-child {
+  color: #686868;
+  font-size: 15px;
+  letter-spacing: 0.48em;
+  padding-left: 0.48em;
+}
+
+.full-size-guide__charts {
+  display: grid;
+  gap: 32px;
+}
+
+.full-size-guide__scroll {
+  max-width: 100%;
+  overflow-x: auto;
+  background: #222;
+  box-shadow: 0 3px 5px #0003;
+}
+
+.full-size-guide__scroll:focus-visible {
+  outline: 3px solid #ffcb58;
+  outline-offset: 4px;
+}
+
+.full-size-guide__table {
+  width: 100%;
+  min-width: 640px;
+  border-collapse: collapse;
+  color: #ddd;
+  font-size: 16px;
+  line-height: 1.5;
+  font-variant-numeric: tabular-nums;
+  text-align: left;
+}
+
+.full-size-guide__table caption {
+  padding: 15px 24px;
+  background: #222;
+  color: #eee;
+  font-size: 19px;
+  font-weight: 600;
+  text-align: left;
+}
+
+.full-size-guide__table th,
+.full-size-guide__table td {
+  padding: 18px 20px;
+  border: 1px solid #353535;
+  font-weight: 400;
+  white-space: nowrap;
+}
+
+.full-size-guide__table thead th {
+  padding-block: 12px;
+  background: #303030;
+  font-weight: 500;
+}
+
+.full-size-guide__table .full-size-guide__index {
+  width: 40px;
+  padding-inline: 10px;
+  background: #2b2b2b;
+  text-align: center;
+}
+
+@media (max-width: 700px) {
+  .full-size-guide-page {
+    width: calc(100% - 32px);
+    padding: 36px 0 64px;
+  }
+
+  .full-size-guide__brand {
+    padding: 64px 0 40px;
+  }
+
+  .full-size-guide__charts {
+    gap: 24px;
+  }
+
+  .full-size-guide__table {
+    font-size: 14px;
+  }
+
+  .full-size-guide__table caption {
+    padding: 14px 16px;
+    font-size: 16px;
+    white-space: normal;
+  }
+
+  .full-size-guide__table th,
+  .full-size-guide__table td {
+    padding: 14px 16px;
+  }
+}
+
 .help-content .size-guide-table-wrap {
   padding: 7px 0 12px;
 }

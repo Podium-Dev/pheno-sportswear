@@ -1,5 +1,4 @@
-import { faqGroups } from "@/data/site";
-import { SizeGuideTable } from "@/components/SizeGuideModal";
+import { faqGroups, productSizeCharts } from "@/data/site";
 
 export function FaqAccordions() {
   return (
@@ -22,15 +21,46 @@ export function FaqAccordions() {
 }
 
 export function SizeGuideContent() {
+  const charts = [
+    ["hoodies", "Pheno Hoodie Size Chart (Chest, Length & Sleeve)"],
+    ["joggers", "Pheno Jogger Full Size Chart (Waist, Inseam & Outseam)"],
+    ["t-shirts", "Pheno Tee And Tank Size Chart (With Cm + Inches)"],
+    ["shorts", "Pheno Shorts Full Size Chart (Waist, Liner & Shell Inseam)"],
+  ] as const;
+
   return (
-    <div className="help-content">
-      <p>
-        Use the measurements below as a guide when selecting your PHENO size. They are body measurements in centimetres, not garment measurements.
-      </p>
-      <SizeGuideTable />
-      <p>
-        If you are between sizes or need help choosing a fit, email <a className="text-link" href="mailto:info@phenosportswear.com">info@phenosportswear.com</a> before ordering.
-      </p>
+    <div className="full-size-guide">
+      <div className="full-size-guide__brand" aria-label="PHENO size charts">
+        <span aria-hidden="true">PHENO</span>
+        <span aria-hidden="true">SIZE CHARTS</span>
+      </div>
+      <div className="full-size-guide__charts">
+        {charts.map(([category, title]) => {
+          const chart = productSizeCharts[category];
+          return (
+            <div className="full-size-guide__scroll" key={category} role="region" aria-label={title} tabIndex={0}>
+              <table className="full-size-guide__table">
+                <caption>{title}</caption>
+                <thead>
+                  <tr>
+                    <th scope="col" aria-label="Row" />
+                    {chart.columns.map((column) => <th scope="col" key={column}>{column}</th>)}
+                  </tr>
+                </thead>
+                <tbody>
+                  {chart.rows.map((row, index) => (
+                    <tr key={row[0]}>
+                      <td className="full-size-guide__index">{index + 1}</td>
+                      <th scope="row">{row[0] === "2XL" ? "XXL" : row[0]}</th>
+                      {row.slice(1).map((value, cell) => <td key={cell}>{value}</td>)}
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          );
+        })}
+      </div>
     </div>
   );
 }
