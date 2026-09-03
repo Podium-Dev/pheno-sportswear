@@ -9953,23 +9953,6 @@ h2 {
   transform: scale(1.025);
 }
 
-.storefront-page--story .story-hero__media-meta {
-  display: flex;
-  width: min(100%, 366px);
-  justify-content: space-between;
-  padding-left: clamp(8px, 2vw, 24px);
-  color: rgb(255 255 255 / 0.62);
-  font-size: 9px;
-  font-weight: 700;
-  letter-spacing: 0.13em;
-  line-height: 1;
-  text-transform: uppercase;
-}
-
-.storefront-page--story .story-hero__media-meta span:first-child {
-  color: var(--story-yellow);
-}
-
 .storefront-page--story .story-hero__copy {
   align-content: center;
   gap: 24px;
@@ -10284,11 +10267,6 @@ h2 {
   .storefront-page--story .story-hero__image {
     width: min(100%, 300px);
     margin-left: 9px;
-  }
-
-  .storefront-page--story .story-hero__media-meta {
-    width: min(100%, 300px);
-    padding-left: 9px;
   }
 
   .storefront-page--story .story-hero__copy h2 {

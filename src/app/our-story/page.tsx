@@ -31,10 +31,6 @@ export default function OurStoryPage() {
                 aria-label="PHENO athlete training for the Pursue the Rise campaign"
               />
             </div>
-            <div className="story-hero__media-meta" aria-hidden="true">
-              <span>01</span>
-              <span>The work continues</span>
-            </div>
           </div>
           <div className="story-hero__copy">
             <p className="eyebrow">PHENOTYPE</p>
