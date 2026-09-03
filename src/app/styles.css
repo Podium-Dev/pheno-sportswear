@@ -9782,7 +9782,7 @@ h2 {
 }
 
 .storefront-page--product .product-feature-strip__image {
-  border: 1px solid var(--paper);
+  border: 4px solid #F8F8F5;
   background: var(--product-dark);
 }
 
