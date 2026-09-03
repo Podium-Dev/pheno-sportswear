@@ -151,27 +151,29 @@ function ProductEngineeredDetails({ details }: { details: NonNullable<Product["e
       <div className="engineered-details__layout">
         <div className="engineered-details__visual">
           <img src={details.image} alt={details.imageAlt} loading="lazy" decoding="async" />
-          <ol className="engineered-details__markers" aria-label="Engineered detail markers">
-            {details.details.map((detail) => {
-              if (!detail.marker) return null;
+          {!details.artworkHasEmbeddedCallouts ? (
+            <ol className="engineered-details__markers" aria-label="Engineered detail markers">
+              {details.details.map((detail) => {
+                if (!detail.marker) return null;
 
-              return (
-                <li
-                  key={detail.number}
-                  className={`engineered-details__marker engineered-details__marker--line-${detail.marker.line}`}
-                  style={{
-                    top: detail.marker.top,
-                    left: detail.marker.left,
-                    "--marker-line-length": detail.marker.lineLength,
-                    "--marker-size": details.markerSize,
-                  } as CSSProperties}
-                  aria-label={`${detail.number}. ${detail.title}`}
-                >
-                  <span aria-hidden="true">{detail.number}</span>
-                </li>
-              );
-            })}
-          </ol>
+                return (
+                  <li
+                    key={detail.number}
+                    className={`engineered-details__marker engineered-details__marker--line-${detail.marker.line}`}
+                    style={{
+                      top: detail.marker.top,
+                      left: detail.marker.left,
+                      "--marker-line-length": detail.marker.lineLength,
+                      "--marker-size": details.markerSize,
+                    } as CSSProperties}
+                    aria-label={`${detail.number}. ${detail.title}`}
+                  >
+                    <span aria-hidden="true">{detail.number}</span>
+                  </li>
+                );
+              })}
+            </ol>
+          ) : null}
         </div>
         <div className="engineered-details__content">
           <ol className="engineered-details__list" aria-label="Engineered construction details">

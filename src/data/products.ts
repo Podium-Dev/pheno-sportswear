@@ -125,16 +125,18 @@ function createEngineeredDetails(
   };
 }
 
-function createPhotoEngineeredDetails(
+function createEmbeddedCalloutDetails(
   image: string,
   imageAlt: string,
   details: ProductEngineeredDetail[],
 ): ProductEngineeredDetails {
-  return createEngineeredDetails(image, imageAlt, details);
+  return createEngineeredDetails(image, imageAlt, details, {
+    artworkHasEmbeddedCallouts: true,
+  });
 }
 
-const hoodieEngineeredDetails = createPhotoEngineeredDetails(
-  galleries.hoodie[0],
+const hoodieEngineeredDetails = createEmbeddedCalloutDetails(
+  "/images/product-anatomies/type-1-hoodie-callouts.png",
   "Black PHENO Type 1 Hoodie with numbered engineered construction details",
   [
     {
@@ -182,8 +184,8 @@ const hoodieEngineeredDetails = createPhotoEngineeredDetails(
   ],
 );
 
-const joggersEngineeredDetails = createPhotoEngineeredDetails(
-  galleries.joggers[0],
+const joggersEngineeredDetails = createEmbeddedCalloutDetails(
+  "/images/product-anatomies/type-1-joggers-callouts.png",
   "Black PHENO Type 1 Joggers with numbered engineered construction details",
   [
     {
@@ -237,8 +239,8 @@ function createPerformanceTopEngineeredDetails(
 ): ProductEngineeredDetails {
   const imagePath =
     productName === "T-Shirt"
-      ? galleries.tshirt[colour][0]
-      : galleries.tank[colour][0];
+      ? `/images/product-anatomies/type-1-tshirt-${colour.toLowerCase()}-callouts.png`
+      : `/images/product-anatomies/type-1-tank-${colour.toLowerCase()}-callouts.png`;
   const markerPositions =
     productName === "T-Shirt"
       ? colour === "White"
@@ -280,7 +282,7 @@ function createPerformanceTopEngineeredDetails(
             { top: "82%", left: "85%", line: "left", lineLength: "clamp(42px, 5vw, 70px)" },
           ] as const;
 
-  return createPhotoEngineeredDetails(
+  return createEmbeddedCalloutDetails(
     imagePath,
     `${colour} PHENO Type 1 ${productName} with numbered engineered construction details`,
     [
