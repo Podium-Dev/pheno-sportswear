@@ -10200,18 +10200,7 @@ h2 {
   margin-left: 10px;
   overflow: visible;
   background: var(--story-black);
-}
-
-.storefront-page--story .founder-section__media::before {
-  position: absolute;
-  right: 12%;
-  bottom: -11px;
-  left: -10px;
-  height: 78%;
-  border-bottom: 8px solid var(--story-yellow);
-  border-left: 8px solid var(--story-yellow);
-  content: "";
-  pointer-events: none;
+  box-shadow: -30px 30px 0 #FFCB58;
 }
 
 .storefront-page--story .founder-section__media img {
