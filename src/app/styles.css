@@ -9788,6 +9788,14 @@ h2 {
 
 .storefront-page--product .product-feature-strip__image img {
   filter: none;
+  mix-blend-mode: multiply;
+}
+
+.storefront-page--product .product-feature-strip__image--light {
+  border-color: #FFCB58;
+}
+
+.storefront-page--product .product-feature-strip__image--light img {
   mix-blend-mode: normal;
 }
 

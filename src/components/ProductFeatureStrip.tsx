@@ -114,7 +114,9 @@ export function ProductFeatureStrip({ features }: { features: ProductFeature[] }
         {features.map((feature) => (
           <li className="product-feature-strip__item" key={feature.id}>
             <figure>
-              <div className="product-feature-strip__image">
+              <div
+                className={`product-feature-strip__image${feature.image.includes("/white/") ? " product-feature-strip__image--light" : ""}`}
+              >
                 <img
                   src={feature.image}
                   alt={feature.imageAlt}
