@@ -9906,23 +9906,8 @@ h2 {
   min-height: clamp(460px, 34vw, 520px);
   padding: clamp(28px, 4vw, 56px);
   overflow: hidden;
-  background:
-    linear-gradient(119deg, transparent 0 68%, rgb(255 203 88 / 0.08) 68% 69%, transparent 69%),
-    linear-gradient(132deg, transparent 0 79%, rgb(255 255 255 / 0.05) 79% 80%, transparent 80%),
-    var(--story-black);
+  background: var(--story-black);
   color: #ffffff;
-}
-
-.storefront-page--story .story-hero::after {
-  position: absolute;
-  top: -26%;
-  right: -7%;
-  width: 29%;
-  height: 155%;
-  border-left: 1px solid rgb(255 203 88 / 0.24);
-  content: "";
-  pointer-events: none;
-  transform: rotate(17deg);
 }
 
 .storefront-page--story .story-hero > * {
