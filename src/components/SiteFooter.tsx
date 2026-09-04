@@ -15,7 +15,7 @@ const footerGroups = [
     links: [
       ["Our story", "/our-story"],
       ["Train with Yousef", "/train-with-yousef"],
-      ["Core values", "/our-story#principles-title"],
+      ["Core values", "/core-values"],
     ],
   },
   {
