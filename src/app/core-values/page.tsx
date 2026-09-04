@@ -93,16 +93,7 @@ export default function CoreValuesPage() {
           ))}
         </section>
 
-        <section className="core-values-cta" aria-labelledby="core-values-cta-title">
-          <img src="/images/campaign-athlete.jpg" alt="PHENO training equipment" />
-          <div className="core-values-cta__veil" aria-hidden="true" />
-          <div className="core-values-cta__content">
-            <p>Join the movement</p>
-            <h2 id="core-values-cta-title">Pursue the rise.</h2>
-            <span>Performance starts with purpose.</span>
-            <a href="/shop" className="core-values-cta__button">Shop now <span aria-hidden="true">›</span></a>
-          </div>
-        </section>
+
       </div>
     </StorefrontPage>
   );
