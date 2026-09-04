@@ -5,6 +5,7 @@ export type AccountOrderStatus = "Processing" | "In transit" | "Completed" | "De
 export type AccountCustomer = {
   firstName: string;
   fullName: string;
+  lastName: string;
   email: string;
   phone: string;
 };
@@ -43,6 +44,12 @@ export type AccountOrder = {
   shippingAddress: AccountAddress;
 };
 
+export type AccountEmailPreferences = {
+  orderUpdates: boolean;
+  newDrops: boolean;
+  marketing: boolean;
+};
+
 export type AccountDashboardData = {
   customer: AccountCustomer;
   defaultAddress: AccountAddress;
@@ -51,6 +58,12 @@ export type AccountDashboardData = {
   orders: AccountOrder[];
   overviewOrders: AccountOrder[];
   totalSpent: string;
+  customerSince: string;
+  accountStatus: "Active" | "Inactive";
+  defaultCurrency: string;
+  language: string;
+  emailPreferences: AccountEmailPreferences;
+  passwordLastUpdated: string;
   promotionalImage: string;
 };
 
@@ -119,6 +132,7 @@ const mockDashboardData: Omit<AccountDashboardData, "overviewOrders"> = {
   customer: {
     firstName: "Alex",
     fullName: "Alex Johnson",
+    lastName: "Johnson",
     email: "alex.johnson@email.com",
     phone: "+44 7700 900123",
   },
@@ -268,6 +282,12 @@ const mockDashboardData: Omit<AccountDashboardData, "overviewOrders"> = {
     },
   ],
   totalSpent: "£146.00",
+  customerSince: "21 Jun 2026",
+  accountStatus: "Active",
+  defaultCurrency: "GBP (£)",
+  language: "English",
+  emailPreferences: { orderUpdates: true, newDrops: true, marketing: false },
+  passwordLastUpdated: "12 Aug 2026",
   promotionalImage: "/images/campaign-athlete.jpg",
 };
 
