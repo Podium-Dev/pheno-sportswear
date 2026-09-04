@@ -54,7 +54,7 @@ export default function TrainWithYousefPage() {
 
         <section className="coaching-process" aria-labelledby="process-title">
           <div className="coaching-process__visual">
-            <img src="/images/editorial-left.jpg" alt="Runners training together on a track" />
+            <img src="/images/coaching-process-training.png" alt="Two athletes standing together beside boxing bags" width={3072} height={4096} />
           </div>
           <div className="coaching-process__content">
             <div>
@@ -80,7 +80,7 @@ export default function TrainWithYousefPage() {
             </div>
           </div>
           <div className="coaching-faq__visual">
-            <img src="/images/editorial-right.jpg" alt="Athletes training with barbells in a gym" />
+            <img src="/images/coaching-faq-training.png" alt="Athlete training in a boxing gym" width={1440} height={1920} />
           </div>
         </section>
 
