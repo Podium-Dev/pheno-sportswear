@@ -28,8 +28,7 @@ export default function TrainWithYousefPage() {
             </div>
           </div>
           <div className="coaching-hero__visual">
-            <img src="/images/campaign-athlete.jpg" alt="Athlete preparing for a training session" />
-            <span>FINAL COACHING PHOTOGRAPH TO BE PROVIDED</span>
+            <img src="/images/yousef-coaching-hero.png" alt="Yousef Jaafar in a boxing stance wearing PHENO sportswear" width={1440} height={1920} />
           </div>
         </section>
 

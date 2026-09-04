@@ -3201,7 +3201,6 @@ img {
   height: 100%;
   min-height: 480px;
   object-fit: cover;
-  filter: grayscale(1) contrast(0.95);
 }
 
 .coaching-hero__visual span {
