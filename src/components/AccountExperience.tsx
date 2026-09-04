@@ -3,6 +3,7 @@
 import { type FormEvent, useState } from "react";
 import {
   IconBox,
+  IconChevronLeft,
   IconChevronRight,
   IconCurrencyPound,
   IconLayoutGrid,
@@ -27,17 +28,35 @@ const accountNavItems = [
   { id: "profile", label: "Profile", Icon: IconUser },
 ] as const satisfies Array<{ id: AccountView; label: string; Icon: typeof IconLayoutGrid }>;
 
+const accountOrderFilters = ["All orders", "Processing", "In transit", "Completed", "Cancelled"] as const;
+type AccountOrderFilter = (typeof accountOrderFilters)[number];
+
 type AuthMode = "sign-in" | "create-account";
 type AccountField = "email" | "password";
 type AccountFieldErrors = Partial<Record<AccountField, string>>;
 
 function AccountStatus({ status }: { status: AccountOrderStatus }) {
+  const statusClass = status.toLowerCase().replace(/\s+/g, "-");
+
   return (
-    <span className={`account-status account-status--${status === "In transit" ? "transit" : "complete"}`}>
+    <span className={`account-status account-status--${statusClass}`}>
       <span className="account-status__marker" aria-hidden="true" />
       {status}
     </span>
   );
+}
+
+function getOrderStatusMessage(status: AccountOrderStatus) {
+  switch (status) {
+    case "In transit":
+      return "Your order is on its way.";
+    case "Processing":
+      return "Your order is being prepared.";
+    case "Cancelled":
+      return "This order was cancelled.";
+    default:
+      return "Your order has been delivered.";
+  }
 }
 
 function AccountOrderAction({ onClick }: { onClick: () => void }) {
@@ -53,6 +72,7 @@ export function AccountExperience() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [activeView, setActiveView] = useState<AccountView>("overview");
   const [selectedOrderId, setSelectedOrderId] = useState<string | null>(null);
+  const [orderFilter, setOrderFilter] = useState<AccountOrderFilter>("All orders");
   const [authMode, setAuthMode] = useState<AuthMode>("sign-in");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -163,6 +183,19 @@ export function AccountExperience() {
     setProfileFeedback("");
     setAddressFeedback("");
   };
+
+  const renderPromo = () => (
+    <aside className="account-promo" aria-labelledby="account-promo-title">
+      <img src={dashboard.promotionalImage} alt="PHENO training space with barbells" />
+      <div className="account-promo__overlay" />
+      <div className="account-promo__content">
+        <p className="account-eyebrow">PURSUE THE RISE</p>
+        <h2 id="account-promo-title">Keep pushing. Keep growing.</h2>
+        <p>New drops. Proven performance. Built for your journey.</p>
+        <a className="button account-promo__cta" href="/shop">Shop new arrivals <IconChevronRight size={18} stroke={1.7} aria-hidden="true" /></a>
+      </div>
+    </aside>
+  );
 
   const renderAuth = () => (
     <section className="account-auth" aria-labelledby="account-auth-title">
@@ -285,12 +318,12 @@ export function AccountExperience() {
         <div className="account-metric">
           <span className="account-metric__icon" aria-hidden="true"><IconShoppingBag size={29} stroke={1.45} /></span>
           <dt>Orders</dt>
-          <dd>{dashboard.orders.length}</dd>
+          <dd>{dashboard.overviewOrders.length}</dd>
         </div>
         <div className="account-metric">
           <span className="account-metric__icon" aria-hidden="true"><IconTruckDelivery size={30} stroke={1.45} /></span>
           <dt>Active order</dt>
-          <dd>{dashboard.orders.filter((order) => order.status === "In transit").length}</dd>
+          <dd>{dashboard.overviewOrders.filter((order) => order.status === "In transit").length}</dd>
         </div>
         <div className="account-metric">
           <span className="account-metric__icon" aria-hidden="true"><IconCurrencyPound size={30} stroke={1.45} /></span>
@@ -323,7 +356,7 @@ export function AccountExperience() {
                 </tr>
               </thead>
               <tbody>
-                {dashboard.orders.map((order) => (
+                {dashboard.overviewOrders.map((order) => (
                   <tr key={order.id}>
                     <th scope="row">{order.id}</th>
                     <td>{order.date}</td>
@@ -365,16 +398,6 @@ export function AccountExperience() {
         </div>
       </div>
 
-      <aside className="account-promo" aria-labelledby="account-promo-title">
-        <img src={dashboard.promotionalImage} alt="PHENO training space with barbells" />
-        <div className="account-promo__overlay" />
-        <div className="account-promo__content">
-          <p className="account-eyebrow">PURSUE THE RISE</p>
-          <h2 id="account-promo-title">Keep pushing. Keep growing.</h2>
-          <p>New drops. Proven performance. Built for your journey.</p>
-          <a className="button account-promo__cta" href="/shop">Shop new arrivals <IconChevronRight size={18} stroke={1.7} aria-hidden="true" /></a>
-        </div>
-      </aside>
     </div>
   );
 
@@ -394,7 +417,7 @@ export function AccountExperience() {
               <p className="account-panel__eyebrow">{selectedOrder.date}</p>
               <h2 id="order-detail-title">{selectedOrder.id}</h2>
             </div>
-            <p>{selectedOrder.status === "In transit" ? "Your order is on its way." : "Your order has been delivered."}</p>
+            <p>{getOrderStatusMessage(selectedOrder.status)}</p>
           </div>
 
           <div className="account-order-detail__grid">
@@ -441,39 +464,102 @@ export function AccountExperience() {
       );
     }
 
+    const filteredOrders = orderFilter === "All orders"
+      ? dashboard.orders
+      : dashboard.orders.filter((order) => order.status === orderFilter);
+
     return (
-      <section className="account-panel account-order-history" aria-labelledby="order-history-title">
-        <div className="account-panel__header account-panel__header--stacked">
-          <div>
-            <p className="account-panel__eyebrow">ORDERS</p>
-            <h2 id="order-history-title">Order history</h2>
-          </div>
-          <p>Review the products, totals and delivery details for this sample account.</p>
+      <div className="account-order-view">
+        <div className="account-orders-layout">
+          <section className="account-panel account-order-history" aria-labelledby="order-history-title">
+            <div className="account-order-filters" role="tablist" aria-label="Filter orders by status">
+              {accountOrderFilters.map((filter) => (
+                <button
+                  className={orderFilter === filter ? "account-order-filter account-order-filter--active" : "account-order-filter"}
+                  key={filter}
+                  type="button"
+                  role="tab"
+                  aria-selected={orderFilter === filter}
+                  onClick={() => setOrderFilter(filter)}
+                >
+                  {filter}
+                </button>
+              ))}
+            </div>
+
+            <div className="account-orders-table-wrap">
+              <table className="account-orders-table account-orders-table--history">
+                <caption className="account-visually-hidden">PHENO order history</caption>
+                <thead>
+                  <tr>
+                    <th scope="col">Order</th>
+                    <th scope="col">Date</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Total</th>
+                    <th scope="col">Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {filteredOrders.length > 0 ? filteredOrders.map((order) => (
+                    <tr key={order.id}>
+                      <th scope="row">{order.id}</th>
+                      <td>{order.date}</td>
+                      <td><AccountStatus status={order.status} /></td>
+                      <td>{order.total}</td>
+                      <td><AccountOrderAction onClick={() => openOrder(order)} /></td>
+                    </tr>
+                  )) : (
+                    <tr>
+                      <td colSpan={5}>
+                        <p className="account-orders-empty">No orders match this filter.</p>
+                      </td>
+                    </tr>
+                  )}
+                </tbody>
+              </table>
+            </div>
+
+            <div className="account-order-footer">
+              <p>Showing {filteredOrders.length > 0 ? `1 to ${filteredOrders.length}` : "0"} of {dashboard.orders.length} orders</p>
+              <div className="account-pagination" aria-label="Order pages">
+                <button type="button" aria-label="Previous page" disabled>
+                  <IconChevronLeft size={17} stroke={1.7} aria-hidden="true" />
+                </button>
+                <button className="account-pagination__current" type="button" aria-current="page">1</button>
+                <button type="button" aria-label="Next page" disabled>
+                  <IconChevronRight size={17} stroke={1.7} aria-hidden="true" />
+                </button>
+              </div>
+            </div>
+          </section>
+
+          <aside className="account-orders-rail" aria-label="Order tools">
+            <section className="account-panel account-filter-panel" aria-labelledby="filter-orders-title">
+              <div className="account-panel__header">
+                <h2 id="filter-orders-title">Filter orders</h2>
+                <button className="account-clear-filter" type="button" onClick={() => setOrderFilter("All orders")}>Clear all</button>
+              </div>
+              <div className="account-filter-panel__field">
+                <label htmlFor="account-order-status">Status</label>
+                <select
+                  id="account-order-status"
+                  value={orderFilter}
+                  onChange={(event) => setOrderFilter(event.target.value as AccountOrderFilter)}
+                >
+                  {accountOrderFilters.map((filter) => <option key={filter} value={filter}>{filter}</option>)}
+                </select>
+              </div>
+            </section>
+
+            <section className="account-panel account-help-panel" aria-labelledby="account-help-title">
+              <h2 id="account-help-title">Need help?</h2>
+              <p>If you have any questions about your orders, our support team is here to help.</p>
+              <a className="account-outline-cta" href="/contact">Contact support <IconChevronRight size={17} stroke={1.7} aria-hidden="true" /></a>
+            </section>
+          </aside>
         </div>
-        <div className="account-order-list">
-          {dashboard.orders.map((order) => (
-            <article className="account-order-card" key={order.id}>
-              <div>
-                <span className="account-order-card__label">Order</span>
-                <h3>{order.id}</h3>
-              </div>
-              <div>
-                <span className="account-order-card__label">Date</span>
-                <p>{order.date}</p>
-              </div>
-              <div>
-                <span className="account-order-card__label">Status</span>
-                <AccountStatus status={order.status} />
-              </div>
-              <div>
-                <span className="account-order-card__label">Total</span>
-                <p>{order.total}</p>
-              </div>
-              <AccountOrderAction onClick={() => openOrder(order)} />
-            </article>
-          ))}
-        </div>
-      </section>
+
+      </div>
     );
   };
 
@@ -537,11 +623,21 @@ export function AccountExperience() {
     <section className="account-dashboard" aria-labelledby="account-dashboard-title">
       <header className="account-page__intro account-page__intro--dashboard">
         <p className="account-eyebrow">MY ACCOUNT</p>
-        <h1 id="account-dashboard-title">Welcome back, {dashboard.customer.firstName}</h1>
-        <p className="account-page__summary">Manage your orders, details and account preferences.</p>
+        <h1 id="account-dashboard-title">
+          {activeView === "overview" ? `Welcome back, ${dashboard.customer.firstName}` : null}
+          {activeView === "orders" ? "Orders" : null}
+          {activeView === "addresses" ? "Addresses" : null}
+          {activeView === "profile" ? "Profile" : null}
+        </h1>
+        <p className="account-page__summary">
+          {activeView === "overview" ? "Manage your orders, details and account preferences." : null}
+          {activeView === "orders" ? "View and track all your orders." : null}
+          {activeView === "addresses" ? "Manage your saved delivery details." : null}
+          {activeView === "profile" ? "Manage your account details and preferences." : null}
+        </p>
       </header>
 
-      <div className="account-dashboard__layout">
+      <div className={`account-dashboard__layout account-dashboard__layout--${activeView}`}>
         <aside className="account-sidebar" aria-label="Account navigation">
           <nav className="account-sidebar__nav">
             {accountNavItems.map((item) => (
@@ -576,6 +672,8 @@ export function AccountExperience() {
           {activeView === "profile" ? renderProfile() : null}
         </div>
       </div>
+
+      {renderPromo()}
     </section>
   );
 

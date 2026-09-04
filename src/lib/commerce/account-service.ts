@@ -1,6 +1,6 @@
 export type AccountView = "overview" | "orders" | "addresses" | "profile";
 
-export type AccountOrderStatus = "In transit" | "Completed";
+export type AccountOrderStatus = "Processing" | "In transit" | "Completed" | "Delivered" | "Cancelled";
 
 export type AccountCustomer = {
   firstName: string;
@@ -42,6 +42,7 @@ export type AccountDashboardData = {
   customer: AccountCustomer;
   defaultAddress: AccountAddress;
   orders: AccountOrder[];
+  overviewOrders: AccountOrder[];
   totalSpent: string;
   promotionalImage: string;
 };
@@ -71,7 +72,7 @@ const mockAddress: AccountAddress = {
   country: "United Kingdom",
 };
 
-const mockDashboard: AccountDashboardData = {
+const mockDashboardData: Omit<AccountDashboardData, "overviewOrders"> = {
   customer: {
     firstName: "Alex",
     fullName: "Alex Johnson",
@@ -120,9 +121,114 @@ const mockDashboard: AccountDashboardData = {
       ],
       shippingAddress: mockAddress,
     },
+    {
+      id: "#PH-0876",
+      date: "01 Aug 2026",
+      status: "Completed",
+      total: "£142.00",
+      subtotal: "£134.00",
+      shipping: "£8.00",
+      items: [
+        {
+          id: "type-1-joggers",
+          name: "Type 1 Joggers",
+          variant: "Black / Small",
+          quantity: 1,
+          unitPrice: "£134.00",
+          image: "/images/type-1-joggers.jpg",
+          alt: "Black PHENO Type 1 joggers",
+        },
+      ],
+      shippingAddress: mockAddress,
+    },
+    {
+      id: "#PH-0750",
+      date: "18 Jul 2026",
+      status: "Delivered",
+      total: "£96.00",
+      subtotal: "£88.00",
+      shipping: "£8.00",
+      items: [
+        {
+          id: "type-1-shorts",
+          name: "Type 1 Shorts",
+          variant: "Black / Small",
+          quantity: 1,
+          unitPrice: "£88.00",
+          image: "/images/type-1-shorts.jpg",
+          alt: "Black PHENO Type 1 shorts",
+        },
+      ],
+      shippingAddress: mockAddress,
+    },
+    {
+      id: "#PH-0615",
+      date: "05 Jul 2026",
+      status: "Completed",
+      total: "£58.00",
+      subtotal: "£50.00",
+      shipping: "£8.00",
+      items: [
+        {
+          id: "type-1-tank",
+          name: "Type 1 Tank",
+          variant: "White / Small",
+          quantity: 1,
+          unitPrice: "£50.00",
+          image: "/images/type-1-tank-white.jpg",
+          alt: "White PHENO Type 1 tank",
+        },
+      ],
+      shippingAddress: mockAddress,
+    },
+    {
+      id: "#PH-0488",
+      date: "21 Jun 2026",
+      status: "Completed",
+      total: "£110.00",
+      subtotal: "£102.00",
+      shipping: "£8.00",
+      items: [
+        {
+          id: "type-1-joggers-2",
+          name: "Type 1 Joggers",
+          variant: "Black / Medium",
+          quantity: 1,
+          unitPrice: "£102.00",
+          image: "/images/type-1-joggers.jpg",
+          alt: "Black PHENO Type 1 joggers",
+        },
+      ],
+      shippingAddress: mockAddress,
+    },
+    {
+      id: "#PH-0312",
+      date: "07 Jun 2026",
+      status: "Completed",
+      total: "£72.00",
+      subtotal: "£64.00",
+      shipping: "£8.00",
+      items: [
+        {
+          id: "type-1-tshirt-2",
+          name: "Type 1 T-Shirt",
+          variant: "Black / Small",
+          quantity: 1,
+          unitPrice: "£64.00",
+          image: "/images/type-1-tshirt.jpg",
+          alt: "Black PHENO Type 1 T-shirt",
+        },
+      ],
+      shippingAddress: mockAddress,
+    },
   ],
   totalSpent: "£146.00",
   promotionalImage: "/images/campaign-athlete.jpg",
+};
+
+const mockDashboard: AccountDashboardData = {
+  ...mockDashboardData,
+  overviewOrders: mockDashboardData.orders.slice(0, 2),
 };
 
 const validEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -156,4 +262,3 @@ export const mockAccountService: CustomerAccountService = {
 };
 
 export const accountService: CustomerAccountService = mockAccountService;
-
