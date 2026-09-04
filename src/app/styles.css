@@ -10942,3 +10942,41 @@ h2 {
     margin-top: 34px;
   }
 }
+
+
+/* Compact vertical rhythm for the homepage review carousel. */
+.retail-testimonials {
+  padding-block: clamp(46px, 5vw, 70px);
+}
+
+.retail-testimonials .retail-testimonials__stage {
+  min-height: clamp(210px, 18vw, 272px);
+  margin-top: 0;
+}
+
+.retail-testimonials .retail-testimonial__stars {
+  margin-bottom: clamp(18px, 2vw, 26px);
+}
+
+.retail-testimonials .retail-testimonial figcaption {
+  margin-top: clamp(18px, 2vw, 25px);
+}
+
+.retail-testimonials .retail-testimonials__dots {
+  margin-top: 12px;
+}
+
+@media (max-width: 720px) {
+  .retail-testimonials {
+    padding-block: 46px 50px;
+  }
+
+  .retail-testimonials .retail-testimonials__stage {
+    min-height: 260px;
+    margin-top: 0;
+  }
+
+  .retail-testimonials .retail-testimonials__dots {
+    margin-top: 34px;
+  }
+}
