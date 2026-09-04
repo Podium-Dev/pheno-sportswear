@@ -6,11 +6,14 @@ import {
   IconChevronLeft,
   IconChevronRight,
   IconCurrencyPound,
+  IconInfoCircle,
   IconLayoutGrid,
   IconLogout,
   IconMapPin,
   IconPencil,
+  IconPlus,
   IconShoppingBag,
+  IconTrash,
   IconTruckDelivery,
   IconUser,
 } from "@tabler/icons-react";
@@ -30,6 +33,7 @@ const accountNavItems = [
 
 const accountOrderFilters = ["All orders", "Processing", "In transit", "Completed", "Cancelled"] as const;
 type AccountOrderFilter = (typeof accountOrderFilters)[number];
+type AddressKind = "delivery" | "billing";
 
 type AuthMode = "sign-in" | "create-account";
 type AccountField = "email" | "password";
@@ -73,6 +77,7 @@ export function AccountExperience() {
   const [activeView, setActiveView] = useState<AccountView>("overview");
   const [selectedOrderId, setSelectedOrderId] = useState<string | null>(null);
   const [orderFilter, setOrderFilter] = useState<AccountOrderFilter>("All orders");
+  const [addressKind, setAddressKind] = useState<AddressKind>("delivery");
   const [authMode, setAuthMode] = useState<AuthMode>("sign-in");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -173,8 +178,15 @@ export function AccountExperience() {
     setProfileFeedback("Your changes are saved locally for this frontend preview.");
   };
 
-  const openAddressEditor = () => {
-    setAddressFeedback("Address editing will connect to the selected commerce platform later.");
+  const handleAddressAction = (action: "add" | "edit" | "remove", addressLabel?: string) => {
+    const subject = addressLabel ? ` for ${addressLabel}` : "";
+    const messages = {
+      add: "Adding a saved address will connect to the selected commerce platform later.",
+      edit: `Address editing${subject} will connect to the selected commerce platform later.`,
+      remove: `Address removal${subject} will connect to the selected commerce platform later.`,
+    };
+
+    setAddressFeedback(messages[action]);
   };
 
   const openOrder = (order: AccountOrder) => {
@@ -563,31 +575,97 @@ export function AccountExperience() {
     );
   };
 
-  const renderAddresses = () => (
-    <section className="account-panel account-addresses-view" aria-labelledby="addresses-title">
-      <div className="account-panel__header account-panel__header--stacked">
-        <div>
-          <p className="account-panel__eyebrow">DELIVERY</p>
-          <h2 id="addresses-title">Addresses</h2>
-        </div>
-        <p>Keep the address used for your next session ready to go.</p>
+  const renderAddresses = () => {
+    const savedAddresses = addressKind === "delivery" ? dashboard.addresses : dashboard.billingAddresses;
+
+    return (
+      <div className="account-addresses-layout">
+        <section className="account-panel account-addresses-view" aria-labelledby="addresses-title">
+          <div className="account-addresses__toolbar">
+            <div className="account-addresses__tabs" role="tablist" aria-label="Address type">
+              <button
+                className={addressKind === "delivery" ? "account-addresses__tab account-addresses__tab--active" : "account-addresses__tab"}
+                type="button"
+                role="tab"
+                aria-selected={addressKind === "delivery"}
+                onClick={() => setAddressKind("delivery")}
+              >
+                Delivery addresses
+              </button>
+              <button
+                className={addressKind === "billing" ? "account-addresses__tab account-addresses__tab--active" : "account-addresses__tab"}
+                type="button"
+                role="tab"
+                aria-selected={addressKind === "billing"}
+                onClick={() => setAddressKind("billing")}
+              >
+                Billing addresses
+              </button>
+            </div>
+            <button className="button account-addresses__add" type="button" onClick={() => handleAddressAction("add")}>
+              <IconPlus size={15} stroke={2} aria-hidden="true" />
+              Add new address
+            </button>
+          </div>
+
+          <div className="account-addresses__list">
+            {savedAddresses.map((address) => (
+              <article className="account-address-card" key={`${addressKind}-${address.label}`}>
+                <div className="account-address-card__content">
+                  {address.isDefault ? <span className="account-address-card__badge">Default</span> : null}
+                  <h2 id={address.isDefault ? "addresses-title" : undefined}>{address.label}</h2>
+                  <address className="account-address">
+                    <strong>{address.fullName}</strong>
+                    <span>{address.line1}</span>
+                    {address.line2 ? <span>{address.line2}</span> : null}
+                    <span>{address.city}, {address.region}</span>
+                    <span>{address.country}</span>
+                    <span>{address.phone}</span>
+                  </address>
+                </div>
+
+                <span className="account-address-card__type">
+                  <IconTruckDelivery size={14} stroke={1.7} aria-hidden="true" />
+                  {address.type}
+                </span>
+
+                <div className="account-address-card__actions">
+                  <button type="button" onClick={() => handleAddressAction("edit", address.label)}>
+                    <IconPencil size={15} stroke={1.7} aria-hidden="true" />
+                    Edit
+                  </button>
+                  <button type="button" onClick={() => handleAddressAction("remove", address.label)}>
+                    <IconTrash size={15} stroke={1.7} aria-hidden="true" />
+                    Remove
+                  </button>
+                </div>
+              </article>
+            ))}
+          </div>
+
+          <p className="account-addresses__notice">
+            <IconInfoCircle size={17} stroke={1.7} aria-hidden="true" />
+            You can add multiple delivery addresses and choose your preferred one at checkout.
+          </p>
+          {addressFeedback ? <p className="account-view-feedback" role="status">{addressFeedback}</p> : null}
+        </section>
+
+        <aside className="account-addresses__rail" aria-label="Address help">
+          <section className="account-panel account-addresses__help">
+            <h2>About addresses</h2>
+            <p>Your default delivery address will be used at checkout when no other address is selected.</p>
+            <p>You can add, edit or remove addresses at any time.</p>
+          </section>
+
+          <section className="account-panel account-addresses__help">
+            <h2>Need help?</h2>
+            <p>If you have any questions about your addresses, our support team is here to help.</p>
+            <a className="account-outline-cta" href="/contact">Contact support <IconChevronRight size={17} stroke={1.7} aria-hidden="true" /></a>
+          </section>
+        </aside>
       </div>
-      <div className="account-address-card">
-        <div className="account-address-card__header">
-          <h3>Default address</h3>
-          <span>Primary</span>
-        </div>
-        <address className="account-address">
-          <strong>{dashboard.defaultAddress.fullName}</strong>
-          <span>{dashboard.defaultAddress.line1}</span>
-          <span>{dashboard.defaultAddress.city}, {dashboard.defaultAddress.region}</span>
-          <span>{dashboard.defaultAddress.country}</span>
-        </address>
-        <button className="account-text-link" type="button" onClick={openAddressEditor}>Edit address <span aria-hidden="true">↗</span></button>
-      </div>
-      {addressFeedback ? <p className="account-view-feedback" role="status">{addressFeedback}</p> : null}
-    </section>
-  );
+    );
+  };
 
   const renderProfile = () => (
     <section className="account-panel account-profile-view" aria-labelledby="profile-title">
@@ -632,7 +710,7 @@ export function AccountExperience() {
         <p className="account-page__summary">
           {activeView === "overview" ? "Manage your orders, details and account preferences." : null}
           {activeView === "orders" ? "View and track all your orders." : null}
-          {activeView === "addresses" ? "Manage your saved delivery details." : null}
+          {activeView === "addresses" ? "Manage your delivery and billing addresses." : null}
           {activeView === "profile" ? "Manage your account details and preferences." : null}
         </p>
       </header>
