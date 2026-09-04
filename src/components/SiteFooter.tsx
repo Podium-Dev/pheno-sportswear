@@ -13,6 +13,7 @@ const footerGroups = [
   {
     title: "Quick links",
     links: [
+      ["Home", "/"],
       ["Our story", "/our-story"],
       ["Train with Yousef", "/train-with-yousef"],
       ["Core values", "/core-values"],
