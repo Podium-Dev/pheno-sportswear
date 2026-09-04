@@ -5,11 +5,20 @@ import { postForm } from "@/components/Forms";
 
 type ModalStatus = "idle" | "submitting" | "success" | "error";
 
-const EARLY_ACCESS_STORAGE_KEY = "pheno-early-access-seen-v1";
+const EARLY_ACCESS_STORAGE_KEY = "pheno-early-access-seen-date-v1";
+
+function getLocalDateKey() {
+  const now = new Date();
+  const year = now.getFullYear();
+  const month = String(now.getMonth() + 1).padStart(2, "0");
+  const day = String(now.getDate()).padStart(2, "0");
+
+  return `${year}-${month}-${day}`;
+}
 
 function markAsSeen() {
   try {
-    window.sessionStorage.setItem(EARLY_ACCESS_STORAGE_KEY, "1");
+    window.localStorage.setItem(EARLY_ACCESS_STORAGE_KEY, getLocalDateKey());
   } catch {
     // The modal can still be used when browser storage is unavailable.
   }
@@ -17,7 +26,7 @@ function markAsSeen() {
 
 function hasBeenSeen() {
   try {
-    return window.sessionStorage.getItem(EARLY_ACCESS_STORAGE_KEY) === "1";
+    return window.localStorage.getItem(EARLY_ACCESS_STORAGE_KEY) === getLocalDateKey();
   } catch {
     return false;
   }
