@@ -45,7 +45,7 @@
   font-family: var(--heading-font) !important;
   font-weight: 400 !important;
   letter-spacing: -0.06em;
-  text-transform: uppercase;
+  text-transform: capitalize;
 }
 
 .account-page__intro h1 {
@@ -1151,7 +1151,7 @@
   font-size: 21px !important;
   font-weight: 400 !important;
   letter-spacing: -0.05em;
-  text-transform: uppercase;
+  text-transform: capitalize;
 }
 
 .account-order-items {
@@ -1192,7 +1192,7 @@
   font-size: 17px;
   font-weight: 400;
   letter-spacing: -0.04em;
-  text-transform: uppercase;
+  text-transform: capitalize;
 }
 
 .account-order-item__copy p,
