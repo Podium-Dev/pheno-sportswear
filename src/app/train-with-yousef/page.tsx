@@ -81,13 +81,20 @@ export default function TrainWithYousefPage() {
           </div>
         </section>
 
-        <section className="booking-section" id="register-interest" aria-label="Book a one to one coaching session">
-          <iframe
-            src="https://podium-cal-staging.up.railway.app/embed/pheno"
-            title="PHENO Sportswear booking"
-            style={{ width: "100%", minHeight: 900, border: 0 }}
-            loading="lazy"
-          />
+        <section className="booking-section" id="register-interest" aria-labelledby="booking-title">
+          <div className="booking-section__intro">
+            <p className="eyebrow">BOOK A 1:1</p>
+            <h2 id="booking-title">Book your session.</h2>
+            <p>Choose a time that works for you, then tell Yousef a little about what you want to work on.</p>
+          </div>
+          <div className="booking-section__embed">
+            <iframe
+              src="https://podium-cal-staging.up.railway.app/embed/pheno"
+              title="PHENO Sportswear booking"
+              style={{ width: "100%", minHeight: 900, border: 0 }}
+              loading="lazy"
+            />
+          </div>
         </section>
       </div>
     </StorefrontPage>
