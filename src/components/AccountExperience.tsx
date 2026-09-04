@@ -84,9 +84,11 @@ export function AccountExperience() {
   const [fieldErrors, setFieldErrors] = useState<AccountFieldErrors>({});
   const [authFeedback, setAuthFeedback] = useState("");
   const [authFeedbackTone, setAuthFeedbackTone] = useState<"error" | "info" | "">("");
-  const [profileName, setProfileName] = useState(dashboard.customer.fullName);
+  const [profileFirstName, setProfileFirstName] = useState(dashboard.customer.firstName);
+  const [profileLastName, setProfileLastName] = useState(dashboard.customer.lastName);
   const [profileEmail, setProfileEmail] = useState(dashboard.customer.email);
   const [profilePhone, setProfilePhone] = useState(dashboard.customer.phone);
+  const [emailPreferences, setEmailPreferences] = useState(dashboard.emailPreferences);
   const [profileFeedback, setProfileFeedback] = useState("");
   const [addressFeedback, setAddressFeedback] = useState("");
 
@@ -173,9 +175,12 @@ export function AccountExperience() {
     setAuthFeedbackTone("info");
   };
 
-  const handleProfileSubmit = (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
+  const handleProfileSave = () => {
     setProfileFeedback("Your changes are saved locally for this frontend preview.");
+  };
+
+  const handlePreferenceSave = () => {
+    setProfileFeedback("Your email preferences are saved locally for this frontend preview.");
   };
 
   const handleAddressAction = (action: "add" | "edit" | "remove", addressLabel?: string) => {
@@ -659,38 +664,65 @@ export function AccountExperience() {
 
           <section className="account-panel account-addresses__help">
             <h2>Need help?</h2>
-            <p>If you have any questions about your addresses, our support team is here to help.</p>
-            <a className="account-outline-cta" href="/contact">Contact support <IconChevronRight size={17} stroke={1.7} aria-hidden="true" /></a>
-          </section>
-        </aside>
-      </div>
-    );
-  };
+            <p>If you have any questions about y  const renderProfile = () => (
+    <div className="account-profile-layout">
+      <section className="account-panel account-profile-view" aria-labelledby="profile-title">
+        <div className="account-profile-head">
+          <div>
+            <h2 id="profile-title">Personal information</h2>
+            <p>Update your personal details and how we contact you.</p>
+          </div>
+          <button className="account-profile-edit" type="button" onClick={handleProfileSave}>
+            Edit <IconPencil size={16} stroke={1.8} aria-hidden="true" />
+          </button>
+        </div>
+        <div className="account-profile-fields">
+          <div className="account-field"><label htmlFor="profile-first-name">First name</label><input id="profile-first-name" value={profileFirstName} onChange={(event) => setProfileFirstName(event.target.value)} /></div>
+          <div className="account-field"><label htmlFor="profile-last-name">Last name</label><input id="profile-last-name" value={profileLastName} onChange={(event) => setProfileLastName(event.target.value)} /></div>
+          <div className="account-field account-field--wide"><label htmlFor="profile-email">Email address</label><input id="profile-email" type="email" value={profileEmail} onChange={(event) => setProfileEmail(event.target.value)} /></div>
+          <div className="account-field account-field--wide"><label htmlFor="profile-phone">Phone number (optional)</label><input id="profile-phone" type="tel" value={profilePhone} onChange={(event) => setProfilePhone(event.target.value)} /></div>
+        </div>
+        <section className="account-profile-password" aria-labelledby="password-title">
+          <div className="account-profile-head">
+            <div><h2 id="password-title">Change password</h2><p>Choose a strong password to keep your account secure.</p></div>
+            <button className="account-profile-edit" type="button" onClick={handleProfileSave}>Edit password <IconPencil size={16} stroke={1.8} aria-hidden="true" /></button>
+          </div>
+          <div className="account-profile-password__value"><span>Password</span><strong>••••••••••••••••</strong><small>Last updated: {dashboard.passwordLastUpdated}</small></div>
+        </section>
+      </section>
+      <aside className="account-profile-rail">
+        <section className="account-panel account-profile-preferences" aria-labelledby="preferences-title">
+          <h2 id="preferences-title">Email preferences</h2>
+          <p>Choose what emails you’d like to receive from PHENO.</p>
+          <div className="account-profile-preference-list">
+            {[
+              ["orderUpdates", "Order updates", "Get notified about your orders and delivery."],
+              ["newDrops", "New drops & updates", "Be the first to know about new products and offers."],
+              ["marketing", "Marketing emails", "Receive exclusive offers and promotions."],
+            ].map(([key, label, description]) => (
+              <label className="account-profile-preference" key={key}>
+                <input type="checkbox" checked={emailPreferences[key as keyof typeof emailPreferences]} onChange={(event) => setEmailPreferences((current) => ({ ...current, [key]: event.target.checked }))} />
+                <span><strong>{label}</strong><small>{description}</small></span>
+              </label>
+            ))}
+          </div>
+          <button className="button account-profile-preferences__save" type="button" onClick={handlePreferenceSave}>Save preferences</button>
+        </section>
+        <section className="account-panel account-profile-details" aria-labelledby="account-details-title">
+          <h2 id="account-details-title">Account details</h2>
+          <dl>
+            <div><dt>Customer since</dt><dd>{dashboard.customerSince}</dd></div>
+            <div><dt>Account status</dt><dd><span className="account-profile-status">{dashboard.accountStatus}</span></dd></div>
+            <div><dt>Default currency</dt><dd>{dashboard.defaultCurrency}</dd></div>
+            <div><dt>Language</dt><dd>{dashboard.language}</dd></div>
+          </dl>
+        </section>
+      </aside>
+      {profileFeedback ? <p className="account-view-feedback account-profile-feedback" role="status">{profileFeedback}</p> : null}
+    </div>
+  );
 
-  const renderProfile = () => (
-    <section className="account-panel account-profile-view" aria-labelledby="profile-title">
-      <div className="account-panel__header account-panel__header--stacked">
-        <div>
-          <p className="account-panel__eyebrow">ACCOUNT</p>
-          <h2 id="profile-title">Profile details</h2>
-        </div>
-        <p>Update the details attached to this sample customer account.</p>
-      </div>
-      <form className="account-profile-form" onSubmit={handleProfileSubmit}>
-        <div className="account-field">
-          <label htmlFor="profile-name">Full name</label>
-          <input id="profile-name" name="fullName" value={profileName} onChange={(event) => setProfileName(event.target.value)} />
-        </div>
-        <div className="account-field">
-          <label htmlFor="profile-email">Email</label>
-          <input id="profile-email" name="email" type="email" value={profileEmail} onChange={(event) => setProfileEmail(event.target.value)} />
-        </div>
-        <div className="account-field">
-          <label htmlFor="profile-phone">Phone</label>
-          <input id="profile-phone" name="phone" type="tel" value={profilePhone} onChange={(event) => setProfilePhone(event.target.value)} />
-        </div>
-        <div className="account-profile-form__actions">
-          <button className="button button--dark" type="submit">Save changes <span aria-hidden="true">↗</span></button>
+ className="button button--dark" type="submit">Save changes <span aria-hidden="true">↗</span></button>
           {profileFeedback ? <p className="account-view-feedback" role="status">{profileFeedback}</p> : null}
         </div>
       </form>
@@ -711,7 +743,7 @@ export function AccountExperience() {
           {activeView === "overview" ? "Manage your orders, details and account preferences." : null}
           {activeView === "orders" ? "View and track all your orders." : null}
           {activeView === "addresses" ? "Manage your delivery and billing addresses." : null}
-          {activeView === "profile" ? "Manage your account details and preferences." : null}
+          {activeView === "profile" ? "Manage your personal information and account settings." : null}
         </p>
       </header>
 
