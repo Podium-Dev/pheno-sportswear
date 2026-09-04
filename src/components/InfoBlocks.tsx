@@ -15,7 +15,12 @@ const sizeGuideCharts = [
   {
     category: "t-shirts",
     title: "Pheno Tee And Tank Size Chart (With Cm + Inches)",
-    garmentSlugs: ["pheno-type-1-t-shirt-black", "pheno-type-1-tank-black"],
+    garmentSlugs: [
+      "pheno-type-1-t-shirt-black",
+      "pheno-type-1-tank-black",
+      "pheno-type-1-t-shirt-white",
+      "pheno-type-1-tank-white",
+    ],
   },
   {
     category: "shorts",
