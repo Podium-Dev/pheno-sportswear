@@ -664,7 +664,15 @@ export function AccountExperience() {
 
           <section className="account-panel account-addresses__help">
             <h2>Need help?</h2>
-            <p>If you have any questions about y  const renderProfile = () => (
+            <p>If you have any questions about your addresses, our support team is here to help.</p>
+            <a className="account-outline-cta" href="/contact">Contact support <IconChevronRight size={17} stroke={1.7} aria-hidden="true" /></a>
+          </section>
+        </aside>
+      </div>
+    );
+  };
+
+  const renderProfile = () => (
     <div className="account-profile-layout">
       <section className="account-panel account-profile-view" aria-labelledby="profile-title">
         <div className="account-profile-head">
@@ -677,17 +685,38 @@ export function AccountExperience() {
           </button>
         </div>
         <div className="account-profile-fields">
-          <div className="account-field"><label htmlFor="profile-first-name">First name</label><input id="profile-first-name" value={profileFirstName} onChange={(event) => setProfileFirstName(event.target.value)} /></div>
-          <div className="account-field"><label htmlFor="profile-last-name">Last name</label><input id="profile-last-name" value={profileLastName} onChange={(event) => setProfileLastName(event.target.value)} /></div>
-          <div className="account-field account-field--wide"><label htmlFor="profile-email">Email address</label><input id="profile-email" type="email" value={profileEmail} onChange={(event) => setProfileEmail(event.target.value)} /></div>
-          <div className="account-field account-field--wide"><label htmlFor="profile-phone">Phone number (optional)</label><input id="profile-phone" type="tel" value={profilePhone} onChange={(event) => setProfilePhone(event.target.value)} /></div>
+          <div className="account-field">
+            <label htmlFor="profile-first-name">First name</label>
+            <input id="profile-first-name" value={profileFirstName} onChange={(event) => setProfileFirstName(event.target.value)} />
+          </div>
+          <div className="account-field">
+            <label htmlFor="profile-last-name">Last name</label>
+            <input id="profile-last-name" value={profileLastName} onChange={(event) => setProfileLastName(event.target.value)} />
+          </div>
+          <div className="account-field account-field--wide">
+            <label htmlFor="profile-email">Email address</label>
+            <input id="profile-email" type="email" value={profileEmail} onChange={(event) => setProfileEmail(event.target.value)} />
+          </div>
+          <div className="account-field account-field--wide">
+            <label htmlFor="profile-phone">Phone number (optional)</label>
+            <input id="profile-phone" type="tel" value={profilePhone} onChange={(event) => setProfilePhone(event.target.value)} />
+          </div>
         </div>
         <section className="account-profile-password" aria-labelledby="password-title">
           <div className="account-profile-head">
-            <div><h2 id="password-title">Change password</h2><p>Choose a strong password to keep your account secure.</p></div>
-            <button className="account-profile-edit" type="button" onClick={handleProfileSave}>Edit password <IconPencil size={16} stroke={1.8} aria-hidden="true" /></button>
+            <div>
+              <h2 id="password-title">Change password</h2>
+              <p>Choose a strong password to keep your account secure.</p>
+            </div>
+            <button className="account-profile-edit" type="button" onClick={handleProfileSave}>
+              Edit password <IconPencil size={16} stroke={1.8} aria-hidden="true" />
+            </button>
           </div>
-          <div className="account-profile-password__value"><span>Password</span><strong>••••••••••••••••</strong><small>Last updated: {dashboard.passwordLastUpdated}</small></div>
+          <div className="account-profile-password__value">
+            <span>Password</span>
+            <strong>••••••••••••••••</strong>
+            <small>Last updated: {dashboard.passwordLastUpdated}</small>
+          </div>
         </section>
       </section>
       <aside className="account-profile-rail">
@@ -701,8 +730,15 @@ export function AccountExperience() {
               ["marketing", "Marketing emails", "Receive exclusive offers and promotions."],
             ].map(([key, label, description]) => (
               <label className="account-profile-preference" key={key}>
-                <input type="checkbox" checked={emailPreferences[key as keyof typeof emailPreferences]} onChange={(event) => setEmailPreferences((current) => ({ ...current, [key]: event.target.checked }))} />
-                <span><strong>{label}</strong><small>{description}</small></span>
+                <input
+                  type="checkbox"
+                  checked={emailPreferences[key as keyof typeof emailPreferences]}
+                  onChange={(event) => setEmailPreferences((current) => ({ ...current, [key]: event.target.checked }))}
+                />
+                <span>
+                  <strong>{label}</strong>
+                  <small>{description}</small>
+                </span>
               </label>
             ))}
           </div>
@@ -720,13 +756,6 @@ export function AccountExperience() {
       </aside>
       {profileFeedback ? <p className="account-view-feedback account-profile-feedback" role="status">{profileFeedback}</p> : null}
     </div>
-  );
-
- className="button button--dark" type="submit">Save changes <span aria-hidden="true">↗</span></button>
-          {profileFeedback ? <p className="account-view-feedback" role="status">{profileFeedback}</p> : null}
-        </div>
-      </form>
-    </section>
   );
 
   const renderDashboard = () => (
