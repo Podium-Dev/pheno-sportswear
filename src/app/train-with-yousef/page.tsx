@@ -1,15 +1,12 @@
 import type { Metadata } from "next";
 import { CoachingCommunity } from "@/components/CoachingCommunity";
-import { InterestForm } from "@/components/Forms";
 import { StorefrontPage } from "@/components/StorefrontPage";
-
-const PODIUM_CAL_BOOKING_URL = process.env.NEXT_PUBLIC_PODIUM_CAL_BOOKING_URL || "https://podium-cal-staging.up.railway.app/book/pheno";
 
 export const metadata: Metadata = {
   title: "Train With Yousef | PHENO Sportswear",
-  description: "Register your interest in boxing coaching with Yousef Jaafar.",
+  description: "Book one to one boxing coaching with Yousef Jaafar.",
   alternates: { canonical: "/train-with-yousef" },
-  openGraph: { title: "Train With Yousef", description: "Register your interest in PHENO boxing coaching.", url: "/train-with-yousef", type: "website" },
+  openGraph: { title: "Train With Yousef", description: "Book one to one boxing coaching with Yousef Jaafar.", url: "/train-with-yousef", type: "website" },
 };
 
 export default function TrainWithYousefPage() {
@@ -23,7 +20,7 @@ export default function TrainWithYousefPage() {
             <h1 id="coaching-title">Train with Yousef.</h1>
             <p>Boxing coaching built around your goals, your level, and the work required to move forward.</p>
             <div className="coaching-hero__actions">
-              <a className="button button--dark" href={PODIUM_CAL_BOOKING_URL}>Book a 1:1</a>
+              <a className="button button--dark" href="#register-interest">Book a 1:1</a>
               <a className="text-link" href="#register-interest">Register interest</a>
             </div>
           </div>
@@ -84,13 +81,13 @@ export default function TrainWithYousefPage() {
           </div>
         </section>
 
-        <section className="interest-section" id="register-interest" aria-labelledby="interest-title">
-          <div>
-            <p className="eyebrow">REGISTER INTEREST</p>
-            <h2 id="interest-title">Ready to start?</h2>
-            <p>Leave your details and a note about what you want to work on. This is an enquiry, not a confirmed booking.</p>
-          </div>
-          <InterestForm />
+        <section className="booking-section" id="register-interest" aria-label="Book a one to one coaching session">
+          <iframe
+            src="https://podium-cal-staging.up.railway.app/embed/pheno"
+            title="PHENO Sportswear booking"
+            style={{ width: "100%", minHeight: 900, border: 0 }}
+            loading="lazy"
+          />
         </section>
       </div>
     </StorefrontPage>

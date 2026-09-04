@@ -3512,6 +3512,20 @@ img {
   border-bottom: 0;
 }
 
+.booking-section {
+  width: 100%;
+  padding: 0;
+  border: 0;
+  scroll-margin-top: calc(var(--header-height) + 18px);
+}
+
+.booking-section iframe {
+  display: block;
+  width: 100%;
+  min-height: 900px;
+  border: 0;
+}
+
 .storefront-page--coaching .coaching-page {
   padding-bottom: 0;
 }
