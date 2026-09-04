@@ -292,3 +292,14 @@
 @media (prefers-reduced-motion: reduce) {
   .core-values-hero__image { transition: none; }
 }
+
+
+/* Core Values hero spans the full viewport. */
+.storefront-page--core-values .core-values-page {
+  width: 100%;
+}
+
+.storefront-page--core-values .core-values-hero {
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+}
