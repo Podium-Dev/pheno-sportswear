@@ -2,18 +2,30 @@
 
 import { type FormEvent, useState } from "react";
 import {
+  IconBox,
+  IconChevronRight,
+  IconCurrencyPound,
+  IconLayoutGrid,
+  IconLogout,
+  IconMapPin,
+  IconPencil,
+  IconShoppingBag,
+  IconTruckDelivery,
+  IconUser,
+} from "@tabler/icons-react";
+import {
   accountService,
   type AccountOrder,
   type AccountOrderStatus,
   type AccountView,
 } from "@/lib/commerce/account-service";
 
-const accountNavItems: Array<{ id: AccountView; label: string }> = [
-  { id: "overview", label: "Overview" },
-  { id: "orders", label: "Orders" },
-  { id: "addresses", label: "Addresses" },
-  { id: "profile", label: "Profile" },
-];
+const accountNavItems = [
+  { id: "overview", label: "Overview", Icon: IconLayoutGrid },
+  { id: "orders", label: "Orders", Icon: IconBox },
+  { id: "addresses", label: "Addresses", Icon: IconMapPin },
+  { id: "profile", label: "Profile", Icon: IconUser },
+] as const satisfies Array<{ id: AccountView; label: string; Icon: typeof IconLayoutGrid }>;
 
 type AuthMode = "sign-in" | "create-account";
 type AccountField = "email" | "password";
@@ -31,7 +43,7 @@ function AccountStatus({ status }: { status: AccountOrderStatus }) {
 function AccountOrderAction({ onClick }: { onClick: () => void }) {
   return (
     <button className="account-text-link" type="button" onClick={onClick}>
-      View order <span aria-hidden="true">↗</span>
+      View order <IconChevronRight size={18} stroke={1.6} aria-hidden="true" />
     </button>
   );
 }
@@ -271,19 +283,19 @@ export function AccountExperience() {
     <div className="account-main__content">
       <dl className="account-metrics" aria-label="Account summary">
         <div className="account-metric">
+          <span className="account-metric__icon" aria-hidden="true"><IconShoppingBag size={29} stroke={1.45} /></span>
           <dt>Orders</dt>
           <dd>{dashboard.orders.length}</dd>
-          <span>All orders</span>
         </div>
         <div className="account-metric">
+          <span className="account-metric__icon" aria-hidden="true"><IconTruckDelivery size={30} stroke={1.45} /></span>
           <dt>Active order</dt>
           <dd>{dashboard.orders.filter((order) => order.status === "In transit").length}</dd>
-          <span>In motion</span>
         </div>
         <div className="account-metric">
+          <span className="account-metric__icon" aria-hidden="true"><IconCurrencyPound size={30} stroke={1.45} /></span>
           <dt>Total spent</dt>
           <dd>{dashboard.totalSpent}</dd>
-          <span>Account total</span>
         </div>
       </dl>
 
@@ -291,11 +303,10 @@ export function AccountExperience() {
         <section className="account-panel account-panel--orders" aria-labelledby="recent-orders-title">
           <div className="account-panel__header">
             <div>
-              <p className="account-panel__eyebrow">ORDERS</p>
               <h2 id="recent-orders-title">Recent orders</h2>
             </div>
             <button className="account-text-link" type="button" onClick={() => setActiveView("orders")}>
-              View all orders <span aria-hidden="true">↗</span>
+              View all orders <IconChevronRight size={18} stroke={1.6} aria-hidden="true" />
             </button>
           </div>
 
@@ -330,25 +341,25 @@ export function AccountExperience() {
           <section className="account-panel account-panel--address" aria-labelledby="default-address-title">
             <div className="account-panel__header">
               <h2 id="default-address-title">Default address</h2>
-              <button className="account-panel__edit" type="button" onClick={() => setActiveView("addresses")}>Edit <span aria-hidden="true">↗</span></button>
+              <button className="account-panel__edit" type="button" onClick={() => setActiveView("addresses")}>Edit <IconPencil size={15} stroke={1.7} aria-hidden="true" /></button>
             </div>
             <address className="account-address">
               <strong>{dashboard.defaultAddress.fullName}</strong>
               <span>{dashboard.defaultAddress.line1}</span>
               <span>{dashboard.defaultAddress.city}, {dashboard.defaultAddress.region}</span>
               <span>{dashboard.defaultAddress.country}</span>
+              <span>{dashboard.customer.phone}</span>
             </address>
           </section>
 
           <section className="account-panel account-panel--details" aria-labelledby="account-details-title">
             <div className="account-panel__header">
               <h2 id="account-details-title">Account details</h2>
-              <button className="account-panel__edit" type="button" onClick={() => setActiveView("profile")}>Edit profile <span aria-hidden="true">↗</span></button>
+              <button className="account-panel__edit" type="button" onClick={() => setActiveView("profile")}>Edit profile <IconPencil size={15} stroke={1.7} aria-hidden="true" /></button>
             </div>
             <div className="account-details">
               <strong>{dashboard.customer.fullName}</strong>
               <span>{dashboard.customer.email}</span>
-              <span>{dashboard.customer.phone}</span>
             </div>
           </section>
         </div>
@@ -360,8 +371,8 @@ export function AccountExperience() {
         <div className="account-promo__content">
           <p className="account-eyebrow">PURSUE THE RISE</p>
           <h2 id="account-promo-title">Keep pushing. Keep growing.</h2>
-          <p>New drops and proven performance for the work ahead.</p>
-          <a className="button account-promo__cta" href="/shop">Shop new arrivals <span aria-hidden="true">↗</span></a>
+          <p>New drops. Proven performance. Built for your journey.</p>
+          <a className="button account-promo__cta" href="/shop">Shop new arrivals <IconChevronRight size={18} stroke={1.7} aria-hidden="true" /></a>
         </div>
       </aside>
     </div>
@@ -526,14 +537,12 @@ export function AccountExperience() {
     <section className="account-dashboard" aria-labelledby="account-dashboard-title">
       <header className="account-page__intro account-page__intro--dashboard">
         <p className="account-eyebrow">MY ACCOUNT</p>
-        <h1 id="account-dashboard-title">Welcome back, {dashboard.customer.firstName}.</h1>
+        <h1 id="account-dashboard-title">Welcome back, {dashboard.customer.firstName}</h1>
         <p className="account-page__summary">Manage your orders, details and account preferences.</p>
-        <p className="account-page__sample-note">Sample customer data for the frontend preview.</p>
       </header>
 
       <div className="account-dashboard__layout">
         <aside className="account-sidebar" aria-label="Account navigation">
-          <p className="account-sidebar__label">Account</p>
           <nav className="account-sidebar__nav">
             {accountNavItems.map((item) => (
               <button
@@ -548,13 +557,13 @@ export function AccountExperience() {
                   setAddressFeedback("");
                 }}
               >
-                <span className="account-sidebar__link-mark" aria-hidden="true" />
+                <item.Icon className="account-sidebar__icon" size={25} stroke={1.6} aria-hidden="true" />
                 {item.label}
               </button>
             ))}
             <span className="account-sidebar__divider" aria-hidden="true" />
             <button className="account-sidebar__link account-sidebar__link--signout" type="button" onClick={handleSignOut}>
-              <span className="account-sidebar__link-mark" aria-hidden="true" />
+              <IconLogout className="account-sidebar__icon" size={25} stroke={1.6} aria-hidden="true" />
               Sign out
             </button>
           </nav>
@@ -572,4 +581,3 @@ export function AccountExperience() {
 
   return <div className="account-experience">{isAuthenticated ? renderDashboard() : renderAuth()}</div>;
 }
-

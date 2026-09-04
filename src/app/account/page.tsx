@@ -1,7 +1,7 @@
 import "./account.css";
 import type { Metadata } from "next";
 import { AccountExperience } from "@/components/AccountExperience";
-import { Breadcrumbs, StorefrontPage } from "@/components/StorefrontPage";
+import { StorefrontPage } from "@/components/StorefrontPage";
 
 export const metadata: Metadata = {
   title: "Account | PHENO Sportswear",
@@ -14,7 +14,6 @@ export default function AccountPage() {
   return (
     <StorefrontPage className="storefront-page--account">
       <div className="account-page">
-        <Breadcrumbs current="Account" />
         <AccountExperience />
       </div>
     </StorefrontPage>

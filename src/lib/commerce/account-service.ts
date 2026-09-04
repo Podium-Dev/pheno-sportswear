@@ -122,7 +122,7 @@ const mockDashboard: AccountDashboardData = {
     },
   ],
   totalSpent: "£146.00",
-  promotionalImage: "/images/pheno-banner.jpg",
+  promotionalImage: "/images/campaign-athlete.jpg",
 };
 
 const validEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -156,5 +156,4 @@ export const mockAccountService: CustomerAccountService = {
 };
 
 export const accountService: CustomerAccountService = mockAccountService;
-
 
