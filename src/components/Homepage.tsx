@@ -375,29 +375,74 @@ function SocialProof() {
   );
 }
 
+function ReviewArrow({ direction }: { direction: "previous" | "next" }) {
+  const isPrevious = direction === "previous";
+
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d={isPrevious ? "M19 12H5m7-7-7 7 7 7" : "M5 12h14m-7-7 7 7-7 7"} />
+    </svg>
+  );
+}
+
 function Testimonials() {
+  const [activeTestimonial, setActiveTestimonial] = useState(0);
+  const testimonial = testimonials[activeTestimonial];
+
+  const showTestimonial = (direction: "previous" | "next") => {
+    setActiveTestimonial((current) => (
+      direction === "previous"
+        ? (current - 1 + testimonials.length) % testimonials.length
+        : (current + 1) % testimonials.length
+    ));
+  };
+
   return (
     <section className="retail-testimonials" aria-labelledby="retail-testimonials-title">
       <div className="retail-testimonials__inner">
-        <div className="retail-testimonials__header">
-          <h2 id="retail-testimonials-title">Built for the work.</h2>
-          <p className="retail-testimonials__note">
-            Sample reviews for now. Replace these with verified customer feedback as it comes in.
-          </p>
+        <div className="retail-testimonials__source" aria-label="Customer review summary">
+          <span>PHENO reviews</span>
+          <strong>4.9</strong>
+          <span className="retail-testimonials__source-stars" aria-hidden="true">★★★★★</span>
         </div>
 
-        <div className="retail-testimonials__grid">
-          {testimonials.map((testimonial, index) => (
-            <figure
-              className={`retail-testimonial${index === 0 ? " retail-testimonial--featured" : ""}`}
-              key={testimonial.name}
-            >
-              <blockquote>“{testimonial.quote}”</blockquote>
-              <figcaption>
-                <strong>{testimonial.name}</strong>
-                <span>{testimonial.detail}</span>
-              </figcaption>
-            </figure>
+        <div className="retail-testimonials__stage" aria-live="polite">
+          <button
+            className="retail-testimonials__arrow retail-testimonials__arrow--previous"
+            type="button"
+            onClick={() => showTestimonial("previous")}
+            aria-label="Show previous review"
+          >
+            <ReviewArrow direction="previous" />
+          </button>
+
+          <figure className="retail-testimonial" key={testimonial.name}>
+            <div className="retail-testimonial__stars" aria-label="5 out of 5 stars">★★★★★</div>
+            <blockquote id="retail-testimonials-title">“{testimonial.quote}”</blockquote>
+            <figcaption>{testimonial.name} <span>/</span> {testimonial.detail}</figcaption>
+          </figure>
+
+          <button
+            className="retail-testimonials__arrow retail-testimonials__arrow--next"
+            type="button"
+            onClick={() => showTestimonial("next")}
+            aria-label="Show next review"
+          >
+            <ReviewArrow direction="next" />
+          </button>
+        </div>
+
+        <div className="retail-testimonials__dots" role="tablist" aria-label="Choose a customer review">
+          {testimonials.map((item, index) => (
+            <button
+              type="button"
+              role="tab"
+              aria-label={`Show review from ${item.name}`}
+              aria-selected={activeTestimonial === index}
+              className={activeTestimonial === index ? "is-active" : ""}
+              onClick={() => setActiveTestimonial(index)}
+              key={item.name}
+            />
           ))}
         </div>
       </div>
