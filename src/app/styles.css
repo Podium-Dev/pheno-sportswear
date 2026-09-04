@@ -10908,3 +10908,37 @@ h2 {
 @media (prefers-reduced-motion: reduce) {
   .retail-testimonial { animation: none; }
 }
+
+
+/* Review carousel refinements */
+.retail-testimonials .retail-testimonials__stage {
+  margin-top: clamp(34px, 4vw, 52px);
+}
+
+.retail-testimonials .retail-testimonial {
+  display: block;
+  min-height: 0;
+  padding: 0;
+  border: 0;
+}
+
+.retail-testimonials .retail-testimonial + .retail-testimonial,
+.retail-testimonials .retail-testimonial:last-child {
+  padding: 0;
+  border: 0;
+}
+
+.retail-testimonials .retail-testimonial blockquote {
+  text-transform: capitalize;
+}
+
+.retail-testimonials .retail-testimonial figcaption {
+  display: block;
+  padding: 0;
+}
+
+@media (max-width: 720px) {
+  .retail-testimonials .retail-testimonials__stage {
+    margin-top: 34px;
+  }
+}
