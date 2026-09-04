@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Script from "next/script";
 import { CoachingCommunity } from "@/components/CoachingCommunity";
 import { StorefrontPage } from "@/components/StorefrontPage";
 
@@ -91,9 +92,12 @@ export default function TrainWithYousefPage() {
             <iframe
               src="https://podium-cal-staging.up.railway.app/embed/pheno"
               title="PHENO Sportswear booking"
-              style={{ width: "100%", minHeight: 900, border: 0 }}
+              data-podium-cal-embed=""
+              style={{ display: "block", width: "100%", height: "1px", minHeight: 0, border: 0 }}
               loading="lazy"
+              scrolling="no"
             />
+            <Script async src="https://podium-cal-staging.up.railway.app/embed.js" strategy="afterInteractive" />
           </div>
         </section>
       </div>

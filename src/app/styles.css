@@ -3555,7 +3555,8 @@ img {
 .booking-section iframe {
   display: block;
   width: 100%;
-  min-height: 900px;
+  height: 1px;
+  min-height: 0;
   border: 0;
 }
 
