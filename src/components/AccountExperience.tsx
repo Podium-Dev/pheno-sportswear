@@ -163,7 +163,11 @@ export function AccountExperience() {
       <div className="account-auth__layout">
         <aside className="account-auth__statement" aria-label="PHENO account benefits">
           <p className="account-eyebrow">BUILT FOR THE WORK</p>
-          <h2>Keep moving toward what comes next.</h2>
+          <h2>
+            <span>Keep moving</span>
+            <span>toward what</span>
+            <span>comes next.</span>
+          </h2>
           <p>Sign in to see your orders, saved details and delivery information in one place.</p>
           <dl className="account-auth__signals">
             <div>
@@ -568,5 +572,4 @@ export function AccountExperience() {
 
   return <div className="account-experience">{isAuthenticated ? renderDashboard() : renderAuth()}</div>;
 }
-
 

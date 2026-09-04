@@ -111,11 +111,16 @@
 }
 
 .account-auth__statement h2 {
-  max-width: 11ch;
+  max-width: none;
   margin-top: 19px;
   color: var(--account-paper);
   font-size: clamp(42px, 5.2vw, 72px) !important;
   line-height: 0.88;
+}
+
+.account-auth__statement h2 span {
+  display: block;
+  white-space: nowrap;
 }
 
 .account-auth__statement > p:not(.account-eyebrow) {
@@ -1100,7 +1105,7 @@
   }
 
   .account-auth__statement h2 {
-    max-width: 13ch;
+    max-width: none;
     font-size: clamp(38px, 12vw, 56px) !important;
   }
 
