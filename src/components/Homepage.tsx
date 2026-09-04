@@ -60,6 +60,24 @@ const socialProofPosts = [
   },
 ] as const;
 
+const testimonials = [
+  {
+    quote: "The hoodie feels ready for the first warm-up and the last walk home. Clean fit, no fuss.",
+    name: "Aidan M.",
+    detail: "Type 1 Hoodie",
+  },
+  {
+    quote: "The fabric moves well without losing its shape. It is the tee I reach for before training.",
+    name: "Maya R.",
+    detail: "Type 1 T-Shirt",
+  },
+  {
+    quote: "Light enough for speed work, structured enough for the rest of the day.",
+    name: "Connor D.",
+    detail: "Type 1 Shorts",
+  },
+] as const;
+
 function RetailCta({ href, children, dark = false }: { href: string; children: ReactNode; dark?: boolean }) {
   return (
     <a className={`retail-cta${dark ? " retail-cta--dark" : ""}`} href={href}>
@@ -357,6 +375,36 @@ function SocialProof() {
   );
 }
 
+function Testimonials() {
+  return (
+    <section className="retail-testimonials" aria-labelledby="retail-testimonials-title">
+      <div className="retail-testimonials__inner">
+        <div className="retail-testimonials__header">
+          <h2 id="retail-testimonials-title">Built for the work.</h2>
+          <p className="retail-testimonials__note">
+            Sample reviews for now. Replace these with verified customer feedback as it comes in.
+          </p>
+        </div>
+
+        <div className="retail-testimonials__grid">
+          {testimonials.map((testimonial, index) => (
+            <figure
+              className={`retail-testimonial${index === 0 ? " retail-testimonial--featured" : ""}`}
+              key={testimonial.name}
+            >
+              <blockquote>“{testimonial.quote}”</blockquote>
+              <figcaption>
+                <strong>{testimonial.name}</strong>
+                <span>{testimonial.detail}</span>
+              </figcaption>
+            </figure>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
 function ProductSpotlight({ catalogProducts }: { catalogProducts: Product[] }) {
   const products = retailSpotlightSlugs
     .map((slug) => findCatalogProduct(catalogProducts, slug))
@@ -461,6 +509,7 @@ export function Homepage({ products }: { products: Product[] }) {
           <TrendingCampaign />
           <ProductSpotlight catalogProducts={products} />
           <SocialProof />
+          <Testimonials />
       </main>
       <SiteFooter />
     </div>
