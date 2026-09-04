@@ -455,9 +455,9 @@ export function Homepage({ products }: { products: Product[] }) {
       <SiteHeader />
         <main>
           <PhenoCampaignHero />
+          <RetailFeatureStrip />
           <RetailHero />
           <TopPicks products={products} />
-          <RetailFeatureStrip />
           <TrendingCampaign />
           <ProductSpotlight catalogProducts={products} />
           <SocialProof />
