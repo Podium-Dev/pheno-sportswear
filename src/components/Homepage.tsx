@@ -400,12 +400,6 @@ function Testimonials() {
   return (
     <section className="retail-testimonials" aria-labelledby="retail-testimonials-title">
       <div className="retail-testimonials__inner">
-        <div className="retail-testimonials__source" aria-label="Customer review summary">
-          <span>PHENO reviews</span>
-          <strong>4.9</strong>
-          <span className="retail-testimonials__source-stars" aria-hidden="true">★★★★★</span>
-        </div>
-
         <div className="retail-testimonials__stage" aria-live="polite">
           <button
             className="retail-testimonials__arrow retail-testimonials__arrow--previous"
