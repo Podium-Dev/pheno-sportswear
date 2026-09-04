@@ -1983,3 +1983,245 @@
     grid-template-columns: 1fr;
   }
 }
+
+
+/* Profile */
+.account-profile-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 374px;
+  gap: 16px;
+  align-items: start;
+}
+
+.account-profile-view {
+  min-height: 0;
+  padding: 26px 28px;
+}
+
+.account-profile-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.account-profile-head h2,
+.account-profile-preferences h2,
+.account-profile-details h2 {
+  margin: 0;
+  color: var(--account-ink);
+  font-size: 21px !important;
+  line-height: 1;
+}
+
+.account-profile-head p,
+.account-profile-preferences > p {
+  margin: 12px 0 0;
+  color: var(--account-muted);
+  font-size: 12px;
+  line-height: 1.45;
+}
+
+.account-profile-edit {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  flex: 0 0 auto;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--account-ink);
+  font-size: 12px;
+}
+
+.account-profile-edit:hover,
+.account-profile-edit:focus-visible {
+  color: #916c15;
+}
+
+.account-profile-fields {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+  margin-top: 27px;
+}
+
+.account-profile-view .account-field--wide {
+  grid-column: 1 / -1;
+}
+
+.account-profile-view .account-field label {
+  color: var(--account-ink);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.account-profile-view .account-field input {
+  min-height: 42px;
+  border-radius: 6px;
+  font-size: 13px;
+}
+
+.account-profile-password {
+  margin-top: 19px;
+  padding-top: 24px;
+  border-top: 1px solid var(--account-line);
+}
+
+.account-profile-password__value {
+  display: grid;
+  gap: 7px;
+  margin-top: 27px;
+  color: var(--account-ink);
+  font-size: 12px;
+}
+
+.account-profile-password__value strong {
+  font-size: 15px;
+  letter-spacing: 0.14em;
+  line-height: 1;
+}
+
+.account-profile-password__value small {
+  color: var(--account-muted);
+  font-size: 12px;
+}
+
+.account-profile-rail {
+  display: grid;
+  gap: 14px;
+}
+
+.account-profile-preferences,
+.account-profile-details {
+  min-height: 0;
+  padding: 25px 26px;
+}
+
+.account-profile-preference-list {
+  display: grid;
+  gap: 15px;
+  margin-top: 25px;
+}
+
+.account-profile-preference {
+  display: grid;
+  grid-template-columns: 17px minmax(0, 1fr);
+  align-items: start;
+  gap: 10px;
+  cursor: pointer;
+}
+
+.account-profile-preference input {
+  width: 15px;
+  height: 15px;
+  margin: 1px 0 0;
+  accent-color: var(--account-yellow);
+}
+
+.account-profile-preference span {
+  display: grid;
+  gap: 4px;
+}
+
+.account-profile-preference strong {
+  color: var(--account-ink);
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.account-profile-preference small {
+  color: var(--account-muted);
+  font-size: 12px;
+  line-height: 1.35;
+}
+
+.account-profile-preferences__save {
+  min-height: 35px;
+  margin: 25px 0 0 auto;
+  padding: 0 19px;
+  border: 0;
+  background: var(--account-yellow);
+  color: var(--account-ink);
+  font-size: 12px;
+}
+
+.account-profile-details dl {
+  display: grid;
+  gap: 15px;
+  margin: 23px 0 0;
+}
+
+.account-profile-details dl div {
+  display: flex;
+  justify-content: space-between;
+  gap: 18px;
+}
+
+.account-profile-details dt,
+.account-profile-details dd {
+  margin: 0;
+  color: var(--account-ink);
+  font-size: 12px;
+}
+
+.account-profile-details dd {
+  text-align: right;
+}
+
+.account-profile-status {
+  display: inline-flex;
+  padding: 4px 10px;
+  border-radius: 6px;
+  background: #e2f5e7;
+  color: #22733a;
+  font-size: 11px;
+}
+
+.account-profile-feedback {
+  grid-column: 1 / -1;
+  margin: 0;
+}
+
+@media (max-width: 1100px) {
+  .account-profile-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .account-profile-rail {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 720px) {
+  .account-profile-view,
+  .account-profile-preferences,
+  .account-profile-details {
+    padding: 20px 16px;
+  }
+
+  .account-profile-head {
+    gap: 15px;
+  }
+
+  .account-profile-head h2,
+  .account-profile-preferences h2,
+  .account-profile-details h2 {
+    font-size: 19px !important;
+  }
+
+  .account-profile-fields,
+  .account-profile-rail {
+    grid-template-columns: 1fr;
+  }
+
+  .account-profile-edit {
+    font-size: 11px;
+  }
+
+  .account-profile-preferences__save {
+    width: 100%;
+  }
+}
