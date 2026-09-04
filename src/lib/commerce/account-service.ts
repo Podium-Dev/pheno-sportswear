@@ -10,11 +10,16 @@ export type AccountCustomer = {
 };
 
 export type AccountAddress = {
+  label: string;
   fullName: string;
   line1: string;
+  line2?: string;
   city: string;
   region: string;
   country: string;
+  phone: string;
+  type: "Delivery" | "Billing";
+  isDefault?: boolean;
 };
 
 export type AccountOrderItem = {
@@ -41,6 +46,8 @@ export type AccountOrder = {
 export type AccountDashboardData = {
   customer: AccountCustomer;
   defaultAddress: AccountAddress;
+  addresses: AccountAddress[];
+  billingAddresses: AccountAddress[];
   orders: AccountOrder[];
   overviewOrders: AccountOrder[];
   totalSpent: string;
@@ -65,12 +72,48 @@ export interface CustomerAccountService {
 }
 
 const mockAddress: AccountAddress = {
+  label: "Home",
   fullName: "Alex Johnson",
   line1: "12 King Street",
   city: "Manchester",
   region: "M2 4WU",
   country: "United Kingdom",
+  phone: "+44 7700 900123",
+  type: "Delivery",
+  isDefault: true,
 };
+
+const mockAddresses: AccountAddress[] = [
+  mockAddress,
+  {
+    label: "Work",
+    fullName: "Alex Johnson",
+    line1: "Unit 7, Trafford Park",
+    line2: "Trafford Park Road",
+    city: "Manchester",
+    region: "M17 1BD",
+    country: "United Kingdom",
+    phone: "+44 7700 900123",
+    type: "Delivery",
+  },
+  {
+    label: "Parents' House",
+    fullName: "Alex Johnson",
+    line1: "43 Oakfield Road",
+    city: "Stockport",
+    region: "SK2 6PL",
+    country: "United Kingdom",
+    phone: "+44 7700 900123",
+    type: "Delivery",
+  },
+];
+
+const mockBillingAddresses: AccountAddress[] = [
+  {
+    ...mockAddress,
+    type: "Billing",
+  },
+];
 
 const mockDashboardData: Omit<AccountDashboardData, "overviewOrders"> = {
   customer: {
@@ -80,6 +123,8 @@ const mockDashboardData: Omit<AccountDashboardData, "overviewOrders"> = {
     phone: "+44 7700 900123",
   },
   defaultAddress: mockAddress,
+  addresses: mockAddresses,
+  billingAddresses: mockBillingAddresses,
   orders: [
     {
       id: "#PH-1024",
