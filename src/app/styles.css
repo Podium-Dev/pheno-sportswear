@@ -11275,3 +11275,48 @@ h2 {
     margin-top: 22px;
   }
 }
+
+
+/* Train with Yousef audience cards: compact, balanced card rhythm. */
+.storefront-page--coaching .coaching-audience__grid {
+  gap: 14px;
+}
+
+.storefront-page--coaching .coaching-audience__grid article {
+  aspect-ratio: 4 / 3;
+  min-height: 0;
+  padding: clamp(24px, 2.2vw, 32px);
+  gap: 0;
+}
+
+.storefront-page--coaching .coaching-audience__grid article > span {
+  font-size: 24px;
+  line-height: 1;
+  letter-spacing: -0.04em;
+}
+
+.storefront-page--coaching .coaching-audience__grid article h3 {
+  margin-top: 24px;
+  font-size: 24px;
+  line-height: 1;
+  text-transform: capitalize;
+}
+
+.storefront-page--coaching .coaching-audience__grid article p {
+  max-width: 32ch;
+  margin-top: 14px;
+  font-size: 13px;
+  line-height: 1.42;
+}
+
+@media (max-width: 720px) {
+  .storefront-page--coaching .coaching-audience__grid article {
+    aspect-ratio: 4 / 3;
+    padding: 24px;
+  }
+
+  .storefront-page--coaching .coaching-audience__grid article h3 {
+    margin-top: 22px;
+    font-size: 24px;
+  }
+}
