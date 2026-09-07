@@ -322,7 +322,14 @@ export function AccountExperience() {
           <div className="account-auth__panel-heading">
             <p className="account-eyebrow">{authMode === "sign-in" ? "WELCOME BACK" : "START HERE"}</p>
             <h2 className={authMode === "create-account" ? "account-auth__panel-title--create" : undefined}>
-              {authMode === "sign-in" ? "Sign in to PHENO." : "Create your PHENO account."}
+              {authMode === "sign-in" ? (
+                "Sign in to PHENO."
+              ) : (
+                <>
+                  <span>Create your</span>
+                  <span>PHENO account.</span>
+                </>
+              )}
             </h2>
             <p>
               {authMode === "sign-in"
