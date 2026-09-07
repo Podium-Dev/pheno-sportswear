@@ -2289,3 +2289,13 @@
     font-size: clamp(17px, 6.3cqw, 31px) !important;
   }
 }
+
+
+/* Create-account title: use the requested two-line lockup. */
+.account-auth__panel-title--create {
+  white-space: normal;
+}
+
+.account-auth__panel-title--create span {
+  display: block;
+}
