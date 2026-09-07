@@ -2299,3 +2299,35 @@
 .account-auth__panel-title--create span {
   display: block;
 }
+
+
+/* Preview hand-off for pending customer registrations. */
+.account-auth__approval-actions {
+  display: grid;
+  gap: 13px;
+}
+
+.account-auth__approval-actions .account-auth__approval-note {
+  margin-top: 26px;
+}
+
+.account-auth__admin-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  width: max-content;
+  color: var(--account-ink);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-decoration: underline;
+  text-decoration-color: var(--account-yellow);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 5px;
+  text-transform: uppercase;
+}
+
+.account-auth__admin-link:hover,
+.account-auth__admin-link:focus-visible {
+  color: var(--account-muted);
+}
