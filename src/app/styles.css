@@ -11221,3 +11221,25 @@ h2 {
     transform: none;
   }
 }
+
+
+/* Story principle card proportions and type scale. */
+.storefront-page--story .story-principles article {
+  aspect-ratio: 4 / 3;
+  min-height: 0;
+}
+
+.storefront-page--story .story-principles article h3 {
+  font-size: 24px !important;
+  text-transform: capitalize;
+}
+
+@media (max-width: 720px) {
+  .storefront-page--story .story-principles article {
+    aspect-ratio: 4 / 3;
+  }
+
+  .storefront-page--story .story-principles article h3 {
+    font-size: 24px !important;
+  }
+}
