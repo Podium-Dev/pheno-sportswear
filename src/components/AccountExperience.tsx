@@ -72,8 +72,9 @@ function AccountOrderAction({ onClick }: { onClick: () => void }) {
 }
 
 export function AccountExperience() {
-  const dashboard = accountService.getDashboard();
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [activeCustomerEmail, setActiveCustomerEmail] = useState<string | null>(null);
+  const dashboard = accountService.getDashboard(activeCustomerEmail ?? undefined);
   const [activeView, setActiveView] = useState<AccountView>("overview");
   const [selectedOrderId, setSelectedOrderId] = useState<string | null>(null);
   const [orderFilter, setOrderFilter] = useState<AccountOrderFilter>("All orders");
@@ -100,7 +101,14 @@ export function AccountExperience() {
     ? dashboard.orders.find((order) => order.id === selectedOrderId) ?? null
     : null;
 
-  const enterDashboard = () => {
+  const enterDashboard = (customerEmail?: string) => {
+    const nextDashboard = accountService.getDashboard(customerEmail);
+    setActiveCustomerEmail(customerEmail ?? null);
+    setProfileFirstName(nextDashboard.customer.firstName);
+    setProfileLastName(nextDashboard.customer.lastName);
+    setProfileEmail(nextDashboard.customer.email);
+    setProfilePhone(nextDashboard.customer.phone);
+    setEmailPreferences(nextDashboard.emailPreferences);
     setIsAuthenticated(true);
     setActiveView("overview");
     setSelectedOrderId(null);
@@ -181,7 +189,7 @@ export function AccountExperience() {
 
     setAuthFeedback("");
     setAuthFeedbackTone("");
-    enterDashboard();
+    enterDashboard(normalizedEmail);
   };
 
   const handleForgotPassword = () => {
@@ -208,6 +216,7 @@ export function AccountExperience() {
 
   const handleSignOut = () => {
     setIsAuthenticated(false);
+    setActiveCustomerEmail(null);
     setActiveView("overview");
     setSelectedOrderId(null);
     setPassword("");
@@ -479,7 +488,7 @@ export function AccountExperience() {
           </form>
 
           {authMode === "sign-in" ? (
-            <button className="account-auth__demo" type="button" onClick={enterDashboard}>
+            <button className="account-auth__demo" type="button" onClick={() => enterDashboard()}>
               Preview approved dashboard with sample data
             </button>
           ) : (
