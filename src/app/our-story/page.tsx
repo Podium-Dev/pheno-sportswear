@@ -76,6 +76,8 @@ export default function OurStoryPage() {
           <h2 id="principles-title">Performance with purpose.</h2>
           <div className="story-principles__grid">
             <article>
+              <img className="story-principles__image" src="/images/editorial-left.jpg" alt="Athlete standing outdoors at sunrise" />
+              <span className="story-principles__shade" aria-hidden="true" />
               <span className="story-principles__number">01</span>
               <h3>Discipline</h3>
               <p>Show up for the work, especially when motivation is not there.</p>
@@ -84,6 +86,8 @@ export default function OurStoryPage() {
               </svg>
             </article>
             <article>
+              <img className="story-principles__image" src="/images/editorial-main.jpg" alt="PHENO athlete training outdoors" />
+              <span className="story-principles__shade" aria-hidden="true" />
               <span className="story-principles__number">02</span>
               <h3>Resilience</h3>
               <p>Use the difficult days as part of the process, not proof that you should stop.</p>
@@ -93,6 +97,8 @@ export default function OurStoryPage() {
               </svg>
             </article>
             <article>
+              <img className="story-principles__image" src="/images/editorial-right.jpg" alt="Athlete preparing for a workout" />
+              <span className="story-principles__shade" aria-hidden="true" />
               <span className="story-principles__number">03</span>
               <h3>Expression</h3>
               <p>Build a physical practice that reflects the person you are becoming.</p>
