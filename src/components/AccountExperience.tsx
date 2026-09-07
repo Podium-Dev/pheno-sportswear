@@ -36,7 +36,7 @@ type AccountOrderFilter = (typeof accountOrderFilters)[number];
 type AddressKind = "delivery" | "billing";
 
 type AuthMode = "sign-in" | "create-account";
-type AccountField = "email" | "password";
+type AccountField = "firstName" | "lastName" | "email" | "phone" | "password" | "confirmPassword";
 type AccountFieldErrors = Partial<Record<AccountField, string>>;
 
 function AccountStatus({ status }: { status: AccountOrderStatus }) {
@@ -79,8 +79,13 @@ export function AccountExperience() {
   const [orderFilter, setOrderFilter] = useState<AccountOrderFilter>("All orders");
   const [addressKind, setAddressKind] = useState<AddressKind>("delivery");
   const [authMode, setAuthMode] = useState<AuthMode>("sign-in");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [pendingApprovalEmail, setPendingApprovalEmail] = useState("");
   const [fieldErrors, setFieldErrors] = useState<AccountFieldErrors>({});
   const [authFeedback, setAuthFeedback] = useState("");
   const [authFeedbackTone, setAuthFeedbackTone] = useState<"error" | "info" | "">("");
@@ -106,7 +111,20 @@ export function AccountExperience() {
     event.preventDefault();
 
     const nextErrors: AccountFieldErrors = {};
+    const normalizedFirstName = firstName.trim();
+    const normalizedLastName = lastName.trim();
     const normalizedEmail = email.trim();
+    const normalizedPhone = phone.trim();
+
+    if (authMode === "create-account") {
+      if (!normalizedFirstName) {
+        nextErrors.firstName = "Enter your first name.";
+      }
+
+      if (!normalizedLastName) {
+        nextErrors.lastName = "Enter your last name.";
+      }
+    }
 
     if (!normalizedEmail) {
       nextErrors.email = "Enter your email address.";
@@ -120,6 +138,14 @@ export function AccountExperience() {
       nextErrors.password = "Use at least 6 characters.";
     }
 
+    if (authMode === "create-account") {
+      if (!confirmPassword) {
+        nextErrors.confirmPassword = "Confirm your password.";
+      } else if (confirmPassword !== password) {
+        nextErrors.confirmPassword = "Passwords do not match.";
+      }
+    }
+
     if (Object.keys(nextErrors).length > 0) {
       setFieldErrors(nextErrors);
       setAuthFeedback("Check the highlighted fields and try again.");
@@ -127,9 +153,22 @@ export function AccountExperience() {
       return;
     }
 
+    if (authMode === "sign-in" && pendingApprovalEmail === normalizedEmail.toLowerCase()) {
+      setFieldErrors({});
+      setAuthFeedback("Your account is awaiting admin approval. You will get access once it has been accepted.");
+      setAuthFeedbackTone("info");
+      return;
+    }
+
     const result = authMode === "sign-in"
       ? accountService.signIn({ email: normalizedEmail, password })
-      : accountService.createAccount({ email: normalizedEmail, password });
+      : accountService.createAccount({
+          firstName: normalizedFirstName,
+          lastName: normalizedLastName,
+          email: normalizedEmail,
+          phone: normalizedPhone,
+          password,
+        });
 
     if (!result.ok) {
       setFieldErrors({});
@@ -139,6 +178,16 @@ export function AccountExperience() {
     }
 
     setFieldErrors({});
+
+    if (authMode === "create-account") {
+      setPendingApprovalEmail(normalizedEmail.toLowerCase());
+      setPassword("");
+      setConfirmPassword("");
+      setAuthFeedback(result.message ?? "Your account request has been submitted for admin approval.");
+      setAuthFeedbackTone("info");
+      return;
+    }
+
     setAuthFeedback("");
     setAuthFeedbackTone("");
     enterDashboard();
@@ -171,6 +220,7 @@ export function AccountExperience() {
     setActiveView("overview");
     setSelectedOrderId(null);
     setPassword("");
+    setConfirmPassword("");
     setAuthFeedback("You have been signed out of this preview.");
     setAuthFeedbackTone("info");
   };
@@ -272,42 +322,149 @@ export function AccountExperience() {
           <div className="account-auth__panel-heading">
             <p className="account-eyebrow">{authMode === "sign-in" ? "WELCOME BACK" : "START HERE"}</p>
             <h2>{authMode === "sign-in" ? "Sign in to PHENO." : "Create your PHENO account."}</h2>
-            <p>Frontend preview. Your customer data will connect after the commerce platform is selected.</p>
+            <p>
+              {authMode === "sign-in"
+                ? "Frontend preview. Your customer data will connect after the commerce platform is selected."
+                : "Submit your details for review. Dashboard access begins after an admin accepts your account."}
+            </p>
           </div>
 
-          <form className="account-auth__form" onSubmit={handleAuthSubmit} noValidate>
-            <div className="account-field">
-              <label htmlFor="account-email">Email</label>
-              <input
-                id="account-email"
-                name="email"
-                type="email"
-                autoComplete="email"
-                value={email}
-                onChange={(event) => setEmail(event.target.value)}
-                aria-invalid={Boolean(fieldErrors.email)}
-                aria-describedby={fieldErrors.email ? "account-email-error" : undefined}
-              />
-              {fieldErrors.email ? <span className="account-field__error" id="account-email-error">{fieldErrors.email}</span> : null}
-            </div>
+          <form
+            className={authMode === "create-account" ? "account-auth__form account-auth__form--create" : "account-auth__form"}
+            onSubmit={handleAuthSubmit}
+            noValidate
+          >
+            {authMode === "create-account" ? (
+              <>
+                <div className="account-auth__name-fields">
+                  <div className="account-field">
+                    <label htmlFor="account-first-name">First name</label>
+                    <input
+                      id="account-first-name"
+                      name="firstName"
+                      type="text"
+                      autoComplete="given-name"
+                      placeholder="Alex"
+                      value={firstName}
+                      onChange={(event) => setFirstName(event.target.value)}
+                      aria-invalid={Boolean(fieldErrors.firstName)}
+                      aria-describedby={fieldErrors.firstName ? "account-first-name-error" : undefined}
+                    />
+                    {fieldErrors.firstName ? <span className="account-field__error" id="account-first-name-error">{fieldErrors.firstName}</span> : null}
+                  </div>
 
-            <div className="account-field">
-              <div className="account-field__label-row">
-                <label htmlFor="account-password">Password</label>
-                <button className="account-auth__forgot" type="button" onClick={handleForgotPassword}>Forgot password?</button>
-              </div>
-              <input
-                id="account-password"
-                name="password"
-                type="password"
-                autoComplete={authMode === "sign-in" ? "current-password" : "new-password"}
-                value={password}
-                onChange={(event) => setPassword(event.target.value)}
-                aria-invalid={Boolean(fieldErrors.password)}
-                aria-describedby={fieldErrors.password ? "account-password-error" : undefined}
-              />
-              {fieldErrors.password ? <span className="account-field__error" id="account-password-error">{fieldErrors.password}</span> : null}
-            </div>
+                  <div className="account-field">
+                    <label htmlFor="account-last-name">Last name</label>
+                    <input
+                      id="account-last-name"
+                      name="lastName"
+                      type="text"
+                      autoComplete="family-name"
+                      placeholder="Johnson"
+                      value={lastName}
+                      onChange={(event) => setLastName(event.target.value)}
+                      aria-invalid={Boolean(fieldErrors.lastName)}
+                      aria-describedby={fieldErrors.lastName ? "account-last-name-error" : undefined}
+                    />
+                    {fieldErrors.lastName ? <span className="account-field__error" id="account-last-name-error">{fieldErrors.lastName}</span> : null}
+                  </div>
+                </div>
+
+                <div className="account-field">
+                  <label htmlFor="account-email">Email address</label>
+                  <input
+                    id="account-email"
+                    name="email"
+                    type="email"
+                    autoComplete="email"
+                    placeholder="alex.johnson@email.com"
+                    value={email}
+                    onChange={(event) => setEmail(event.target.value)}
+                    aria-invalid={Boolean(fieldErrors.email)}
+                    aria-describedby={fieldErrors.email ? "account-email-error" : undefined}
+                  />
+                  {fieldErrors.email ? <span className="account-field__error" id="account-email-error">{fieldErrors.email}</span> : null}
+                </div>
+
+                <div className="account-field">
+                  <label htmlFor="account-phone">Phone number (optional)</label>
+                  <input
+                    id="account-phone"
+                    name="phone"
+                    type="tel"
+                    autoComplete="tel"
+                    placeholder="+44 7700 900123"
+                    value={phone}
+                    onChange={(event) => setPhone(event.target.value)}
+                  />
+                </div>
+
+                <div className="account-field">
+                  <label htmlFor="account-password">Password</label>
+                  <input
+                    id="account-password"
+                    name="password"
+                    type="password"
+                    autoComplete="new-password"
+                    value={password}
+                    onChange={(event) => setPassword(event.target.value)}
+                    aria-invalid={Boolean(fieldErrors.password)}
+                    aria-describedby={fieldErrors.password ? "account-password-error" : undefined}
+                  />
+                  {fieldErrors.password ? <span className="account-field__error" id="account-password-error">{fieldErrors.password}</span> : null}
+                </div>
+
+                <div className="account-field">
+                  <label htmlFor="account-confirm-password">Confirm password</label>
+                  <input
+                    id="account-confirm-password"
+                    name="confirmPassword"
+                    type="password"
+                    autoComplete="new-password"
+                    value={confirmPassword}
+                    onChange={(event) => setConfirmPassword(event.target.value)}
+                    aria-invalid={Boolean(fieldErrors.confirmPassword)}
+                    aria-describedby={fieldErrors.confirmPassword ? "account-confirm-password-error" : undefined}
+                  />
+                  {fieldErrors.confirmPassword ? <span className="account-field__error" id="account-confirm-password-error">{fieldErrors.confirmPassword}</span> : null}
+                </div>
+              </>
+            ) : (
+              <>
+                <div className="account-field">
+                  <label htmlFor="account-email">Email</label>
+                  <input
+                    id="account-email"
+                    name="email"
+                    type="email"
+                    autoComplete="email"
+                    value={email}
+                    onChange={(event) => setEmail(event.target.value)}
+                    aria-invalid={Boolean(fieldErrors.email)}
+                    aria-describedby={fieldErrors.email ? "account-email-error" : undefined}
+                  />
+                  {fieldErrors.email ? <span className="account-field__error" id="account-email-error">{fieldErrors.email}</span> : null}
+                </div>
+
+                <div className="account-field">
+                  <div className="account-field__label-row">
+                    <label htmlFor="account-password">Password</label>
+                    <button className="account-auth__forgot" type="button" onClick={handleForgotPassword}>Forgot password?</button>
+                  </div>
+                  <input
+                    id="account-password"
+                    name="password"
+                    type="password"
+                    autoComplete="current-password"
+                    value={password}
+                    onChange={(event) => setPassword(event.target.value)}
+                    aria-invalid={Boolean(fieldErrors.password)}
+                    aria-describedby={fieldErrors.password ? "account-password-error" : undefined}
+                  />
+                  {fieldErrors.password ? <span className="account-field__error" id="account-password-error">{fieldErrors.password}</span> : null}
+                </div>
+              </>
+            )}
 
             {authFeedback ? (
               <p className={`account-auth__feedback account-auth__feedback--${authFeedbackTone}`} role={authFeedbackTone === "error" ? "alert" : "status"}>
@@ -321,9 +478,15 @@ export function AccountExperience() {
             </button>
           </form>
 
-          <button className="account-auth__demo" type="button" onClick={enterDashboard}>
-            Preview dashboard with sample data
-          </button>
+          {authMode === "sign-in" ? (
+            <button className="account-auth__demo" type="button" onClick={enterDashboard}>
+              Preview approved dashboard with sample data
+            </button>
+          ) : (
+            <p className="account-auth__approval-note">
+              Dashboard access is available only after an admin approves your account.
+            </p>
+          )}
         </div>
       </div>
     </section>
