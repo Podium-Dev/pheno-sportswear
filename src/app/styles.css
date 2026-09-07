@@ -11050,3 +11050,29 @@ h2 {
 .retail-testimonials .retail-testimonials__dots button.is-active {
   background: var(--retail-yellow);
 }
+
+
+/* Dark PHENO feature strip directly below the homepage hero. */
+.retail-home .retail-features {
+  border-block-color: #2a2d2a;
+  background: #111311;
+  color: #fff;
+}
+
+.retail-home .retail-feature {
+  border-left-color: #2a2d2a;
+}
+
+.retail-home .retail-feature__icon svg {
+  stroke: #fff;
+}
+
+.retail-home .retail-feature h2 {
+  color: #fff;
+}
+
+@media (max-width: 720px) {
+  .retail-home .retail-features__inner {
+    background: #111311;
+  }
+}
