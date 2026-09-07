@@ -2225,3 +2225,9 @@
     width: 100%;
   }
 }
+
+
+/* Remove the decorative diagonal from account campaign banners. */
+.account-promo::after {
+  display: none;
+}
