@@ -81,9 +81,6 @@ export default function OurStoryPage() {
               <span className="story-principles__number">01</span>
               <h3>Discipline</h3>
               <p>Show up for the work, especially when motivation is not there.</p>
-              <svg className="story-principles__icon" viewBox="0 0 44 44" aria-hidden="true" focusable="false">
-                <path d="m22 5 12 5v10c0 8-5.2 14.3-12 18-6.8-3.7-12-10-12-18V10l12-5Z" />
-              </svg>
             </article>
             <article>
               <img className="story-principles__image" src="/images/editorial-main.jpg" alt="PHENO athlete training outdoors" />
@@ -91,10 +88,6 @@ export default function OurStoryPage() {
               <span className="story-principles__number">02</span>
               <h3>Resilience</h3>
               <p>Use the difficult days as part of the process, not proof that you should stop.</p>
-              <svg className="story-principles__icon" viewBox="0 0 44 44" aria-hidden="true" focusable="false">
-                <path d="m5 35 11-14 7 7 9-15 7 22H5Z" />
-                <path d="M31 13h8v8" />
-              </svg>
             </article>
             <article>
               <img className="story-principles__image" src="/images/editorial-right.jpg" alt="Athlete preparing for a workout" />
@@ -102,10 +95,6 @@ export default function OurStoryPage() {
               <span className="story-principles__number">03</span>
               <h3>Expression</h3>
               <p>Build a physical practice that reflects the person you are becoming.</p>
-              <svg className="story-principles__icon" viewBox="0 0 44 44" aria-hidden="true" focusable="false">
-                <path d="m22 5 7 10 10 7-10 7-7 10-7-10-10-7 10-7 7-10Z" />
-                <path d="M22 15v14M15 22h14" />
-              </svg>
             </article>
           </div>
         </section>
