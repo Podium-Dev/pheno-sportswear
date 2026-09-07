@@ -2269,3 +2269,23 @@
     grid-template-columns: 1fr;
   }
 }
+
+
+/* Keep the create-account heading on one line at every responsive width. */
+.account-auth__panel-heading {
+  container-type: inline-size;
+}
+
+.account-auth__panel-title--create {
+  max-width: none !important;
+  font-size: clamp(28px, 3.1vw, 44px) !important;
+  line-height: 0.95;
+  white-space: nowrap;
+  font-size: clamp(17px, 6.3cqw, 44px) !important;
+}
+
+@media (max-width: 720px) {
+  .account-auth__panel-title--create {
+    font-size: clamp(17px, 6.3cqw, 31px) !important;
+  }
+}
