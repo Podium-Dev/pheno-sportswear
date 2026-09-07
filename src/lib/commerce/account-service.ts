@@ -72,15 +72,24 @@ export type AccountCredentials = {
   password: string;
 };
 
+export type AccountRegistration = AccountCredentials & {
+  firstName: string;
+  lastName: string;
+  phone?: string;
+};
+
+export type AccountApprovalStatus = "approved" | "pending" | "rejected";
+
 export type AccountAuthResult = {
   ok: boolean;
+  approvalStatus?: AccountApprovalStatus;
   message?: string;
 };
 
 export interface CustomerAccountService {
   getDashboard(): AccountDashboardData;
   signIn(credentials: AccountCredentials): AccountAuthResult;
-  createAccount(credentials: AccountCredentials): AccountAuthResult;
+  createAccount(credentials: AccountRegistration): AccountAuthResult;
   requestPasswordReset(email: string): string;
 }
 
@@ -309,7 +318,7 @@ export const mockAccountService: CustomerAccountService = {
       return { ok: false, message: "Your password must be at least 6 characters." };
     }
 
-    return { ok: true };
+    return { ok: true, approvalStatus: "approved" };
   },
   createAccount: ({ email, password }) => {
     if (!validEmail.test(email)) {
@@ -320,7 +329,11 @@ export const mockAccountService: CustomerAccountService = {
       return { ok: false, message: "Your password must be at least 6 characters." };
     }
 
-    return { ok: true };
+    return {
+      ok: true,
+      approvalStatus: "pending",
+      message: "Your account request has been submitted. An admin must approve it before dashboard access is enabled.",
+    };
   },
   requestPasswordReset: (email) =>
     `Password reset for ${email} will connect once the commerce platform is selected.`,
