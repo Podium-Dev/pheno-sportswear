@@ -321,7 +321,9 @@ export function AccountExperience() {
 
           <div className="account-auth__panel-heading">
             <p className="account-eyebrow">{authMode === "sign-in" ? "WELCOME BACK" : "START HERE"}</p>
-            <h2>{authMode === "sign-in" ? "Sign in to PHENO." : "Create your PHENO account."}</h2>
+            <h2 className={authMode === "create-account" ? "account-auth__panel-title--create" : undefined}>
+              {authMode === "sign-in" ? "Sign in to PHENO." : "Create your PHENO account."}
+            </h2>
             <p>
               {authMode === "sign-in"
                 ? "Frontend preview. Your customer data will connect after the commerce platform is selected."
