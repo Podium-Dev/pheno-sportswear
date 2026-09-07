@@ -11032,3 +11032,21 @@ h2 {
     margin-top: 34px;
   }
 }
+
+
+/* PHENO yellow review accents on a clean white canvas. */
+.retail-testimonials {
+  background: #fff;
+}
+
+.retail-testimonials .retail-testimonial__stars {
+  color: var(--retail-yellow);
+}
+
+.retail-testimonials .retail-testimonials__dots button {
+  background: color-mix(in srgb, var(--retail-yellow) 35%, transparent);
+}
+
+.retail-testimonials .retail-testimonials__dots button.is-active {
+  background: var(--retail-yellow);
+}
