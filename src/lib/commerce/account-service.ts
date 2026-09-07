@@ -103,7 +103,7 @@ export type AccountAdminResult = {
 };
 
 export interface CustomerAccountService {
-  getDashboard(): AccountDashboardData;
+  getDashboard(email?: string): AccountDashboardData;
   signIn(credentials: AccountCredentials): AccountAuthResult;
   createAccount(credentials: AccountRegistration): AccountAuthResult;
   requestPasswordReset(email: string): string;
@@ -359,12 +359,56 @@ function findAccountRequestByEmail(email: string) {
   return getStoredAccountRequests().find((request) => request.email.toLowerCase() === normalizedEmail);
 }
 
+function getDashboardForAccount(email?: string): AccountDashboardData {
+  if (!email) {
+    return mockDashboard;
+  }
+
+  const request = findAccountRequestByEmail(email);
+
+  if (!request || request.status !== "approved") {
+    return mockDashboard;
+  }
+
+  const fullName = [request.firstName, request.lastName].filter(Boolean).join(" ");
+  const phone = request.phone ?? "";
+  const customer: AccountCustomer = {
+    ...mockDashboard.customer,
+    firstName: request.firstName,
+    lastName: request.lastName,
+    fullName,
+    email: request.email,
+    phone,
+  };
+  const personalizeAddress = (address: AccountAddress): AccountAddress => ({
+    ...address,
+    fullName,
+    phone,
+  });
+  const addresses = mockDashboard.addresses.map(personalizeAddress);
+  const billingAddresses = mockDashboard.billingAddresses.map(personalizeAddress);
+  const orders = mockDashboard.orders.map((order) => ({
+    ...order,
+    shippingAddress: personalizeAddress(order.shippingAddress),
+  }));
+
+  return {
+    ...mockDashboard,
+    customer,
+    defaultAddress: personalizeAddress(mockDashboard.defaultAddress),
+    addresses,
+    billingAddresses,
+    orders,
+    overviewOrders: orders.slice(0, 2),
+  };
+}
+
 function createAccountRequestId() {
   return `account-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
 }
 
 export const mockAccountService: CustomerAccountService = {
-  getDashboard: () => mockDashboard,
+  getDashboard: (email) => getDashboardForAccount(email),
   signIn: ({ email, password }) => {
     const normalizedEmail = email.trim().toLowerCase();
 
