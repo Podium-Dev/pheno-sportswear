@@ -80,10 +80,26 @@ export type AccountRegistration = AccountCredentials & {
 
 export type AccountApprovalStatus = "approved" | "pending" | "rejected";
 
+export type AccountApprovalRequest = {
+  id: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+  phone?: string;
+  status: AccountApprovalStatus;
+  submittedAt: string;
+};
+
 export type AccountAuthResult = {
   ok: boolean;
   approvalStatus?: AccountApprovalStatus;
   message?: string;
+};
+
+export type AccountAdminResult = {
+  ok: boolean;
+  message?: string;
+  request?: AccountApprovalRequest;
 };
 
 export interface CustomerAccountService {
@@ -91,6 +107,9 @@ export interface CustomerAccountService {
   signIn(credentials: AccountCredentials): AccountAuthResult;
   createAccount(credentials: AccountRegistration): AccountAuthResult;
   requestPasswordReset(email: string): string;
+  getAccountRequests(): AccountApprovalRequest[];
+  approveAccountRequest(id: string): AccountAdminResult;
+  rejectAccountRequest(id: string): AccountAdminResult;
 }
 
 const mockAddress: AccountAddress = {
@@ -306,28 +325,122 @@ const mockDashboard: AccountDashboardData = {
 };
 
 const validEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const accountRequestsStorageKey = "pheno-account-approval-requests";
+
+function getStoredAccountRequests(): AccountApprovalRequest[] {
+  if (typeof window === "undefined") {
+    return [];
+  }
+
+  try {
+    const storedRequests = window.localStorage.getItem(accountRequestsStorageKey);
+    const parsedRequests: unknown = storedRequests ? JSON.parse(storedRequests) : [];
+
+    return Array.isArray(parsedRequests) ? parsedRequests as AccountApprovalRequest[] : [];
+  } catch {
+    return [];
+  }
+}
+
+function saveStoredAccountRequests(requests: AccountApprovalRequest[]) {
+  if (typeof window === "undefined") {
+    return;
+  }
+
+  try {
+    window.localStorage.setItem(accountRequestsStorageKey, JSON.stringify(requests));
+  } catch {
+    // The preview remains usable if local storage is unavailable.
+  }
+}
+
+function findAccountRequestByEmail(email: string) {
+  const normalizedEmail = email.trim().toLowerCase();
+  return getStoredAccountRequests().find((request) => request.email.toLowerCase() === normalizedEmail);
+}
+
+function createAccountRequestId() {
+  return `account-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
+}
 
 export const mockAccountService: CustomerAccountService = {
   getDashboard: () => mockDashboard,
   signIn: ({ email, password }) => {
-    if (!validEmail.test(email)) {
+    const normalizedEmail = email.trim().toLowerCase();
+
+    if (!validEmail.test(normalizedEmail)) {
       return { ok: false, message: "Enter a valid email address." };
     }
 
     if (password.length < 6) {
       return { ok: false, message: "Your password must be at least 6 characters." };
+    }
+
+    const request = findAccountRequestByEmail(normalizedEmail);
+
+    if (request?.status === "pending") {
+      return {
+        ok: false,
+        approvalStatus: "pending",
+        message: "Your account is awaiting admin approval before you can sign in.",
+      };
+    }
+
+    if (request?.status === "rejected") {
+      return {
+        ok: false,
+        approvalStatus: "rejected",
+        message: "This account request was not approved. Please contact support.",
+      };
     }
 
     return { ok: true, approvalStatus: "approved" };
   },
-  createAccount: ({ email, password }) => {
-    if (!validEmail.test(email)) {
+  createAccount: ({ firstName, lastName, email, phone, password }) => {
+    const normalizedEmail = email.trim().toLowerCase();
+
+    if (!firstName.trim() || !lastName.trim()) {
+      return { ok: false, message: "Enter your first and last name." };
+    }
+
+    if (!validEmail.test(normalizedEmail)) {
       return { ok: false, message: "Enter a valid email address." };
     }
 
     if (password.length < 6) {
       return { ok: false, message: "Your password must be at least 6 characters." };
     }
+
+    const existingRequest = findAccountRequestByEmail(normalizedEmail);
+
+    if (existingRequest?.status === "pending") {
+      return {
+        ok: false,
+        approvalStatus: "pending",
+        message: "This account is already awaiting admin approval.",
+      };
+    }
+
+    if (existingRequest?.status === "approved") {
+      return {
+        ok: false,
+        approvalStatus: "approved",
+        message: "An account with this email already exists. Please sign in.",
+      };
+    }
+
+    const nextRequest: AccountApprovalRequest = {
+      id: createAccountRequestId(),
+      firstName: firstName.trim(),
+      lastName: lastName.trim(),
+      email: normalizedEmail,
+      phone: phone?.trim() || undefined,
+      status: "pending",
+      submittedAt: new Date().toISOString(),
+    };
+
+    const requests = getStoredAccountRequests().filter((request) => request.email !== normalizedEmail);
+    saveStoredAccountRequests([...requests, nextRequest]);
 
     return {
       ok: true,
@@ -337,6 +450,43 @@ export const mockAccountService: CustomerAccountService = {
   },
   requestPasswordReset: (email) =>
     `Password reset for ${email} will connect once the commerce platform is selected.`,
+  getAccountRequests: () => getStoredAccountRequests(),
+  approveAccountRequest: (id) => {
+    const requests = getStoredAccountRequests();
+    const requestIndex = requests.findIndex((request) => request.id === id);
+
+    if (requestIndex < 0) {
+      return { ok: false, message: "That account request could not be found." };
+    }
+
+    const request = { ...requests[requestIndex], status: "approved" as const };
+    requests[requestIndex] = request;
+    saveStoredAccountRequests(requests);
+
+    return {
+      ok: true,
+      request,
+      message: `${request.firstName} ${request.lastName} has been approved.`,
+    };
+  },
+  rejectAccountRequest: (id) => {
+    const requests = getStoredAccountRequests();
+    const requestIndex = requests.findIndex((request) => request.id === id);
+
+    if (requestIndex < 0) {
+      return { ok: false, message: "That account request could not be found." };
+    }
+
+    const request = { ...requests[requestIndex], status: "rejected" as const };
+    requests[requestIndex] = request;
+    saveStoredAccountRequests(requests);
+
+    return {
+      ok: true,
+      request,
+      message: `${request.firstName} ${request.lastName} has been rejected.`,
+    };
+  },
 };
 
 export const accountService: CustomerAccountService = mockAccountService;
