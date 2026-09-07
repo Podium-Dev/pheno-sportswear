@@ -85,7 +85,6 @@ export function AccountExperience() {
   const [phone, setPhone] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [pendingApprovalEmail, setPendingApprovalEmail] = useState("");
   const [fieldErrors, setFieldErrors] = useState<AccountFieldErrors>({});
   const [authFeedback, setAuthFeedback] = useState("");
   const [authFeedbackTone, setAuthFeedbackTone] = useState<"error" | "info" | "">("");
@@ -153,13 +152,6 @@ export function AccountExperience() {
       return;
     }
 
-    if (authMode === "sign-in" && pendingApprovalEmail === normalizedEmail.toLowerCase()) {
-      setFieldErrors({});
-      setAuthFeedback("Your account is awaiting admin approval. You will get access once it has been accepted.");
-      setAuthFeedbackTone("info");
-      return;
-    }
-
     const result = authMode === "sign-in"
       ? accountService.signIn({ email: normalizedEmail, password })
       : accountService.createAccount({
@@ -180,7 +172,6 @@ export function AccountExperience() {
     setFieldErrors({});
 
     if (authMode === "create-account") {
-      setPendingApprovalEmail(normalizedEmail.toLowerCase());
       setPassword("");
       setConfirmPassword("");
       setAuthFeedback(result.message ?? "Your account request has been submitted for admin approval.");
@@ -492,9 +483,16 @@ export function AccountExperience() {
               Preview approved dashboard with sample data
             </button>
           ) : (
-            <p className="account-auth__approval-note">
-              Dashboard access is available only after an admin approves your account.
-            </p>
+            <div className="account-auth__approval-actions">
+              <p className="account-auth__approval-note">
+                Dashboard access is available only after an admin approves your account.
+              </p>
+              {authFeedbackTone === "info" && authFeedback ? (
+                <a className="account-auth__admin-link" href="/admin/accounts">
+                  Open admin approval preview <span aria-hidden="true">↗</span>
+                </a>
+              ) : null}
+            </div>
           )}
         </div>
       </div>
