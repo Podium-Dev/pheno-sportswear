@@ -11243,3 +11243,35 @@ h2 {
     font-size: 24px !important;
   }
 }
+
+
+/* Final principle card spacing refinement. */
+.storefront-page--story .story-principles article {
+  padding: clamp(24px, 2.2vw, 32px);
+}
+
+.storefront-page--story .story-principles article > span.story-principles__number {
+  font-size: 24px;
+}
+
+.storefront-page--story .story-principles article > span.story-principles__number::after {
+  margin-top: 14px;
+}
+
+.storefront-page--story .story-principles article h3 {
+  margin-top: 24px;
+}
+
+.storefront-page--story .story-principles article p {
+  margin-top: 14px;
+}
+
+@media (max-width: 720px) {
+  .storefront-page--story .story-principles article {
+    padding: 24px;
+  }
+
+  .storefront-page--story .story-principles article h3 {
+    margin-top: 22px;
+  }
+}
