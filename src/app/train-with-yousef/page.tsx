@@ -44,9 +44,27 @@ export default function TrainWithYousefPage() {
           <p className="eyebrow">WHO IT IS FOR</p>
           <h2 id="audience-title">Start where you are.</h2>
           <div className="coaching-audience__grid">
-            <article><span>01</span><h3>New to boxing</h3><p>Build confidence with clear fundamentals, movement, and technique.</p></article>
-            <article><span>02</span><h3>Returning to training</h3><p>Rebuild consistency, fitness, and belief one session at a time.</p></article>
-            <article><span>03</span><h3>Ready to sharpen up</h3><p>Use focused coaching to challenge your habits and raise your level.</p></article>
+            <article>
+              <img className="coaching-audience__image" src="/images/editorial-left.jpg" alt="" />
+              <span className="coaching-audience__shade" aria-hidden="true" />
+              <span>01</span>
+              <h3>New to boxing</h3>
+              <p>Build confidence with clear fundamentals, movement, and technique.</p>
+            </article>
+            <article>
+              <img className="coaching-audience__image" src="/images/editorial-main.jpg" alt="" />
+              <span className="coaching-audience__shade" aria-hidden="true" />
+              <span>02</span>
+              <h3>Returning to training</h3>
+              <p>Rebuild consistency, fitness, and belief one session at a time.</p>
+            </article>
+            <article>
+              <img className="coaching-audience__image" src="/images/editorial-right.jpg" alt="" />
+              <span className="coaching-audience__shade" aria-hidden="true" />
+              <span>03</span>
+              <h3>Ready to sharpen up</h3>
+              <p>Use focused coaching to challenge your habits and raise your level.</p>
+            </article>
           </div>
         </section>
 
