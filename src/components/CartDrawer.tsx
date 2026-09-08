@@ -5,6 +5,7 @@ import { useCommerce } from "@/components/CommerceProvider";
 import { formatCurrency } from "@/lib/format";
 import { QuickAddPanel } from "@/components/ProductCard";
 import { findCatalogProduct } from "@/lib/commerce/catalog-utils";
+import { getProductImage } from "@/data/products";
 
 export function CartDrawer() {
   const {
@@ -131,16 +132,23 @@ export function CartDrawer() {
             {recommendation ? (
               <div className="cart-drawer__recommendation">
                 <p className="eyebrow">COMPLETE YOUR KIT</p>
-                <div className="cart-drawer__recommendation-row">
-                  <a href={`/product/${recommendation.slug}`} onClick={() => setCartOpen(false)}>
-                    {recommendation.name}
+                <div className="cart-drawer__recommendation-item">
+                  <a className="cart-drawer__recommendation-media" href={`/product/${recommendation.slug}`} onClick={() => setCartOpen(false)}>
+                    <img src={getProductImage(recommendation)} alt={`${recommendation.name}, ${recommendation.colours[0] || "Black"} colour`} />
                   </a>
-                  <span>{formatCurrency(recommendation.price, recommendation.currencyCode)}</span>
+                  <div className="cart-drawer__recommendation-content">
+                    <div className="cart-drawer__recommendation-row">
+                      <a href={`/product/${recommendation.slug}`} onClick={() => setCartOpen(false)}>
+                        {recommendation.name}
+                      </a>
+                      <span>{formatCurrency(recommendation.price, recommendation.currencyCode)}</span>
+                    </div>
+                    <button className="quick-add-trigger" type="button" aria-expanded={recommendationOpen} onClick={() => setRecommendationOpen((open) => !open)}>
+                      {recommendationOpen ? "Close" : "Quick add"}
+                    </button>
+                    {recommendationOpen ? <QuickAddPanel product={recommendation} onAdded={() => setRecommendationOpen(false)} /> : null}
+                  </div>
                 </div>
-                <button className="quick-add-trigger" type="button" aria-expanded={recommendationOpen} onClick={() => setRecommendationOpen((open) => !open)}>
-                  {recommendationOpen ? "Close" : "Quick add"}
-                </button>
-                {recommendationOpen ? <QuickAddPanel product={recommendation} onAdded={() => setRecommendationOpen(false)} /> : null}
               </div>
             ) : null}
 

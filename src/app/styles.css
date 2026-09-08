@@ -2497,6 +2497,32 @@ img {
   justify-content: space-between;
 }
 
+.cart-drawer__recommendation-item {
+  display: grid;
+  grid-template-columns: 82px 1fr;
+  gap: 13px;
+  align-items: start;
+}
+
+.cart-drawer__recommendation-media {
+  display: block;
+}
+
+.cart-drawer__recommendation-media img {
+  display: block;
+  width: 82px;
+  height: 82px;
+  object-fit: contain;
+  background: var(--surface);
+  mix-blend-mode: multiply;
+}
+
+.cart-drawer__recommendation-content {
+  display: grid;
+  align-content: start;
+  gap: 8px;
+}
+
 .cart-drawer__footer {
   display: grid;
   gap: 11px;
