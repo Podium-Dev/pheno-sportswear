@@ -3521,6 +3521,42 @@ img {
   scroll-margin-top: calc(var(--header-height) + 18px);
 }
 
+.coaching-timetable,
+.coaching-day-sessions {
+  padding-block: clamp(48px, 6vw, 80px);
+}
+.coaching-schedule-intro { max-width: 680px; margin-bottom: 30px; }
+.coaching-schedule-intro h2 { margin: 0 0 16px; font-family: var(--heading-font); font-size: var(--type-h2); line-height: 1.05; text-transform: uppercase; letter-spacing: -0.04em; }
+.coaching-schedule-intro p { margin: 0; font-size: 16px; line-height: 1.6; }
+.coaching-schedule-filters { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 24px; }
+.coaching-schedule-filters button { padding: 12px 16px; border: 1px solid var(--line); background: var(--paper); color: var(--ink); font: inherit; font-size: 14px; cursor: pointer; }
+.coaching-schedule-filters button[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: #070908; }
+.coaching-schedule-filters button:focus-visible,
+.coaching-timetable__scroll:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
+.coaching-timetable__scroll { overflow-x: auto; }
+.coaching-timetable table { width: 100%; min-width: 940px; border-collapse: collapse; table-layout: fixed; font-size: 14px; }
+.coaching-timetable th,
+.coaching-timetable td { padding: 18px 10px; border: 1px solid var(--line); text-align: center; vertical-align: middle; line-height: 1.4; }
+.coaching-timetable thead th { background: var(--ink); color: var(--paper); }
+.coaching-timetable th:first-child { width: 76px; }
+.coaching-timetable tbody th { background: var(--surface); font-variant-numeric: tabular-nums; }
+.coaching-timetable td { background: var(--paper); color: var(--muted); }
+.coaching-timetable td.coaching-timetable__session { background: var(--accent); color: #070908; font-weight: 600; }
+.coaching-timetable td.coaching-timetable__session--pt { background: var(--accent-soft); }
+.coaching-timetable__note { margin: 20px 0 0; font-size: 14px; line-height: 1.6; color: var(--muted); }
+.coaching-day-sessions { background: #070908; color: var(--paper); box-shadow: 0 0 0 100vmax #070908; clip-path: inset(0 -100vmax); }
+.coaching-day-sessions__list { list-style: none; margin: 0; padding: 0; }
+.coaching-day-sessions__list li { display: grid; grid-template-columns: minmax(0, 2fr) minmax(70px, .5fr) minmax(130px, 1fr) auto; gap: 24px; align-items: center; padding: 24px 0; border-top: 1px solid rgb(255 255 255 / .2); }
+.coaching-day-sessions__list h3 { margin: 0 0 8px; font-size: 18px; }
+.coaching-day-sessions__list p { margin: 0; color: rgb(255 255 255 / .7); font-size: 14px; line-height: 1.5; }
+.coaching-day-sessions__list .button { background: var(--accent); color: #070908; white-space: nowrap; }
+@media (max-width: 720px) {
+  .coaching-schedule-filters { flex-wrap: nowrap; overflow-x: auto; padding-bottom: 8px; }
+  .coaching-schedule-filters button { flex-shrink: 0; }
+  .coaching-day-sessions__list li { grid-template-columns: 1fr auto; gap: 16px; }
+  .coaching-day-sessions__list .button { min-width: 0; padding-inline: 14px; }
+}
+
 .booking-section__intro {
   display: grid;
   gap: 14px;

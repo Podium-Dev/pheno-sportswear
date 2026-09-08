@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Script from "next/script";
 import { CoachingCommunity } from "@/components/CoachingCommunity";
+import { CoachingTimetable } from "@/components/CoachingTimetable";
 import { StorefrontPage } from "@/components/StorefrontPage";
 
 export const metadata: Metadata = {
@@ -30,6 +31,7 @@ export default function TrainWithYousefPage() {
           </div>
         </section>
 
+        <CoachingTimetable />
         <CoachingCommunity />
 
         <section className="coaching-section" aria-labelledby="coaching-intro-title">
