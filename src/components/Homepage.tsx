@@ -128,7 +128,7 @@ function RetailHero() {
           onFocus={() => setIsHeroPaused(true)}
           onBlur={() => setIsHeroPaused(false)}
         >
-          <img className="retail-hero__mark" src="/images/pheno-hero-mark.png" alt="" />
+          <img className="retail-hero__mark" src="/images/pheno-hero-mark-orange.png" alt="" />
           {retailHeroSlides.map((slide, index) => (
             <img
               className={`retail-hero__product${index === activeHeroIndex ? " is-active" : ""}${slide.isCutout ? " retail-hero__product--cutout" : ""}`}

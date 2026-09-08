@@ -7386,6 +7386,7 @@ h6 {
 }
 
 .retail-hero {
+  --retail-yellow: #FB6D07;
   position: relative;
   min-height: 740px;
   overflow: hidden;
