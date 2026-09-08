@@ -94,12 +94,14 @@ function currencyFromVariant(variant: MedusaVariant) {
 }
 
 function isVariantAvailable(variant: MedusaVariant) {
-  if (typeof variant.purchasable === "boolean") return variant.purchasable;
   if (variant.allow_backorder) return true;
-  if (typeof variant.available_quantity === "number") return variant.available_quantity > 0;
-  if (typeof variant.inventory_quantity === "number") return variant.inventory_quantity > 0;
   if (variant.manage_inventory === false) return true;
-  return true;
+  if (typeof variant.inventory_quantity === "number") return variant.inventory_quantity > 0;
+  if (typeof variant.available_quantity === "number") return variant.available_quantity > 0;
+
+  // A managed variant without an inventory quantity must not be advertised as
+  // purchasable. The Store API query below explicitly requests this field.
+  return false;
 }
 
 function mapMedusaProduct(product: MedusaProduct): RemoteCommerceProduct {
@@ -138,6 +140,10 @@ export async function fetchMedusaProducts(config: MedusaCommerceConfig) {
   do {
     const url = new URL("/store/products", `${config.backendUrl}/`);
     url.searchParams.set("limit", String(limit));
+    // `inventory_quantity` is opt-in in Medusa's Store API. It is scoped to
+    // the sales channels associated with the publishable API key, so it is the
+    // authoritative storefront availability value for managed variants.
+    url.searchParams.set("fields", "*variants.calculated_price,+variants.inventory_quantity");
     url.searchParams.set("offset", String(offset));
     if (config.regionId) url.searchParams.set("region_id", config.regionId);
 
