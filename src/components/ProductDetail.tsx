@@ -319,6 +319,7 @@ export function ProductDetail({ product, catalogProducts }: { product: Product; 
                       type="button"
                       aria-pressed={size === option}
                       aria-label={`${option}${unavailable ? ", sold out" : ""}`}
+                      disabled={unavailable}
                       onClick={() => {
                         setSize(option);
                         setError("");
