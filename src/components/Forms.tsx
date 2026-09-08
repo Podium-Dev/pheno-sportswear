@@ -125,23 +125,23 @@ export function ContactForm() {
     <form ref={formRef} className="contact-form" onSubmit={handleSubmit} noValidate>
       <div className="form-grid">
         <label>
-          Name
+          <span className="contact-form__field-label">Name</span>
           <input name="name" type="text" autoComplete="name" required minLength={2} />
         </label>
         <label>
-          Email
+          <span className="contact-form__field-label">Email</span>
           <input name="email" type="email" autoComplete="email" required />
         </label>
         <label>
-          Phone <span>(optional)</span>
+          <span className="contact-form__field-label">Phone <span className="contact-form__optional">(optional)</span></span>
           <input name="phone" type="tel" autoComplete="tel" />
         </label>
         <label>
-          Subject
+          <span className="contact-form__field-label">Subject</span>
           <input name="subject" type="text" required minLength={2} />
         </label>
         <label className="form-grid__full">
-          Message
+          <span className="contact-form__field-label">Message</span>
           <textarea name="message" rows={6} required minLength={10} />
         </label>
       </div>

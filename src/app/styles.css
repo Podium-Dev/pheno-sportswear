@@ -3655,11 +3655,18 @@ img {
   gap: 7px;
 }
 
-.contact-form label span {
+.contact-form label .contact-form__optional {
   color: var(--muted-light);
   font-weight: 400;
   letter-spacing: 0;
   text-transform: none;
+}
+
+.contact-form__field-label {
+  display: flex;
+  min-height: 1.2em;
+  align-items: flex-start;
+  gap: 4px;
 }
 
 .form-grid__full {
@@ -9865,6 +9872,7 @@ h2 {
 }
 
 .contact-page__form-card .contact-form input {
+  height: 48px;
   min-height: 48px;
 }
 
