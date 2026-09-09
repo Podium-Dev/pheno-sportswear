@@ -53,6 +53,10 @@ export function getCommerceConfig(): CommerceConfig {
 }
 
 
+export function isCheckoutEnabled() {
+  return process.env.CHECKOUT_ENABLED?.trim().toLowerCase() === "true";
+}
+
 export function getCartProvider(): CartProvider {
   const configuredProvider = (process.env.CART_PROVIDER?.trim().toLowerCase() || "local") as CartProvider;
 
