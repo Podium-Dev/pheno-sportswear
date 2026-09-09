@@ -67,7 +67,7 @@ const PLACEHOLDERS = {
   shippingOptionName: "PHENO Development Shipping",
   taxProviderId: "tp_system",
   fulfillmentProviderId: "fp_manual_manual",
-  paymentProviderId: "pp_system",
+  paymentProviderId: "pp_system_default",
   adminKeyTitle: "PHENO Isolated Checkout Preview",
   developmentTaxRate: 0,
 };
