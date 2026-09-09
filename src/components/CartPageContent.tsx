@@ -5,7 +5,7 @@ import { CheckoutButton } from "@/components/CheckoutButton";
 import { formatCurrency } from "@/lib/format";
 
 export function CartPageContent() {
-  const { cart, cartCount, cartSubtotal, removeFromCart, updateCartLine } = useCommerce();
+  const { cart, cartCount, cartMessage, cartSubtotal, removeFromCart, updateCartLine } = useCommerce();
 
   if (!cart.length) {
     return (
@@ -20,6 +20,7 @@ export function CartPageContent() {
 
   return (
     <div className="cart-page__layout">
+      {cartMessage ? <p className="form-message form-message--error" role="status">{cartMessage}</p> : null}
       <section className="cart-page__items" aria-labelledby="cart-page-items-title">
         <div className="section-heading-row">
           <h2 id="cart-page-items-title">Cart ({cartCount})</h2>

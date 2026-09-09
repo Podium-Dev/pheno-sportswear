@@ -15,6 +15,8 @@ export type RemoteCommerceVariant = {
   price?: number;
   currencyCode?: string;
   image?: string;
+  sku?: string;
+  metadata?: Record<string, unknown>;
 };
 
 export type RemoteCommerceProduct = {
@@ -27,6 +29,7 @@ export type RemoteCommerceProduct = {
   currencyCode?: string;
   images: string[];
   variants: RemoteCommerceVariant[];
+  metadata?: Record<string, unknown>;
 };
 
 const fallbackImage = "/images/pheno-logo.png";
@@ -88,12 +91,14 @@ function buildFallbackProduct(
 ): Product {
   return {
     id: product.id,
+    commerceProductId: product.id,
     slug: product.slug,
     name: product.name || localProduct?.name || "PHENO product",
     collection: "type-1",
     category,
     price,
     currencyCode: product.currencyCode || localProduct?.currencyCode || "GBP",
+    metadata: product.metadata || localProduct?.metadata,
     description: product.description || localProduct?.description || "Performance sportswear built for the work ahead.",
     construction: localProduct?.construction || "Technical performance construction.",
     features: localProduct?.features || [],
@@ -160,6 +165,10 @@ export function normalizeRemoteProducts(remoteProducts: RemoteCommerceProduct[])
         size: matchKnownSize(variant.size, localProduct?.sizes[index] || SIZE_OPTIONS[index % SIZE_OPTIONS.length]) as Size,
         colour,
         available: variant.available,
+        sku: variant.sku,
+        price: variant.price,
+        currencyCode: variant.currencyCode,
+        metadata: variant.metadata,
       }));
       const sizes = unique(variants.map((variant) => variant.size)) as Size[];
       const productSlug = splitByColour
@@ -184,6 +193,8 @@ export function normalizeRemoteProducts(remoteProducts: RemoteCommerceProduct[])
       return {
         ...normalizedProduct,
         id: splitByColour ? `${remoteProduct.id}-${slugPart(colour)}` : remoteProduct.id,
+        commerceProductId: remoteProduct.id,
+        metadata: remoteProduct.metadata,
         name: remoteProduct.name || localProduct?.name || normalizedProduct.name,
         colourImages: { [colour]: productImages[0] },
         galleryImagesByColour: { [colour]: productImages },
