@@ -6,8 +6,8 @@
   "license": "MIT",
   "scripts": {
     "build": "medusa build && cd .medusa/server && npm install",
-    "start": "if [ \"$PREVIEW_DB_PROBE\" = \"true\" ]; then node db-probe.mjs; else cd .medusa/server && medusa start; fi",
-    "prestart": "if [ \"$PREVIEW_DB_PROBE\" = \"true\" ]; then exit 0; else medusa db:migrate; fi",
+    "start": "cd .medusa/server && medusa start",
+    "prestart": "medusa db:migrate",
     "predeploy": "medusa db:migrate",
     "dev": "medusa develop",
     "lint": "medusa lint"
