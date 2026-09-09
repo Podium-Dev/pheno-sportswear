@@ -3,6 +3,6 @@ builder = "RAILPACK"
 buildCommand = "cd medusa-backend && npm install && npm run build"
 
 [deploy]
-startCommand = "cd medusa-backend && npm start"
+startCommand = "cd medusa-backend && if [ \"$CHECKOUT_SETUP_MODE\" = \"true\" ]; then (npx medusa user -e \"$MEDUSA_ADMIN_EMAIL\" -p \"$MEDUSA_ADMIN_PASSWORD\" || true); node ../scripts/setup-checkout-preview.mjs; else npm start; fi"
 healthcheckPath = "/health"
 restartPolicyType = "ALWAYS"
