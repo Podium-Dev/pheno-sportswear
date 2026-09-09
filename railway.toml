@@ -1,0 +1,8 @@
+[build]
+builder = "RAILPACK"
+buildCommand = "cd medusa-backend && npm install && npm run build"
+
+[deploy]
+startCommand = "cd medusa-backend && npm start"
+healthcheckPath = "/health"
+restartPolicyType = "ALWAYS"
