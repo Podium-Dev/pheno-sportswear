@@ -33,6 +33,7 @@ export type { CartLine } from "@/lib/commerce/cart/types";
 type CommerceContextValue = {
   catalogProducts: Product[];
   cartProvider: CartProviderMode;
+  checkoutEnabled: boolean;
   cart: CartLine[];
   cartCount: number;
   cartSubtotal: number;
@@ -113,10 +114,12 @@ export function CommerceProvider({
   children,
   catalogProducts,
   cartProvider = "local",
+  checkoutEnabled = false,
 }: {
   children: React.ReactNode;
   catalogProducts: Product[];
   cartProvider?: CartProviderMode;
+  checkoutEnabled?: boolean;
 }) {
   const [cart, setCart] = useState<CartLine[]>([]);
   const [wishlist, setWishlist] = useState<string[]>([]);
@@ -463,6 +466,7 @@ export function CommerceProvider({
     () => ({
       catalogProducts,
       cartProvider,
+      checkoutEnabled,
       cart,
       cartCount: cart.reduce((total, line) => total + line.quantity, 0),
       cartSubtotal,
@@ -487,6 +491,7 @@ export function CommerceProvider({
       cartMessage,
       cartOpen,
       cartProvider,
+      checkoutEnabled,
       cartSubtotal,
       catalogProducts,
       checkoutMessage,

@@ -5,7 +5,16 @@ import { CheckoutButton } from "@/components/CheckoutButton";
 import { formatCurrency } from "@/lib/format";
 
 export function CartPageContent() {
-  const { cart, cartCount, cartMessage, cartSubtotal, removeFromCart, updateCartLine } = useCommerce();
+  const {
+    cart,
+    cartCount,
+    cartMessage,
+    cartProvider,
+    cartSubtotal,
+    checkoutEnabled,
+    removeFromCart,
+    updateCartLine,
+  } = useCommerce();
 
   if (!cart.length) {
     return (
@@ -53,7 +62,11 @@ export function CartPageContent() {
         <div className="cart-page__summary-row"><span>Subtotal</span><strong>{formatCurrency(cartSubtotal, cart[0]?.currencyCode)}</strong></div>
         <p className="cart-page__delivery">Free UK shipping on orders over £75. European and international rules will be confirmed before launch.</p>
         <CheckoutButton />
-        <p className="cart-page__checkout-note">This preview cart is persistent, but payment is not enabled until the selected Shopify or Medusa connection is supplied.</p>
+        <p className="cart-page__checkout-note">
+          {checkoutEnabled && cartProvider === "medusa"
+            ? "Development checkout is enabled for this isolated preview. No production payment is collected."
+            : "This preview cart is persistent, but payment is not enabled until the selected Shopify or Medusa connection is supplied."}
+        </p>
       </aside>
     </div>
   );

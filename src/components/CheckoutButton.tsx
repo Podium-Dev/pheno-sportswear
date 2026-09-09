@@ -3,7 +3,20 @@
 import { useCommerce } from "@/components/CommerceProvider";
 
 export function CheckoutButton() {
-  const { checkoutMessage, setCheckoutMessage } = useCommerce();
+  const {
+    cartProvider,
+    checkoutEnabled,
+    checkoutMessage,
+    setCheckoutMessage,
+  } = useCommerce();
+
+  if (checkoutEnabled && cartProvider === "medusa") {
+    return (
+      <a className="button button--dark button--wide" href="/checkout">
+        Checkout
+      </a>
+    );
+  }
 
   return (
     <div className="checkout-action">
@@ -18,7 +31,11 @@ export function CheckoutButton() {
       >
         Checkout
       </button>
-      {checkoutMessage ? <p className="form-message form-message--error" role="status">{checkoutMessage}</p> : null}
+      {checkoutMessage ? (
+        <p className="form-message form-message--error" role="status">
+          {checkoutMessage}
+        </p>
+      ) : null}
     </div>
   );
 }

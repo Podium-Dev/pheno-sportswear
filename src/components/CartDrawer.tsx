@@ -10,6 +10,8 @@ import { getProductImage } from "@/data/products";
 export function CartDrawer() {
   const {
     catalogProducts,
+    cartProvider,
+    checkoutEnabled,
     cart,
     cartCount,
     cartOpen,
@@ -166,17 +168,27 @@ export function CartDrawer() {
               <a className="button button--dark button--wide" href="/cart" onClick={() => setCartOpen(false)}>
                 View cart
               </a>
-              <button
-                className="button button--outline button--wide"
-                type="button"
-                onClick={() =>
-                  setCheckoutMessage(
-                    "Online checkout is not connected yet. Configure the Shopify or Medusa cart/checkout adapter before payment can be enabled.",
-                  )
-                }
-              >
-                Checkout
-              </button>
+              {checkoutEnabled && cartProvider === "medusa" ? (
+                <a
+                  className="button button--outline button--wide"
+                  href="/checkout"
+                  onClick={() => setCartOpen(false)}
+                >
+                  Checkout
+                </a>
+              ) : (
+                <button
+                  className="button button--outline button--wide"
+                  type="button"
+                  onClick={() =>
+                    setCheckoutMessage(
+                      "Online checkout is not connected yet. Configure the Shopify or Medusa cart/checkout adapter before payment can be enabled.",
+                    )
+                  }
+                >
+                  Checkout
+                </button>
+              )}
               {checkoutMessage ? (
                 <p className="form-message form-message--error" role="status">
                   {checkoutMessage}
