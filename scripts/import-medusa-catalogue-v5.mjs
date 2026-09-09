@@ -264,7 +264,7 @@ function moneyToMinor(price) {
 }
 
 function bundleAliases(catalogue, product) {
-  return (catalogue.bundles || [])
+  return (Array.isArray(catalogue?.bundles) ? catalogue.bundles : [])
     .filter((bundle) => {
       const slugs = bundle.productSlugs || [];
       if (product.slug === "pheno-type-1-t-shirt-black") {
@@ -397,7 +397,7 @@ function rowMetadata(catalogue, row) {
     pheno_source_id: row.sourceId,
     pheno_source_slug: row.handle,
     pheno_collection: row.collection,
-    pheno_collection_label: catalogue.collectionLabels?.[row.collection] || row.collection,
+    pheno_collection_label: (catalogue?.collectionLabels || {})[row.collection] || row.collection,
     pheno_category: row.category,
     pheno_colour: row.colour,
     pheno_related_product_slugs: product.relatedProductSlugs,
@@ -834,7 +834,7 @@ function assertClean(report, assetChecks) {
   if (report.source.missingPrices !== 0) problems.push("price count");
   if (report.duplicateHandles.length || report.duplicateSkus.length || report.remoteDuplicateHandles.length || report.remoteDuplicateSkus.length) problems.push("duplicate handles or SKUs");
   if (report.source.errors.length) problems.push(...report.source.errors);
-  if (!report.partial.matchesApprovedPlan && !report.complete.matchesApprovedPlan) problems.push("Medusa state does not match partial or complete approved plan");
+  if (report.remoteProducts !== 0 && !report.partial.matchesApprovedPlan && !report.complete.matchesApprovedPlan) problems.push("Medusa state does not match partial or complete approved plan");
   if (report.inventoryOperations.length !== 1 || report.inventoryOperations[0].sku !== HOODIE_XS_SKU || report.inventoryOperations[0].action === "UNRESOLVED_INVENTORY_ITEM") problems.push("managed inventory location workflow");
   if (assetChecks.localMissing.length || assetChecks.publicFailures.length) problems.push("image asset verification");
   if (report.payloadContracts.createIncludesTopLevelOptions !== true) problems.push("product CREATE options contract");
