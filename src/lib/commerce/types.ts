@@ -1,4 +1,5 @@
 export type CommerceProvider = "local" | "shopify" | "medusa";
+export type CartProvider = "local" | "medusa";
 
 export type ShopifyCommerceConfig = {
   provider: "shopify";

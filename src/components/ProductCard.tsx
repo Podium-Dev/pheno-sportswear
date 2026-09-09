@@ -23,9 +23,10 @@ export function QuickAddPanel({
   const [colour, setColour] = useState<Colour | "">(product.colours[0] || "");
   const [size, setSize] = useState<Size | "">("");
   const [error, setError] = useState("");
+  const [isAdding, setIsAdding] = useState(false);
   const sizeOptions = product.sizes.length ? product.sizes : SIZE_OPTIONS;
 
-  const handleAdd = () => {
+  const handleAdd = async () => {
     if (!colour || !size) {
       setError("Choose a colour and size first.");
       return;
@@ -37,7 +38,15 @@ export function QuickAddPanel({
       return;
     }
 
-    addToCart(product, variant);
+    setIsAdding(true);
+    const added = await addToCart(product, variant);
+    setIsAdding(false);
+
+    if (!added) {
+      setError("We could not add that variant to your cart. Please try again.");
+      return;
+    }
+
     setError("");
     onAdded?.();
   };
@@ -84,8 +93,8 @@ export function QuickAddPanel({
           })}
         </div>
       </fieldset>
-      <button className="button button--dark button--wide" type="button" onClick={handleAdd}>
-        Add to cart
+      <button className="button button--dark button--wide" type="button" onClick={handleAdd} disabled={isAdding}>
+        {isAdding ? "Adding..." : "Add to cart"}
       </button>
       {error ? <p className="form-message form-message--error">{error}</p> : null}
     </div>
