@@ -32,6 +32,8 @@ type MedusaVariant = {
   manage_inventory?: boolean | null;
   allow_backorder?: boolean | null;
   purchasable?: boolean | null;
+  sku?: string | null;
+  metadata?: Record<string, unknown> | null;
 };
 
 type MedusaImage = { url?: string | null } | string;
@@ -45,6 +47,7 @@ type MedusaProduct = {
   images?: MedusaImage[] | null;
   variants?: MedusaVariant[] | null;
   type?: { name?: string | null; value?: string | null } | null;
+  metadata?: Record<string, unknown> | null;
 };
 
 type MedusaProductsResponse = {
@@ -112,6 +115,8 @@ function mapMedusaProduct(product: MedusaProduct): RemoteCommerceProduct {
     available: isVariantAvailable(variant),
     price: priceFromVariant(variant),
     currencyCode: currencyFromVariant(variant),
+    sku: variant.sku || undefined,
+    metadata: variant.metadata || undefined,
   }));
   const firstVariant = variants[0];
   const images = [
@@ -125,6 +130,7 @@ function mapMedusaProduct(product: MedusaProduct): RemoteCommerceProduct {
     name: product.title || product.handle || "PHENO product",
     description: product.description || undefined,
     category: product.type?.name || product.type?.value || undefined,
+    metadata: product.metadata || undefined,
     price: firstVariant?.price,
     currencyCode: firstVariant?.currencyCode,
     images: Array.from(new Set(images.filter(Boolean))),
@@ -143,7 +149,7 @@ export async function fetchMedusaProducts(config: MedusaCommerceConfig) {
     // `inventory_quantity` is opt-in in Medusa's Store API. It is scoped to
     // the sales channels associated with the publishable API key, so it is the
     // authoritative storefront availability value for managed variants.
-    url.searchParams.set("fields", "*variants.calculated_price,+variants.inventory_quantity");
+    url.searchParams.set("fields", "*variants.calculated_price,+variants.inventory_quantity,+variants.sku,+variants.metadata,+metadata");
     url.searchParams.set("offset", String(offset));
     if (config.regionId) url.searchParams.set("region_id", config.regionId);
 

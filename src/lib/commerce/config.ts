@@ -1,4 +1,4 @@
-import type { CommerceConfig, CommerceProvider } from "@/lib/commerce/types";
+import type { CartProvider, CommerceConfig, CommerceProvider } from "@/lib/commerce/types";
 
 const supportedProviders: CommerceProvider[] = ["local", "shopify", "medusa"];
 
@@ -50,4 +50,17 @@ export function getCommerceConfig(): CommerceConfig {
     publishableKey: requiredEnv("MEDUSA_PUBLISHABLE_KEY"),
     regionId: process.env.MEDUSA_REGION_ID?.trim() || undefined,
   };
+}
+
+
+export function getCartProvider(): CartProvider {
+  const configuredProvider = (process.env.CART_PROVIDER?.trim().toLowerCase() || "local") as CartProvider;
+
+  if (configuredProvider !== "local" && configuredProvider !== "medusa") {
+    throw new Error(
+      'Unsupported CART_PROVIDER "' + configuredProvider + '". Use local or medusa.',
+    );
+  }
+
+  return configuredProvider;
 }

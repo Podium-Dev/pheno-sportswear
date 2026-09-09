@@ -24,9 +24,10 @@ export function BundleCard({ bundle, products }: { bundle: ProductBundle; produc
   const [sizes, setSizes] = useState<Record<string, Size | "">>({});
   const [colours, setColours] = useState<Record<string, Colour>>({});
   const [error, setError] = useState("");
+  const [isAdding, setIsAdding] = useState(false);
   const total = bundleProducts.reduce((sum, product) => sum + product.price, 0);
 
-  const handleAddBundle = () => {
+  const handleAddBundle = async () => {
     if (bundleProducts.some((product) => !sizes[product.slug])) {
       setError("Choose a size for each piece first.");
       return;
@@ -43,9 +44,18 @@ export function BundleCard({ bundle, products }: { bundle: ProductBundle; produc
       return;
     }
 
-    selectedVariants.forEach(({ product, variant }) => {
-      if (variant) addToCart(product, variant, 1, false);
-    });
+    setIsAdding(true);
+    for (const { product, variant } of selectedVariants) {
+      if (!variant) continue;
+      const added = await addToCart(product, variant, 1, false);
+      if (!added) {
+        setIsAdding(false);
+        setError("We could not add the complete set to your cart. Please try again.");
+        return;
+      }
+    }
+
+    setIsAdding(false);
     setError("");
     setCartOpen(true);
   };
@@ -117,8 +127,8 @@ export function BundleCard({ bundle, products }: { bundle: ProductBundle; produc
                 </label>
               </fieldset>
             ))}
-            <button className="button button--dark button--wide" type="button" onClick={handleAddBundle}>
-              Add set to cart
+            <button className="button button--dark button--wide" type="button" onClick={handleAddBundle} disabled={isAdding}>
+              {isAdding ? "Adding..." : "Add set to cart"}
             </button>
             {error ? <p className="form-message form-message--error">{error}</p> : null}
           </div>
