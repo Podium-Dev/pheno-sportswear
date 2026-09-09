@@ -264,7 +264,7 @@ export async function POST(request: Request) {
       const providerId = safeId(
         body.provider_id ||
           process.env.CHECKOUT_DEVELOPMENT_PAYMENT_PROVIDER_ID ||
-          "pp_system",
+          "pp_system_default",
         "Payment provider ID",
       );
       const current = await retrieveCart(cartId, config);
