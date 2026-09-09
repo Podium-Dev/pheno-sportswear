@@ -332,10 +332,13 @@ async function ensureFulfillmentSet(stockLocation) {
 }
 
 async function retrieveFulfillmentSet(id) {
-  const result = await admin(
-    "/admin/fulfillment-sets/" + encodeURIComponent(id) + "?fields=*service_zones",
-  );
-  return result.fulfillment_set;
+  const matches = await listAdmin("/admin/fulfillment-sets", {
+    id,
+    fields: "*service_zones",
+  });
+  const set = matches.find((item) => item.id === id);
+  if (!set) throw new Error("Fulfillment set could not be resolved.");
+  return set;
 }
 
 async function ensureServiceZone(fulfillmentSet) {
