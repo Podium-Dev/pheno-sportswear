@@ -288,16 +288,26 @@ async function ensureStockLocationSalesChannel(stockLocation, salesChannel) {
 }
 
 async function ensureFulfillmentProvider(stockLocation) {
-  if (hasRelation(stockLocation.fulfillment_providers, PLACEHOLDERS.fulfillmentProviderId)) {
-    return stockLocation;
+  if (!hasRelation(stockLocation.fulfillment_providers, PLACEHOLDERS.fulfillmentProviderId)) {
+    await admin(
+      "/admin/stock-locations/" +
+        encodeURIComponent(stockLocation.id) +
+        "/fulfillment-providers",
+      { method: "POST", body: { add: [PLACEHOLDERS.fulfillmentProviderId], remove: [] } },
+    );
   }
-  await admin(
-    "/admin/stock-locations/" +
-      encodeURIComponent(stockLocation.id) +
-      "/fulfillment-providers",
-    { method: "POST", body: { add: [PLACEHOLDERS.fulfillmentProviderId], remove: [] } },
-  );
-  return retrieveStockLocation(stockLocation.id);
+
+  // Always refetch after the link operation. Medusa validates shipping options
+  // against the fulfillment set's linked stock-location providers, not just
+  // the provider list held by the caller's earlier response.
+  const refreshed = await retrieveStockLocation(stockLocation.id);
+  if (!hasRelation(refreshed.fulfillment_providers, PLACEHOLDERS.fulfillmentProviderId)) {
+    throw new Error(
+      "Fulfillment provider could not be confirmed on the stock location: " +
+        PLACEHOLDERS.fulfillmentProviderId,
+    );
+  }
+  return refreshed;
 }
 
 async function ensureFulfillmentSet(stockLocation) {
@@ -509,6 +519,9 @@ async function main() {
   stockLocation = await ensureFulfillmentProvider(stockLocation);
   const fulfillmentSet = await ensureFulfillmentSet(stockLocation);
   const serviceZone = await ensureServiceZone(fulfillmentSet, stockLocation.id);
+  // Re-confirm the location/provider link after the service zone exists,
+  // immediately before creating the shipping option.
+  stockLocation = await ensureFulfillmentProvider(stockLocation);
   const shippingProfile = await ensureShippingProfile();
   const shippingOption = await ensureShippingOption(serviceZone, shippingProfile, region);
   const taxRegion = await ensureTaxRegion();
