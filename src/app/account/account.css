@@ -5,7 +5,7 @@
   --account-muted: #686d69;
   --account-line: #dfe2df;
   --account-soft: #f1f2f0;
-  --account-yellow: #ffcb58;
+  --account-yellow: #FB6D07;
   --account-radius: 8px;
   --account-card-shadow: 0 12px 30px rgb(17 19 17 / 0.06), 0 2px 8px rgb(17 19 17 / 0.04);
   background: var(--account-canvas);
@@ -270,7 +270,7 @@
 
 .account-field input:focus {
   border-color: var(--account-ink);
-  box-shadow: 0 0 0 2px rgb(255 203 88 / 0.55);
+  box-shadow: 0 0 0 2px rgb(251 109 7 / 0.55);
 }
 
 .account-field input[aria-invalid="true"] {
@@ -661,7 +661,7 @@
   height: 6px;
   flex: 0 0 6px;
   border-radius: 50%;
-  background: #d99a12;
+  background: var(--account-yellow);
 }
 
 .account-status--processing .account-status__marker {
@@ -669,7 +669,7 @@
 }
 
 .account-status--in-transit .account-status__marker {
-  background: #d99a12;
+  background: var(--account-yellow);
 }
 
 .account-status--completed .account-status__marker {
@@ -1881,7 +1881,7 @@
 
 .account-address-card__actions button:hover,
 .account-address-card__actions button:focus-visible {
-  color: #916c15;
+  color: var(--account-yellow);
 }
 
 .account-addresses__notice {
@@ -2036,7 +2036,7 @@
 
 .account-profile-edit:hover,
 .account-profile-edit:focus-visible {
-  color: #916c15;
+  color: var(--account-yellow);
 }
 
 .account-profile-fields {
