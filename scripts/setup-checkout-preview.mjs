@@ -316,39 +316,25 @@ async function ensureFulfillmentSet(stockLocation) {
     },
   );
 
+  // Medusa 2.20.1 returns the refreshed fulfillment-set relation through the
+  // stock-location response. The /admin/fulfillment-sets collection endpoint
+  // is not available in this version, so do not attempt a second lookup there.
   const refreshed = await retrieveStockLocation(stockLocation.id);
   set = (refreshed.fulfillment_sets || []).find(
     (item) => item.name === PLACEHOLDERS.fulfillmentSetName && item.type === "shipping",
   );
-  if (set) return set;
-
-  const allSets = await listAdmin("/admin/fulfillment-sets", { fields: "*service_zones" });
-  set = exactlyOne(
-    allSets.filter((item) => item.name === PLACEHOLDERS.fulfillmentSetName),
-    "fulfillment set",
-  );
-  if (!set) throw new Error("Created fulfillment set could not be resolved.");
+  if (!set) throw new Error("Created fulfillment set could not be resolved from the stock location.");
   return set;
 }
 
-async function retrieveFulfillmentSet(id) {
-  const matches = await listAdmin("/admin/fulfillment-sets", {
-    id,
-    fields: "*service_zones",
-  });
-  const set = matches.find((item) => item.id === id);
-  if (!set) throw new Error("Fulfillment set could not be resolved.");
-  return set;
-}
-
-async function ensureServiceZone(fulfillmentSet) {
+async function ensureServiceZone(fulfillmentSet, stockLocationId) {
   const existingZones = Array.isArray(fulfillmentSet.service_zones)
     ? fulfillmentSet.service_zones
     : [];
   let zone = existingZones.find((item) => item.name === PLACEHOLDERS.serviceZoneName);
   if (zone) return zone;
 
-  await admin(
+  const created = await admin(
     "/admin/fulfillment-sets/" +
       encodeURIComponent(fulfillmentSet.id) +
       "/service-zones",
@@ -360,10 +346,25 @@ async function ensureServiceZone(fulfillmentSet) {
       },
     },
   );
-  const refreshed = await retrieveFulfillmentSet(fulfillmentSet.id);
-  zone = (refreshed.service_zones || []).find(
+
+  // The Medusa 2.20.1 route returns the refetched fulfillment set after the
+  // service zone is created. Prefer that response, then use the supported
+  // stock-location relation as a read-after-write fallback.
+  zone = (created.fulfillment_set?.service_zones || []).find(
     (item) => item.name === PLACEHOLDERS.serviceZoneName,
   );
+  if (zone) return zone;
+
+  if (stockLocationId) {
+    const refreshed = await retrieveStockLocation(stockLocationId);
+    const refreshedSet = (refreshed.fulfillment_sets || []).find(
+      (item) => item.id === fulfillmentSet.id,
+    );
+    zone = (refreshedSet?.service_zones || []).find(
+      (item) => item.name === PLACEHOLDERS.serviceZoneName,
+    );
+  }
+
   if (!zone) throw new Error("Created service zone could not be resolved.");
   return zone;
 }
@@ -507,7 +508,7 @@ async function main() {
   stockLocation = await ensureStockLocationSalesChannel(stockLocation, salesChannel);
   stockLocation = await ensureFulfillmentProvider(stockLocation);
   const fulfillmentSet = await ensureFulfillmentSet(stockLocation);
-  const serviceZone = await ensureServiceZone(await retrieveFulfillmentSet(fulfillmentSet.id));
+  const serviceZone = await ensureServiceZone(fulfillmentSet, stockLocation.id);
   const shippingProfile = await ensureShippingProfile();
   const shippingOption = await ensureShippingOption(serviceZone, shippingProfile, region);
   const taxRegion = await ensureTaxRegion();
