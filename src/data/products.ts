@@ -16,6 +16,10 @@ export type ProductVariant = {
   size: Size;
   colour: Colour;
   available: boolean;
+  sku?: string;
+  price?: number;
+  currencyCode?: string;
+  metadata?: Record<string, unknown>;
 };
 
 export type ProductFeature = {
@@ -49,12 +53,14 @@ export type ProductEngineeredDetails = {
 
 export type Product = {
   id: string;
+  commerceProductId?: string;
   slug: string;
   name: string;
   collection: "type-1";
   category: ProductCategory;
   price: number;
   currencyCode?: string;
+  metadata?: Record<string, unknown>;
   description: string;
   construction: string;
   features: string[];

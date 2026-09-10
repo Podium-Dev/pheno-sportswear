@@ -128,7 +128,7 @@ function RetailHero() {
           onFocus={() => setIsHeroPaused(true)}
           onBlur={() => setIsHeroPaused(false)}
         >
-          <img className="retail-hero__mark" src="/images/pheno-hero-mark-orange.png" alt="" />
+          <span className="retail-hero__mark" aria-hidden="true" />
           {retailHeroSlides.map((slide, index) => (
             <img
               className={`retail-hero__product${index === activeHeroIndex ? " is-active" : ""}${slide.isCutout ? " retail-hero__product--cutout" : ""}`}
@@ -482,7 +482,7 @@ function ProductSpotlight({ catalogProducts }: { catalogProducts: Product[] }) {
           <RetailCta href="/shop/type-1" dark>Shop now</RetailCta>
         </div>
         <div className="retail-spotlight__art">
-          <img className="retail-spotlight__mark" src="/images/pheno-hero-mark.png" alt="" aria-hidden="true" />
+          <span className="retail-spotlight__mark" aria-hidden="true" />
           <div
             className="retail-spotlight__slider"
             role="region"

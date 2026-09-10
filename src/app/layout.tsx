@@ -3,6 +3,7 @@ import { CommerceProvider } from "@/components/CommerceProvider";
 import { EarlyAccessModal } from "@/components/EarlyAccessModal";
 import { ParallaxEffects } from "@/components/ParallaxEffects";
 import { getCatalogProducts } from "@/lib/commerce/catalog";
+import { getCartProvider } from "@/lib/commerce/config";
 import "./styles.css";
 
 export const metadata: Metadata = {
@@ -27,11 +28,12 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
   const catalogProducts = await getCatalogProducts();
+  const cartProvider = getCartProvider();
 
   return (
     <html lang="en-GB">
       <body>
-        <CommerceProvider catalogProducts={catalogProducts}>
+        <CommerceProvider catalogProducts={catalogProducts} cartProvider={cartProvider}>
           <ParallaxEffects />
           {children}
           <EarlyAccessModal />

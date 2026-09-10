@@ -13,6 +13,7 @@ export function CartDrawer() {
     cart,
     cartCount,
     cartOpen,
+    cartMessage,
     cartSubtotal,
     checkoutMessage,
     removeFromCart,
@@ -83,6 +84,8 @@ export function CartDrawer() {
             ×
           </button>
         </header>
+
+        {cartMessage ? <p className="form-message form-message--error" role="status">{cartMessage}</p> : null}
 
         {cart.length ? (
           <>

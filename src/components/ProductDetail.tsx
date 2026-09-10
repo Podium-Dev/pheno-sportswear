@@ -251,6 +251,7 @@ export function ProductDetail({ product, catalogProducts }: { product: Product; 
   const [size, setSize] = useState<Size | "">("");
   const [quantity, setQuantity] = useState(1);
   const [error, setError] = useState("");
+  const [isAdding, setIsAdding] = useState(false);
   const [sizeGuideOpen, setSizeGuideOpen] = useState(false);
   const sizeOptions = product.sizes.length ? product.sizes : SIZE_OPTIONS;
 
@@ -261,7 +262,7 @@ export function ProductDetail({ product, catalogProducts }: { product: Product; 
     [catalogProducts, product.slug],
   );
 
-  const handleAddToCart = () => {
+  const handleAddToCart = async () => {
     if (!colour || !size) {
       setError("Choose a colour and size before adding this piece to your cart.");
       return;
@@ -272,7 +273,15 @@ export function ProductDetail({ product, catalogProducts }: { product: Product; 
       return;
     }
 
-    addToCart(product, variant, quantity);
+    setIsAdding(true);
+    const added = await addToCart(product, variant, quantity);
+    setIsAdding(false);
+
+    if (!added) {
+      setError("We could not add that variant to your cart. Please try again.");
+      return;
+    }
+
     setError("");
   };
 
@@ -350,8 +359,8 @@ export function ProductDetail({ product, catalogProducts }: { product: Product; 
               <span>{quantity}</span>
               <button type="button" aria-label="Increase quantity" onClick={() => setQuantity((current) => current + 1)}>+</button>
             </div>
-            <button className="button button--dark button--wide" type="button" onClick={handleAddToCart}>
-              Add to cart
+            <button className="button button--dark button--wide" type="button" onClick={handleAddToCart} disabled={isAdding}>
+              {isAdding ? "Adding..." : "Add to cart"}
             </button>
           </div>
           {error ? <p className="form-message form-message--error" role="alert">{error}</p> : null}
