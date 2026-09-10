@@ -110,14 +110,14 @@ export default function TrainWithYousefPage() {
           </div>
           <div className="booking-section__embed">
             <iframe
-              src="https://podium-cal-staging.up.railway.app/embed/pheno"
+              src="https://podiumcal.com/embed/pheno"
               title="PHENO Sportswear booking"
               data-podium-cal-embed=""
               style={{ display: "block", width: "100%", height: "1px", minHeight: 0, border: 0 }}
               loading="lazy"
               scrolling="no"
             />
-            <Script async src="https://podium-cal-staging.up.railway.app/embed.js" strategy="afterInteractive" />
+            <Script async src="https://podiumcal.com/embed.js" strategy="afterInteractive" />
           </div>
         </section>
       </div>
