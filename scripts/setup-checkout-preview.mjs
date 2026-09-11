@@ -262,12 +262,18 @@ async function retrieveStockLocation(id) {
   return result.stock_location;
 }
 async function retrieveFulfillmentProvider(id) {
-  const result = await admin(
-    "/admin/fulfillment-providers/" +
-      encodeURIComponent(id) +
-      "?fields=*locations",
-  );
-  return result.fulfillment_provider;
+  // Medusa 2.20.1 exposes fulfillment providers through the collection
+  // endpoint; the single-provider detail route is not available there.
+  const query = new URLSearchParams({
+    limit: "100",
+    offset: "0",
+    fields: "*locations",
+  });
+  const result = await admin("/admin/fulfillment-providers?" + query.toString());
+  const providers = Array.isArray(result.fulfillment_providers)
+    ? result.fulfillment_providers
+    : [];
+  return providers.find((provider) => provider.id === id) || null;
 }
 
 async function ensureStockLocation() {
