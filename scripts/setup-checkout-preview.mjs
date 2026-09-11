@@ -273,7 +273,14 @@ async function retrieveFulfillmentProvider(id) {
   const providers = Array.isArray(result.fulfillment_providers)
     ? result.fulfillment_providers
     : [];
-  return providers.find((provider) => provider.id === id) || null;
+  const provider = providers.find((item) => item.id === id) || null;
+  if (!provider) {
+    throw new Error(
+      "Fulfillment provider " + id + " was not returned by the supported collection endpoint. Available provider IDs: " +
+        providers.map((item) => item.id).filter(Boolean).join(","),
+    );
+  }
+  return provider;
 }
 
 async function ensureStockLocation() {
