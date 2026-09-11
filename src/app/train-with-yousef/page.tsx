@@ -117,7 +117,7 @@ export default function TrainWithYousefPage() {
               loading="lazy"
               scrolling="no"
             />
-            <Script async src="https://podiumcal.com/embed.js" strategy="afterInteractive" />
+            <Script async src="https://podiumcal.com/embed.js?v=20260911" strategy="afterInteractive" />
           </div>
         </section>
       </div>
