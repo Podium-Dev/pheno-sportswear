@@ -175,7 +175,17 @@ async function listAdmin(pathname, extraParams = {}) {
 }
 
 function idOf(value) {
-  return value && typeof value === "object" ? value.id : value;
+  if (!value || typeof value !== "object") return value;
+  return (
+    value.id ||
+    value.fulfillment_provider_id ||
+    value.stock_location_id ||
+    value.location_id ||
+    value.fulfillment_provider?.id ||
+    value.location?.id ||
+    value.fulfillmentProvider?.id ||
+    value.stockLocation?.id
+  );
 }
 
 function hasRelation(items, wantedId) {
@@ -251,6 +261,14 @@ async function retrieveStockLocation(id) {
   );
   return result.stock_location;
 }
+async function retrieveFulfillmentProvider(id) {
+  const result = await admin(
+    "/admin/fulfillment-providers/" +
+      encodeURIComponent(id) +
+      "?fields=*locations",
+  );
+  return result.fulfillment_provider;
+}
 
 async function ensureStockLocation() {
   const desired = {
@@ -301,10 +319,22 @@ async function ensureFulfillmentProvider(stockLocation) {
   // against the fulfillment set's linked stock-location providers, not just
   // the provider list held by the caller's earlier response.
   const refreshed = await retrieveStockLocation(stockLocation.id);
-  if (!hasRelation(refreshed.fulfillment_providers, PLACEHOLDERS.fulfillmentProviderId)) {
+  const provider = await retrieveFulfillmentProvider(PLACEHOLDERS.fulfillmentProviderId);
+  const locationLinkedFromProvider = hasRelation(provider?.locations, stockLocation.id);
+  if (
+    !hasRelation(refreshed.fulfillment_providers, PLACEHOLDERS.fulfillmentProviderId) &&
+    !locationLinkedFromProvider
+  ) {
     throw new Error(
       "Fulfillment provider could not be confirmed on the stock location: " +
-        PLACEHOLDERS.fulfillmentProviderId,
+        PLACEHOLDERS.fulfillmentProviderId +
+        " (stock-location relation IDs: " +
+        (Array.isArray(refreshed?.fulfillment_providers)
+          ? refreshed.fulfillment_providers.map(idOf).join(",")
+          : "none") +
+        "; provider locations: " +
+        (Array.isArray(provider?.locations) ? provider.locations.map(idOf).join(",") : "none") +
+        ")",
     );
   }
   return refreshed;

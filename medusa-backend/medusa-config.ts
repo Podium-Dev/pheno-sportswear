@@ -2,6 +2,35 @@ import { defineConfig, loadEnv } from "@medusajs/framework/utils"
 
 loadEnv(process.env.NODE_ENV || "development", process.cwd())
 
+const stripeSecretKey = process.env.PHENO_STRIPE_SECRET_KEY?.trim();
+const stripeWebhookSecret = process.env.PHENO_STRIPE_WEBHOOK_SECRET?.trim();
+
+if (Boolean(stripeSecretKey) !== Boolean(stripeWebhookSecret)) {
+  throw new Error(
+    "PHENO Stripe preview requires both PHENO_STRIPE_SECRET_KEY and PHENO_STRIPE_WEBHOOK_SECRET.",
+  );
+}
+
+const paymentModule = stripeSecretKey
+  ? {
+      resolve: "@medusajs/medusa/payment",
+      options: {
+        providers: [
+          {
+            resolve: "@medusajs/medusa/payment-stripe",
+            id: "stripe",
+            options: {
+              apiKey: stripeSecretKey,
+              webhookSecret: stripeWebhookSecret,
+              capture: true,
+              automatic_payment_methods: true,
+            },
+          },
+        ],
+      },
+    }
+  : { resolve: "@medusajs/payment" };
+
 module.exports = defineConfig({
   projectConfig: {
     databaseUrl: process.env.DATABASE_URL,
@@ -58,9 +87,7 @@ module.exports = defineConfig({
         },
       },
     },
-    {
-      resolve: "@medusajs/payment",
-    },
+    paymentModule,
     {
       resolve: "@medusajs/medusa/fulfillment",
       options: {
