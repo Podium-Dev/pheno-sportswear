@@ -6,10 +6,11 @@ export const checkoutDevelopment = {
       "Temporary manual shipping option for preview only. Final delivery rules and rates remain a client decision.",
   },
   payment: {
-    providerId: "pp_system_default",
-    label: "Development manual payment",
+    providerId: "pp_stripe_stripe",
+    manualProviderId: "pp_system_default",
+    label: "Stripe test payment",
     description:
-      "Temporary Medusa system payment for preview only. No third-party payment is processed or charged.",
+      "Stripe test mode only. No live payment method or live card charge is used in this preview.",
   },
   tax: {
     description:

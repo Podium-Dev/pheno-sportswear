@@ -46,6 +46,12 @@ export type CheckoutPaymentProvider = {
   isEnabled?: boolean;
 };
 
+export type CheckoutPaymentInitialization = {
+  cart: CheckoutCart;
+  providerId: string;
+  clientSecret?: string;
+};
+
 export type CheckoutOrder = {
   id: string;
   displayId?: number;
@@ -308,7 +314,20 @@ export function initializeCheckoutPayment(
     action: "payment",
     cart_id: cartId,
     provider_id: providerId,
-  }).then(mappedCart);
+  }).then((payload) => {
+    const payment = record(payload.payment);
+    return {
+      cart: mappedCart(payload),
+      providerId:
+        typeof payment.provider_id === "string"
+          ? payment.provider_id
+          : providerId,
+      clientSecret:
+        typeof payment.client_secret === "string"
+          ? payment.client_secret
+          : undefined,
+    } satisfies CheckoutPaymentInitialization;
+  });
 }
 
 export function completeCheckout(cartId: string) {

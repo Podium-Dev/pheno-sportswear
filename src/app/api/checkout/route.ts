@@ -54,6 +54,47 @@ function ensureCheckoutConfig() {
   return config;
 }
 
+function checkoutPaymentMode() {
+  const mode = process.env.PHENO_CHECKOUT_PAYMENT_MODE?.trim().toLowerCase() || "stripe";
+  if (mode !== "stripe" && mode !== "manual") {
+    throw new CheckoutRouteError(503, "Checkout payment mode is not configured.");
+  }
+  return mode;
+}
+
+function configuredPaymentProviderId() {
+  if (checkoutPaymentMode() === "manual") {
+    return process.env.PHENO_MANUAL_PAYMENT_PROVIDER_ID?.trim() || "pp_system_default";
+  }
+  return process.env.PHENO_STRIPE_PROVIDER_ID?.trim() || "pp_stripe_stripe";
+}
+
+function objectValue(value: unknown) {
+  return value && typeof value === "object" ? (value as Record<string, unknown>) : {};
+}
+
+function paymentClientSecret(cart: Record<string, unknown>, providerId: string) {
+  const collection = objectValue(cart.payment_collection);
+  const sessions = Array.isArray(collection.payment_sessions)
+    ? collection.payment_sessions
+    : [];
+  const session = sessions.find((value) => {
+    const item = objectValue(value);
+    return item.provider_id === providerId && item.status !== "error";
+  }) || objectValue(cart.payment_session);
+  const data = objectValue(objectValue(session).data);
+  const value = data.client_secret ?? data.clientSecret;
+  return typeof value === "string" && value ? value : undefined;
+}
+
+function storefrontPaymentProviders(payload: Record<string, unknown>) {
+  const expectedProviderId = configuredPaymentProviderId();
+  const providers = Array.isArray(payload.payment_providers)
+    ? payload.payment_providers.filter((value) => objectValue(value).id === expectedProviderId)
+    : [];
+  return { ...payload, payment_providers: providers };
+}
+
 function safeId(value: unknown, label: string) {
   if (typeof value !== "string" || !SAFE_ID.test(value)) {
     throw new CheckoutRouteError(400, label + " is invalid.");
@@ -153,7 +194,7 @@ function cartFrom(payload: Record<string, unknown>) {
   if (!payload.cart || typeof payload.cart !== "object") {
     throw new CheckoutRouteError(502, "Medusa returned no cart.");
   }
-  return payload.cart;
+  return payload.cart as Record<string, unknown>;
 }
 
 function responseForError(error: unknown) {
@@ -189,13 +230,12 @@ export async function GET(request: Request) {
 
     if (resource === "payment-providers") {
       const params = new URLSearchParams({ region_id: config.regionId as string });
-      return NextResponse.json(
-        await requestMedusa<Record<string, unknown>>(
-          "/store/payment-providers?" + params.toString(),
-          config,
-          { method: "GET" },
-        ),
+      const providers = await requestMedusa<Record<string, unknown>>(
+        "/store/payment-providers?" + params.toString(),
+        config,
+        { method: "GET" },
       );
+      return NextResponse.json(storefrontPaymentProviders(providers));
     }
 
     if (resource !== "cart") {
@@ -261,30 +301,24 @@ export async function POST(request: Request) {
 
     if (action === "payment") {
       const cartId = safeId(body.cart_id, "Cart ID");
-      const providerId = safeId(
-        body.provider_id ||
-          process.env.CHECKOUT_DEVELOPMENT_PAYMENT_PROVIDER_ID ||
-          "pp_system_default",
-        "Payment provider ID",
-      );
+      const providerId = configuredPaymentProviderId();
+      if (body.provider_id !== undefined && body.provider_id !== providerId) {
+        throw new CheckoutRouteError(400, "The selected payment provider is not enabled.");
+      }
+
       const current = await retrieveCart(cartId, config);
       const currentCart = cartFrom(current);
-      const currentCollection =
-        currentCart.payment_collection &&
-        typeof currentCart.payment_collection === "object"
-          ? (currentCart.payment_collection as Record<string, unknown>)
-          : {};
+      const currentCollection = objectValue(currentCart.payment_collection);
       let collectionId =
-        typeof currentCollection.id === "string"
-          ? currentCollection.id
-          : undefined;
+        typeof currentCollection.id === "string" ? currentCollection.id : undefined;
       const currentSessions = Array.isArray(currentCollection.payment_sessions)
         ? currentCollection.payment_sessions
         : [];
-      const existingSession = currentSessions.some((session) => {
-        const item = session && typeof session === "object" ? session as Record<string, unknown> : {};
+      const existingSession = currentSessions.find((session) => {
+        const item = objectValue(session);
         return item.provider_id === providerId && item.status !== "error";
       });
+      let createdSession: Record<string, unknown> | undefined;
 
       if (!collectionId) {
         const created = await requestMedusa<Record<string, unknown>>(
@@ -295,13 +329,8 @@ export async function POST(request: Request) {
             body: JSON.stringify({ cart_id: cartId }),
           },
         );
-        const collection = created.payment_collection;
-        if (!collection || typeof collection !== "object") {
-          throw new CheckoutRouteError(502, "Medusa returned no payment collection.");
-        }
-        collectionId = typeof (collection as Record<string, unknown>).id === "string"
-          ? String((collection as Record<string, unknown>).id)
-          : undefined;
+        const collection = objectValue(created.payment_collection);
+        collectionId = typeof collection.id === "string" ? collection.id : undefined;
       }
 
       if (!collectionId) {
@@ -309,7 +338,7 @@ export async function POST(request: Request) {
       }
 
       if (!existingSession) {
-        await requestMedusa(
+        createdSession = await requestMedusa<Record<string, unknown>>(
           "/store/payment-collections/" +
             encodeURIComponent(collectionId) +
             "/payment-sessions",
@@ -321,7 +350,22 @@ export async function POST(request: Request) {
         );
       }
 
-      return NextResponse.json(await retrieveCart(cartId, config));
+      const refreshed = await retrieveCart(cartId, config);
+      const refreshedCart = cartFrom(refreshed);
+      const clientSecret =
+        paymentClientSecret(refreshedCart, providerId) ||
+        (createdSession ? paymentClientSecret(createdSession, providerId) : undefined);
+      if (checkoutPaymentMode() === "stripe" && !clientSecret) {
+        throw new CheckoutRouteError(502, "Stripe did not return a payment client secret.");
+      }
+
+      return NextResponse.json({
+        ...refreshed,
+        payment: {
+          provider_id: providerId,
+          client_secret: clientSecret,
+        },
+      });
     }
 
     if (action === "complete") {

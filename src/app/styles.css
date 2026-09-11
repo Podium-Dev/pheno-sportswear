@@ -12040,6 +12040,29 @@ h2 {
   min-width: 0;
 }
 
+.checkout-payment-panel {
+  display: grid;
+  gap: 14px;
+  margin-bottom: 24px;
+  padding: 24px;
+  border: 1px solid var(--line);
+  background: var(--surface);
+}
+
+.checkout-payment-panel h2 {
+  margin: 0;
+  font-family: var(--heading-font);
+  font-size: clamp(26px, 3vw, 40px);
+  font-weight: 400;
+  line-height: .98;
+}
+
+.stripe-payment-element {
+  min-height: 92px;
+  padding: 4px 0;
+}
+
+
 .checkout-form,
 .checkout-step {
   display: grid;

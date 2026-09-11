@@ -1,12 +1,14 @@
 "use client";
 
-import { useEffect, useState, type Dispatch, type FormEvent, type SetStateAction } from "react";
+import { useCallback, useEffect, useRef, useState, type Dispatch, type FormEvent, type SetStateAction } from "react";
 import { useCommerce } from "@/components/CommerceProvider";
+import { type Stripe, type StripeElements } from "@stripe/stripe-js";
 import { formatCurrency } from "@/lib/format";
 import {
   addCheckoutShippingMethod,
   CHECKOUT_ORDER_CONFIRMATION_KEY,
   clearMedusaCartId,
+  updateCheckoutDetails,
   completeCheckout,
   initializeCheckoutPayment,
   listCheckoutPaymentProviders,
@@ -20,6 +22,7 @@ import {
   type CheckoutRequestError,
 } from "@/lib/commerce/checkout/medusa-client";
 import { checkoutDevelopment } from "@/lib/checkout/development";
+import { StripePaymentElement } from "@/components/StripePaymentElement";
 
 type CheckoutStep = "details" | "shipping" | "payment" | "review";
 
@@ -175,6 +178,13 @@ export function CheckoutExperience() {
   const [billingAddress, setBillingAddress] = useState<AddressForm>(emptyAddress);
   const [billingSameAsShipping, setBillingSameAsShipping] = useState(true);
   const [email, setEmail] = useState("");
+  const [paymentClientSecret, setPaymentClientSecret] = useState("");
+  const [stripeInstance, setStripeInstance] = useState<Stripe | null>(null);
+  const [stripeElements, setStripeElements] = useState<StripeElements | null>(null);
+  const [stripeReady, setStripeReady] = useState(false);
+  const [stripeError, setStripeError] = useState("");
+  const submittingRef = useRef(false);
+
   const [selectedShippingId, setSelectedShippingId] = useState("");
   const [selectedProviderId, setSelectedProviderId] = useState("");
   const [cartId, setCartId] = useState<string | null>(null);
@@ -219,6 +229,16 @@ export function CheckoutExperience() {
       active = false;
     };
   }, [cartProvider, checkoutEnabled]);
+
+  const handleStripeReady = useCallback((nextStripe: Stripe, nextElements: StripeElements) => {
+    setStripeInstance(nextStripe);
+    setStripeElements(nextElements);
+    setStripeReady(true);
+  }, []);
+
+  const handleStripeError = useCallback((message: string) => {
+    setStripeError(message);
+  }, []);
 
   const hasItems = Boolean(checkoutCart?.lines.length || cart.length);
 
@@ -270,15 +290,20 @@ export function CheckoutExperience() {
 
   const submitPayment = async () => {
     if (!cartId || !selectedProviderId) {
-      setError("Choose a development payment method to continue.");
+      setError("Choose a payment method to continue.");
       return;
     }
     setBusy(true);
     setError("");
+    setStripeError("");
     try {
-      const nextCart = await initializeCheckoutPayment(cartId, selectedProviderId);
-      setCheckoutCart(nextCart);
-      setStep("review");
+      const initialized = await initializeCheckoutPayment(cartId, selectedProviderId);
+      setCheckoutCart(initialized.cart);
+      setPaymentClientSecret(initialized.clientSecret || "");
+      setStripeInstance(null);
+      setStripeElements(null);
+      setStripeReady(false);
+      setStep(initialized.clientSecret ? "payment" : "review");
     } catch (requestError) {
       setError(errorMessage(requestError));
     } finally {
@@ -287,13 +312,32 @@ export function CheckoutExperience() {
   };
 
   const submitOrder = async () => {
-    if (!cartId) {
-      setError("Your cart is unavailable. Return to the cart and try again.");
+    if (!cartId || submittingRef.current) {
+      if (!cartId) setError("Your cart is unavailable. Return to the cart and try again.");
       return;
     }
+    if (paymentClientSecret && (!stripeInstance || !stripeElements)) {
+      setError("The Stripe payment form is not ready yet.");
+      return;
+    }
+    submittingRef.current = true;
     setBusy(true);
     setError("");
     try {
+      if (paymentClientSecret && stripeInstance && stripeElements) {
+        const paymentResult = await stripeInstance.confirmPayment({
+          elements: stripeElements,
+          redirect: "if_required",
+        });
+        if (paymentResult.error) {
+          throw new Error(paymentResult.error.message || "Stripe could not confirm the payment.");
+        }
+        const status = paymentResult.paymentIntent?.status;
+        if (status && status !== "succeeded" && status !== "processing") {
+          throw new Error("Stripe did not authorise the test payment.");
+        }
+      }
+
       const result = await completeCheckout(cartId);
       if (!result.order.id) {
         throw new Error("Medusa returned no order ID.");
@@ -306,6 +350,8 @@ export function CheckoutExperience() {
       window.location.assign("/order-confirmation");
     } catch (requestError) {
       setError(errorMessage(requestError));
+    } finally {
+      submittingRef.current = false;
       setBusy(false);
     }
   };
@@ -335,6 +381,9 @@ export function CheckoutExperience() {
 
   const currentCart = checkoutCart;
   const currency = currentCart?.currencyCode || cart[0]?.currencyCode || "GBP";
+  const stripePaymentSelected = selectedProviderId === checkoutDevelopment.payment.providerId;
+  const summaryLines = currentCart?.lines || cart.map((line) => ({ ...line, total: line.price * line.quantity }));
+
 
   return (
     <section className="checkout-experience" data-checkout-provider="medusa" data-cart-id-present="true">
@@ -349,6 +398,20 @@ export function CheckoutExperience() {
 
       <div className="checkout-layout">
         <div className="checkout-main">
+          {paymentClientSecret ? (
+            <div className="checkout-payment-panel">
+              <p className="eyebrow">SECURE PAYMENT</p>
+              <h2>Pay securely with Stripe</h2>
+              <p className="checkout-development-note">Stripe test mode is active for this isolated preview.</p>
+              <StripePaymentElement
+                clientSecret={paymentClientSecret}
+                onReady={handleStripeReady}
+                onError={handleStripeError}
+              />
+              {stripeError ? <p className="checkout-inline-error" role="alert">{stripeError}</p> : null}
+            </div>
+          ) : null}
+
           {step === "details" ? (
             <form className="checkout-form" onSubmit={submitDetails}>
               <div className="checkout-form__section">
@@ -433,7 +496,7 @@ export function CheckoutExperience() {
             <div className="checkout-step">
               <div className="checkout-form__section">
                 <p className="eyebrow">PAYMENT</p>
-                <h2>Development payment</h2>
+                <h2>Secure payment</h2>
                 <p className="checkout-development-note">{checkoutDevelopment.payment.description}</p>
               </div>
               <div className="checkout-option-list">
@@ -446,9 +509,9 @@ export function CheckoutExperience() {
                   >
                     <span>
                       <strong>{provider.title}</strong>
-                      <small>{provider.id === checkoutDevelopment.payment.providerId ? checkoutDevelopment.payment.description : "Enabled Medusa payment provider."}</small>
+                      <small>{provider.id === checkoutDevelopment.payment.providerId ? checkoutDevelopment.payment.description : "Development payment provider."}</small>
                     </span>
-                    <b>{provider.id === checkoutDevelopment.payment.providerId ? "TEST" : "READY"}</b>
+                    <b>{provider.id === checkoutDevelopment.payment.providerId ? "TEST" : "DEV"}</b>
                   </button>
                 ))}
               </div>
@@ -457,8 +520,13 @@ export function CheckoutExperience() {
               ) : null}
               <div className="checkout-step__actions">
                 <button className="button button--outline" type="button" onClick={() => setStep("shipping")}>Back</button>
-                <button className="button button--dark" type="button" onClick={() => void submitPayment()} disabled={busy || !selectedProviderId}>
-                  {busy ? "Preparing payment…" : "Continue to review"}
+                <button
+                  className="button button--dark"
+                  type="button"
+                  onClick={() => paymentClientSecret ? setStep("review") : void submitPayment()}
+                  disabled={busy || !selectedProviderId || (Boolean(paymentClientSecret) && !stripeReady)}
+                >
+                  {busy ? "Preparing payment…" : paymentClientSecret ? "Continue to review" : "Prepare secure payment"}
                 </button>
               </div>
             </div>
@@ -474,12 +542,12 @@ export function CheckoutExperience() {
               <dl className="checkout-review-details">
                 <div><dt>Email</dt><dd>{email}</dd></div>
                 <div><dt>Shipping to</dt><dd>{shippingAddress.city}, {shippingAddress.postalCode}</dd></div>
-                <div><dt>Payment</dt><dd>{checkoutDevelopment.payment.label}</dd></div>
+                <div><dt>Payment</dt><dd>{stripePaymentSelected ? checkoutDevelopment.payment.label : "Manual development payment"}</dd></div>
               </dl>
               <div className="checkout-step__actions">
                 <button className="button button--outline" type="button" onClick={() => setStep("payment")}>Back</button>
                 <button className="button button--dark" type="button" onClick={() => void submitOrder()} disabled={busy}>
-                  {busy ? "Placing test order…" : "Place development order"}
+                  {busy ? "Placing test order…" : "Place test order"}
                 </button>
               </div>
             </div>
@@ -492,7 +560,7 @@ export function CheckoutExperience() {
           <p className="eyebrow">ORDER SUMMARY</p>
           <h2 id="checkout-summary-title">Your selection</h2>
           <ul role="list">
-            {(currentCart?.lines || cart).map((line) => (
+            {summaryLines.map((line) => (
               <li key={line.id}>
                 <span>
                   <strong>{line.name}</strong>
