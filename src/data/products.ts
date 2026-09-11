@@ -142,7 +142,7 @@ function createEmbeddedCalloutDetails(
 }
 
 const hoodieEngineeredDetails = createEmbeddedCalloutDetails(
-  "/images/product-anatomies/type-1-hoodie-callouts.png",
+  "/images/product-anatomies/type-1-hoodie-engineered-details.webp",
   "Black PHENO Type 1 Hoodie with numbered engineered construction details",
   [
     {
@@ -191,7 +191,7 @@ const hoodieEngineeredDetails = createEmbeddedCalloutDetails(
 );
 
 const joggersEngineeredDetails = createEmbeddedCalloutDetails(
-  "/images/product-anatomies/type-1-joggers-callouts.png",
+  "/images/product-anatomies/type-1-joggers-engineered-details.webp",
   "Black PHENO Type 1 Joggers with numbered engineered construction details",
   [
     {
@@ -245,8 +245,8 @@ function createPerformanceTopEngineeredDetails(
 ): ProductEngineeredDetails {
   const imagePath =
     productName === "T-Shirt"
-      ? `/images/product-anatomies/type-1-tshirt-${colour.toLowerCase()}-callouts.png`
-      : `/images/product-anatomies/type-1-tank-${colour.toLowerCase()}-callouts.png`;
+      ? `/images/product-anatomies/type-1-tshirt-${colour.toLowerCase()}-engineered-details.webp`
+      : `/images/product-anatomies/type-1-tank-${colour.toLowerCase()}-engineered-details.webp`;
   const markerPositions =
     productName === "T-Shirt"
       ? colour === "White"
@@ -560,7 +560,7 @@ const sourceProducts: Product[] = [
     ],
     engineeredDetails: {
       title: "ENGINEERED DETAILS",
-      image: "/images/product-anatomies/type-1-shorts-callouts.png",
+      image: "/images/product-anatomies/type-1-shorts-engineered-details.webp",
       imageAlt: "Black PHENO Type 1 Shorts with numbered engineered construction details",
       artworkHasEmbeddedCallouts: true,
       details: [
