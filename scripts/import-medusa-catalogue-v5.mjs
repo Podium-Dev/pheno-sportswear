@@ -834,7 +834,11 @@ function assertClean(report, assetChecks) {
   if (report.source.missingPrices !== 0) problems.push("price count");
   if (report.duplicateHandles.length || report.duplicateSkus.length || report.remoteDuplicateHandles.length || report.remoteDuplicateSkus.length) problems.push("duplicate handles or SKUs");
   if (report.source.errors.length) problems.push(...report.source.errors);
-  if (!report.partial.matchesApprovedPlan && !report.complete.matchesApprovedPlan) problems.push("Medusa state does not match partial or complete approved plan");
+  if (
+      report.remoteProducts !== 0 &&
+      !report.partial.matchesApprovedPlan &&
+      !report.complete.matchesApprovedPlan
+    ) problems.push("Medusa state does not match empty, partial or complete approved plan");
   if (report.inventoryOperations.length !== 1 || report.inventoryOperations[0].sku !== HOODIE_XS_SKU || report.inventoryOperations[0].action === "UNRESOLVED_INVENTORY_ITEM") problems.push("managed inventory location workflow");
   if (assetChecks.localMissing.length || assetChecks.publicFailures.length) problems.push("image asset verification");
   if (report.payloadContracts.createIncludesTopLevelOptions !== true) problems.push("product CREATE options contract");
