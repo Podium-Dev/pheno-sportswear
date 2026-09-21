@@ -34,7 +34,10 @@ export default function OurStoryPage() {
           </div>
           <div className="story-hero__copy">
             <p className="eyebrow">PHENOTYPE</p>
-            <h2 id="story-hero-title">What you show is only the beginning.</h2>
+            <h2 id="story-hero-title">
+              <span>What you show is</span>
+              <span>only the beginning.</span>
+            </h2>
             <p>
               PHENO comes from phenotype, the observable characteristics and physical expression of an individual. We make performance pieces for the work of shaping what comes next.
             </p>
