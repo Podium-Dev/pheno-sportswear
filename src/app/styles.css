@@ -4425,6 +4425,10 @@ img {
     gap: 38px;
   }
 
+  .coaching-faq__visual {
+    order: -1;
+  }
+
   .story-principles__grid,
   .coaching-audience__grid,
   .form-grid {
