@@ -12163,3 +12163,16 @@ h2 {
     font-size: clamp(38px, 11vw, 52px) !important;
   }
 }
+
+/* Shared content eyebrow scale: keep section labels consistent at every breakpoint. */
+.eyebrow,
+.home-eyebrow,
+.retail-eyebrow,
+.shop-performance-banner__eyebrow,
+.contact-hero__eyebrow,
+.contact-page__eyebrow,
+.contact-page__form-eyebrow,
+.editorial-card__copy .eyebrow,
+.admin-eyebrow {
+  font-size: 10px;
+}
