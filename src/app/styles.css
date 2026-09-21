@@ -11560,7 +11560,7 @@ h2 {
 
 /* Story principle card proportions and type scale. */
 .storefront-page--story .story-principles article {
-  aspect-ratio: 4 / 3;
+  aspect-ratio: 16 / 9;
   min-height: 0;
 }
 
@@ -11571,7 +11571,7 @@ h2 {
 
 @media (max-width: 720px) {
   .storefront-page--story .story-principles article {
-    aspect-ratio: 4 / 3;
+    aspect-ratio: 16 / 9;
   }
 
   .storefront-page--story .story-principles article h3 {
