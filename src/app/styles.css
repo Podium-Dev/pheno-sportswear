@@ -12431,3 +12431,11 @@ h2 {
     aspect-ratio: 1;
   }
 }
+
+
+/* Extra-small coaching audience cards: use square tiles. */
+@media (max-width: 390px) {
+  .storefront-page--coaching .coaching-audience__grid article {
+    aspect-ratio: 1;
+  }
+}
