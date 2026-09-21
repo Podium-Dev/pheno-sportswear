@@ -91,7 +91,6 @@ const retailHeroSlides = [
   { src: "/images/type-1-hoodie-transparent.png", alt: "Type 1 Hoodie, PHENO Sportswear", isCutout: true },
   { src: "/images/type-1-joggers-transparent.png", alt: "Type 1 Joggers, PHENO Sportswear", isCutout: true },
   { src: "/images/type-1-shorts-hero-cutout.png", alt: "Type 1 Shorts, PHENO Sportswear", isCutout: true },
-  { src: "/images/type-1-tank-black-transparent.png", alt: "Type 1 Tank, PHENO Sportswear", isCutout: true },
 ];
 
 function RetailHero() {
