@@ -1278,6 +1278,7 @@ img {
 }
 
 .page-intro h1,
+.page-intro h2,
 .not-found-page h1,
 .coaching-hero h1 {
   margin: 0;
@@ -9045,7 +9046,7 @@ h6 {
   text-transform: uppercase;
 }
 
-.shop-performance-banner__copy h2 {
+.shop-performance-banner__copy h1 {
   max-width: 7ch;
   margin: 0;
   color: var(--paper);
@@ -9230,7 +9231,7 @@ h6 {
     padding-block: 43px 48px;
   }
 
-  .shop-performance-banner__copy h2 {
+  .shop-performance-banner__copy h1 {
     font-size: clamp(42px, 13vw, 57px);
   }
 

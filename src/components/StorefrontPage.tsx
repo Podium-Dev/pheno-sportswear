@@ -30,16 +30,20 @@ export function Breadcrumbs({ current }: { current: string }) {
 export function EditorialPageIntro({
   eyebrow,
   title,
+  headingLevel = "h1",
   children,
 }: {
   eyebrow: string;
   title: string;
+  headingLevel?: "h1" | "h2";
   children?: React.ReactNode;
 }) {
+  const Heading = headingLevel;
+
   return (
     <header className="page-intro">
       <p className="eyebrow">{eyebrow}</p>
-      <h1>{title}</h1>
+      <Heading>{title}</Heading>
       {children ? <p className="page-intro__summary">{children}</p> : null}
     </header>
   );
