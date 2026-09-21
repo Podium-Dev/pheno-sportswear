@@ -12377,3 +12377,11 @@ h2 {
     right: -90%;
   }
 }
+
+
+/* Small-mobile review controls: align arrows with the pagination dots. */
+@media (max-width: 480px) {
+  .retail-testimonials .retail-testimonials__arrow {
+    bottom: -61px;
+  }
+}
