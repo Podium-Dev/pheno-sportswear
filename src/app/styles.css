@@ -12423,3 +12423,11 @@ h2 {
     width: 100%;
   }
 }
+
+
+/* Extra-small Our Story principle cards: use square tiles. */
+@media (max-width: 390px) {
+  .storefront-page--story .story-principles article {
+    aspect-ratio: 1;
+  }
+}
