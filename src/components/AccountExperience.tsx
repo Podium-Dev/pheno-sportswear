@@ -1,12 +1,13 @@
 "use client";
 
-import { type FormEvent, useState } from "react";
+import { type FormEvent, useMemo, useState } from "react";
 import {
   IconBox,
   IconChevronLeft,
   IconChevronRight,
   IconCurrencyPound,
   IconInfoCircle,
+  IconHeart,
   IconLayoutGrid,
   IconLogout,
   IconMapPin,
@@ -18,6 +19,16 @@ import {
   IconUser,
 } from "@tabler/icons-react";
 import {
+  getProductImage,
+  getVariant,
+  SIZE_OPTIONS,
+  type Colour,
+  type Product,
+  type Size,
+} from "@/data/products";
+import { useCommerce } from "@/components/CommerceProvider";
+import { formatCurrency } from "@/lib/format";
+import {
   accountService,
   type AccountOrder,
   type AccountOrderStatus,
@@ -28,12 +39,15 @@ const accountNavItems = [
   { id: "overview", label: "Overview", Icon: IconLayoutGrid },
   { id: "orders", label: "Orders", Icon: IconBox },
   { id: "addresses", label: "Addresses", Icon: IconMapPin },
+  { id: "favourites", label: "Favourites", Icon: IconHeart },
   { id: "profile", label: "Profile", Icon: IconUser },
 ] as const satisfies Array<{ id: AccountView; label: string; Icon: typeof IconLayoutGrid }>;
 
 const accountOrderFilters = ["All orders", "Processing", "In transit", "Completed", "Cancelled"] as const;
 type AccountOrderFilter = (typeof accountOrderFilters)[number];
 type AddressKind = "delivery" | "billing";
+
+type FavouritesSort = "newest" | "alphabetical" | "price-low" | "price-high";
 
 type AuthMode = "sign-in" | "create-account";
 type AccountField = "firstName" | "lastName" | "email" | "phone" | "password" | "confirmPassword";
@@ -71,7 +85,146 @@ function AccountOrderAction({ onClick }: { onClick: () => void }) {
   );
 }
 
+function FavouriteProductCard({
+  product,
+  onRemove,
+}: {
+  product: Product;
+  onRemove: () => void;
+}) {
+  const { addToCart } = useCommerce();
+  const [colour, setColour] = useState<Colour>(product.colours[0] ?? "Black");
+  const [size, setSize] = useState<Size | "">("");
+  const [error, setError] = useState("");
+  const [isAdding, setIsAdding] = useState(false);
+  const sizeOptions = product.sizes.length ? product.sizes : SIZE_OPTIONS;
+  const selectedVariant = size ? getVariant(product, colour, size) : undefined;
+  const displayPrice = selectedVariant?.price ?? product.price;
+
+  const handleAddToBag = async () => {
+    if (!size) {
+      setError("Choose a size first.");
+      return;
+    }
+
+    if (!selectedVariant) {
+      setError("That size is not available for this product.");
+      return;
+    }
+
+    if (!selectedVariant.available) {
+      setError("That variant is sold out. Choose another size.");
+      return;
+    }
+
+    setIsAdding(true);
+    setError("");
+
+    try {
+      const added = await addToCart(product, selectedVariant);
+
+      if (!added) {
+        setError("We could not add that variant to your bag. Please try again.");
+      }
+    } catch {
+      setError("We could not add that variant to your bag. Please try again.");
+    } finally {
+      setIsAdding(false);
+    }
+  };
+
+  return (
+    <article className="account-favourite-card">
+      <div className="account-favourite-card__media">
+        <a href={"/product/" + product.slug} aria-label={"View " + product.name}>
+          <img src={getProductImage(product, colour)} alt={product.name + ", PHENO Sportswear"} />
+        </a>
+        <button
+          className="account-favourite-card__remove"
+          type="button"
+          aria-label={"Remove " + product.name + " from favourites"}
+          onClick={onRemove}
+        >
+          <IconHeart size={20} stroke={1.7} fill="currentColor" aria-hidden="true" />
+        </button>
+      </div>
+
+      <div className="account-favourite-card__content">
+        <div className="account-favourite-card__heading">
+          <a href={"/product/" + product.slug}>
+            <h3>{product.name}</h3>
+          </a>
+          <p>{formatCurrency(displayPrice, product.currencyCode)}</p>
+        </div>
+
+        <p className="account-favourite-card__colour">{product.colours.join(" / ")}</p>
+
+        {product.colours.length > 1 ? (
+          <fieldset className="account-favourite-card__options">
+            <legend>Colour</legend>
+            <div className="account-favourite-card__chips">
+              {product.colours.map((option) => (
+                <button
+                  className={colour === option ? "account-favourite-card__chip account-favourite-card__chip--selected" : "account-favourite-card__chip"}
+                  key={option}
+                  type="button"
+                  aria-pressed={colour === option}
+                  onClick={() => {
+                    setColour(option);
+                    setSize("");
+                    setError("");
+                  }}
+                >
+                  {option}
+                </button>
+              ))}
+            </div>
+          </fieldset>
+        ) : null}
+
+        <fieldset className="account-favourite-card__options">
+          <legend>Size</legend>
+          <div className="account-favourite-card__chips">
+            {sizeOptions.map((option) => {
+              const variant = getVariant(product, colour, option);
+              const unavailable = !variant?.available;
+
+              return (
+                <button
+                  className={size === option ? "account-favourite-card__chip account-favourite-card__chip--selected" : "account-favourite-card__chip"}
+                  key={option}
+                  type="button"
+                  aria-pressed={size === option}
+                  aria-label={option + (unavailable ? ", sold out" : "")}
+                  disabled={unavailable}
+                  onClick={() => {
+                    setSize(option);
+                    setError("");
+                  }}
+                >
+                  {option}
+                </button>
+              );
+            })}
+          </div>
+        </fieldset>
+
+        {error ? <p className="account-favourite-card__error" role="alert">{error}</p> : null}
+
+        <button className="account-favourite-card__add" type="button" onClick={handleAddToBag} disabled={isAdding}>
+          <IconShoppingBag size={18} stroke={1.7} aria-hidden="true" />
+          {isAdding ? "Adding..." : "Add to bag"}
+        </button>
+
+        <a className="account-favourite-card__view" href={"/product/" + product.slug}>
+          View product <IconChevronRight size={17} stroke={1.7} aria-hidden="true" />
+        </a>
+      </div>
+    </article>
+  );
+}
 export function AccountExperience() {
+  const { catalogProducts, wishlist, toggleWishlist } = useCommerce();
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [activeCustomerEmail, setActiveCustomerEmail] = useState<string | null>(null);
   const dashboard = accountService.getDashboard(activeCustomerEmail ?? undefined);
@@ -79,6 +232,7 @@ export function AccountExperience() {
   const [selectedOrderId, setSelectedOrderId] = useState<string | null>(null);
   const [orderFilter, setOrderFilter] = useState<AccountOrderFilter>("All orders");
   const [addressKind, setAddressKind] = useState<AddressKind>("delivery");
+  const [favouritesSort, setFavouritesSort] = useState<FavouritesSort>("newest");
   const [authMode, setAuthMode] = useState<AuthMode>("sign-in");
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -96,6 +250,23 @@ export function AccountExperience() {
   const [emailPreferences, setEmailPreferences] = useState(dashboard.emailPreferences);
   const [profileFeedback, setProfileFeedback] = useState("");
   const [addressFeedback, setAddressFeedback] = useState("");
+
+  const favouriteProducts = useMemo(() => {
+    const products = wishlist
+      .map((slug) => catalogProducts.find((product) => product.slug === slug))
+      .filter((product): product is Product => Boolean(product));
+
+    switch (favouritesSort) {
+      case "alphabetical":
+        return [...products].sort((a, b) => a.name.localeCompare(b.name));
+      case "price-low":
+        return [...products].sort((a, b) => a.price - b.price);
+      case "price-high":
+        return [...products].sort((a, b) => b.price - a.price);
+      default:
+        return [...products].reverse();
+    }
+  }, [catalogProducts, favouritesSort, wishlist]);
 
   const selectedOrder = selectedOrderId
     ? dashboard.orders.find((order) => order.id === selectedOrderId) ?? null
@@ -851,6 +1022,47 @@ export function AccountExperience() {
     );
   };
 
+const renderFavourites = () => (
+    <section className="account-panel account-favourites-view" aria-labelledby="favourites-title">
+      <div className="account-favourites__toolbar">
+        <div>
+          <h2 id="favourites-title">My Favourites ({favouriteProducts.length})</h2>
+          <p>Items you&apos;ve saved for later. Prices and availability are subject to change.</p>
+        </div>
+        <label className="account-favourites__sort">
+          <span>Sort by</span>
+          <select
+            value={favouritesSort}
+            onChange={(event) => setFavouritesSort(event.target.value as FavouritesSort)}
+          >
+            <option value="newest">Date added (newest)</option>
+            <option value="alphabetical">Alphabetically</option>
+            <option value="price-low">Price low to high</option>
+            <option value="price-high">Price high to low</option>
+          </select>
+        </label>
+      </div>
+
+      {favouriteProducts.length > 0 ? (
+        <div className="account-favourites__grid">
+          {favouriteProducts.map((product) => (
+            <FavouriteProductCard
+              key={product.slug}
+              product={product}
+              onRemove={() => toggleWishlist(product.slug)}
+            />
+          ))}
+        </div>
+      ) : (
+        <div className="account-favourites__empty">
+          <IconHeart size={38} stroke={1.4} aria-hidden="true" />
+          <h3>Nothing saved yet</h3>
+          <p>Save products as you browse and they&apos;ll appear here for easy access.</p>
+          <a className="button button--dark" href="/shop">Explore the collection <IconChevronRight size={17} stroke={1.7} aria-hidden="true" /></a>
+        </div>
+      )}
+    </section>
+  );
   const renderProfile = () => (
     <div className="account-profile-layout">
       <section className="account-panel account-profile-view" aria-labelledby="profile-title">
@@ -945,12 +1157,14 @@ export function AccountExperience() {
           {activeView === "overview" ? `Welcome back, ${dashboard.customer.firstName}` : null}
           {activeView === "orders" ? "Orders" : null}
           {activeView === "addresses" ? "Addresses" : null}
+          {activeView === "favourites" ? "My Favourites" : null}
           {activeView === "profile" ? "Profile" : null}
         </h1>
         <p className="account-page__summary">
           {activeView === "overview" ? "Manage your orders, details and account preferences." : null}
           {activeView === "orders" ? "View and track all your orders." : null}
           {activeView === "addresses" ? "Manage your delivery and billing addresses." : null}
+          {activeView === "favourites" ? "Your saved products, all in one place. Pick up where you left off." : null}
           {activeView === "profile" ? "Manage your personal information and account settings." : null}
         </p>
       </header>
@@ -987,6 +1201,7 @@ export function AccountExperience() {
           {activeView === "overview" ? renderOverview() : null}
           {activeView === "orders" ? renderOrders() : null}
           {activeView === "addresses" ? renderAddresses() : null}
+          {activeView === "favourites" ? renderFavourites() : null}
           {activeView === "profile" ? renderProfile() : null}
         </div>
       </div>
