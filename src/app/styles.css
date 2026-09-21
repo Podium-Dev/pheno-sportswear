@@ -12501,3 +12501,17 @@ h2 {
     display: flex;
   }
 }
+
+
+/* Keep the feature strip in two columns at 390px. */
+@media (max-width: 390px) {
+  .retail-home .retail-features__inner {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .retail-home .retail-features__row--bottom .retail-feature:last-child {
+    grid-column: 1 / -1;
+    justify-self: center;
+    width: 50%;
+  }
+}
