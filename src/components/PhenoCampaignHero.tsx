@@ -27,9 +27,28 @@ const campaignLooks = [
 export function PhenoCampaignHero() {
   const [activeLook, setActiveLook] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
+  const [isMobileSlider, setIsMobileSlider] = useState(false);
 
   useEffect(() => {
-    if (isPaused) {
+    const mediaQuery = window.matchMedia("(max-width: 720px)");
+
+    const updateSliderMode = () => {
+      const isMobile = mediaQuery.matches;
+      setIsMobileSlider(isMobile);
+
+      if (!isMobile) {
+        setActiveLook(0);
+      }
+    };
+
+    updateSliderMode();
+    mediaQuery.addEventListener("change", updateSliderMode);
+
+    return () => mediaQuery.removeEventListener("change", updateSliderMode);
+  }, []);
+
+  useEffect(() => {
+    if (!isMobileSlider || isPaused) {
       return;
     }
 
@@ -38,7 +57,7 @@ export function PhenoCampaignHero() {
     }, 5200);
 
     return () => window.clearInterval(intervalId);
-  }, [isPaused]);
+  }, [isMobileSlider, isPaused]);
 
   return (
     <section className="pheno-campaign" aria-labelledby="pheno-campaign-title">
@@ -61,7 +80,7 @@ export function PhenoCampaignHero() {
             <figure
               className={"pheno-campaign__look" + (index === activeLook ? " is-active" : "")}
               key={look.id}
-              aria-hidden={index !== activeLook}
+              aria-hidden={isMobileSlider ? index !== activeLook : undefined}
             >
               <Image
                 src={look.src}
