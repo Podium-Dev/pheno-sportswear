@@ -12395,3 +12395,16 @@ h2 {
     text-align: center;
   }
 }
+
+
+/* Small-mobile spotlight slider: show two cards at a time. */
+@media (max-width: 480px) {
+  .retail-home .retail-spotlight__slider-stage {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 6px;
+  }
+
+  .retail-home .retail-spotlight__slide--previous {
+    display: none;
+  }
+}
