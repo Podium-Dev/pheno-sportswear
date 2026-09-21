@@ -11652,7 +11652,7 @@ h2 {
 }
 
 .storefront-page--coaching .coaching-audience__grid article {
-  aspect-ratio: 4 / 3;
+  aspect-ratio: 16 / 9;
   min-height: 0;
   padding: clamp(24px, 2.2vw, 32px);
   gap: 0;
@@ -11680,7 +11680,7 @@ h2 {
 
 @media (max-width: 720px) {
   .storefront-page--coaching .coaching-audience__grid article {
-    aspect-ratio: 4 / 3;
+    aspect-ratio: 16 / 9;
     padding: 24px;
   }
 
@@ -11696,7 +11696,7 @@ h2 {
   position: relative;
   display: flex;
   min-height: 0;
-  aspect-ratio: 4 / 3;
+  aspect-ratio: 16 / 9;
   flex-direction: column;
   align-items: flex-start;
   justify-content: flex-start;
@@ -11779,7 +11779,7 @@ h2 {
 
 @media (max-width: 720px) {
   .storefront-page--coaching .coaching-audience__grid article {
-    aspect-ratio: 4 / 3;
+    aspect-ratio: 16 / 9;
     padding: 24px;
   }
 
