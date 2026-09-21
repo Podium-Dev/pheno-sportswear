@@ -1,4 +1,4 @@
-export type AccountView = "overview" | "orders" | "addresses" | "profile";
+export type AccountView = "overview" | "orders" | "addresses" | "favourites" | "profile";
 
 export type AccountOrderStatus = "Processing" | "In transit" | "Completed" | "Delivered" | "Cancelled";
 
