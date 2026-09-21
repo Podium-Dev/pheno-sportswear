@@ -8689,8 +8689,8 @@ h6 {
   }
 
   .retail-navigation__brand {
-    width: 91px;
-    flex-basis: 91px;
+    width: 132px;
+    flex-basis: 132px;
   }
 
   .retail-navigation__links,
@@ -8833,22 +8833,25 @@ h6 {
   }
 
   .retail-features__inner {
-    display: flex;
-    min-height: 92px;
-    gap: 0;
-    overflow-x: auto;
-    padding: 20px var(--retail-section-x);
-    scrollbar-width: none;
-  }
-
-  .retail-features__inner::-webkit-scrollbar {
-    display: none;
+    display: grid;
+    min-height: 0;
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    gap: 16px 0;
+    padding: 20px var(--retail-section-x) 22px;
   }
 
   .retail-feature {
-    width: 157px;
-    flex: 0 0 157px;
-    padding-inline: 20px;
+    width: auto;
+    flex: none;
+    padding-inline: 12px;
+  }
+
+  .retail-feature:nth-child(4) {
+    grid-column: 2 / span 2;
+  }
+
+  .retail-feature:nth-child(5) {
+    grid-column: 4 / span 2;
   }
 
   .retail-campaign-feature {
