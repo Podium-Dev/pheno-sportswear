@@ -8953,7 +8953,7 @@ h6 {
   }
 
   .retail-spotlight__art {
-    top: 280px;
+    top: 0;
     right: 0;
     bottom: 0;
     left: 0;
@@ -8964,7 +8964,7 @@ h6 {
   }
 
   .retail-spotlight__slider {
-    inset: 10px 0 16px;
+    inset: 280px 0 16px;
   }
 
   .retail-spotlight__slider-stage {
