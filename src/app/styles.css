@@ -7191,6 +7191,7 @@ h6 {
   background: transparent;
 }
 
+.retail-navigation__favourites,
 .retail-navigation__account {
   display: inline-flex;
   width: 18px;
@@ -7199,6 +7200,7 @@ h6 {
   justify-content: center;
 }
 
+.retail-navigation__favourites svg,
 .retail-navigation__account svg {
   width: 17px;
   height: 17px;
