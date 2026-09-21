@@ -34,7 +34,11 @@ export async function CollectionPage({ collection }: { collection: string }) {
       {collection === "all" ? <ShopPerformanceBanner /> : null}
       <div className="catalogue-page">
         <Breadcrumbs current={label} />
-        <EditorialPageIntro eyebrow="PHENO SPORTSWEAR" title={label}>
+        <EditorialPageIntro
+          eyebrow="PHENO SPORTSWEAR"
+          title={label}
+          headingLevel={collection === "all" ? "h2" : "h1"}
+        >
           {isSets
             ? "Two deliberate combinations from the Type 1 range. Choose the size for each piece, then add the complete set to your cart."
             : collectionDescriptions[collection]}
