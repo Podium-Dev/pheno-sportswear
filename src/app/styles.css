@@ -8860,6 +8860,7 @@ h6 {
     min-width: 0;
     align-items: stretch;
     justify-content: center;
+    column-gap: 24px;
   }
 
   .retail-feature {
