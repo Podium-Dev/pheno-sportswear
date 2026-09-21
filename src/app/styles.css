@@ -11502,6 +11502,40 @@ h2 {
 }
 
 
+@media (max-width: 900px) {
+  .storefront-page--story .story-principles > h2 {
+    max-width: 100%;
+  }
+
+  .storefront-page--story .story-principles > h2 span {
+    display: block;
+    white-space: nowrap;
+  }
+
+  .storefront-page--story .story-principles__grid {
+    gap: 12px;
+    padding-top: 20px;
+  }
+
+  .storefront-page--story .story-principles article {
+    padding: 20px;
+  }
+
+  .storefront-page--story .story-principles article > span.story-principles__number::after {
+    margin-top: 10px;
+  }
+
+  .storefront-page--story .story-principles article h3 {
+    margin-top: 16px;
+  }
+
+  .storefront-page--story .story-principles article p {
+    margin-top: 8px;
+    line-height: 1.4;
+  }
+}
+
+
 /* Train with Yousef audience cards: compact, balanced card rhythm. */
 .storefront-page--coaching .coaching-audience__grid {
   gap: 14px;
