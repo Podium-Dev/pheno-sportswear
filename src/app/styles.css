@@ -10720,6 +10720,15 @@ h2 {
     padding: 30px;
   }
 
+  .storefront-page--story .story-hero__copy h2 {
+    max-width: 100%;
+  }
+
+  .storefront-page--story .story-hero__copy h2 span {
+    display: block;
+    white-space: nowrap;
+  }
+
   .storefront-page--story .story-hero__image {
     width: min(100%, 290px);
   }
@@ -10757,7 +10766,7 @@ h2 {
   }
 
   .storefront-page--story .story-hero__copy h2 {
-    max-width: 11ch;
+    max-width: 100%;
     font-size: clamp(42px, 13vw, 62px);
   }
 
