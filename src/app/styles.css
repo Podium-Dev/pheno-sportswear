@@ -12328,3 +12328,44 @@ h2 {
     padding: 40px 30px 44px;
   }
 }
+
+
+/* Small-mobile feature strip: use a balanced two-column grid at 480px and below. */
+@media (max-width: 480px) {
+  .retail-home .retail-features__inner {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px 8px;
+    padding: 20px 16px 22px;
+  }
+
+  .retail-home .retail-features__row {
+    display: contents;
+  }
+
+  .retail-home .retail-feature {
+    width: 100%;
+    min-height: 48px;
+    justify-content: center;
+    gap: 8px;
+    padding-inline: 4px;
+  }
+
+  .retail-home .retail-feature__icon,
+  .retail-home .retail-feature__icon svg {
+    width: 24px;
+    height: 24px;
+  }
+
+  .retail-home .retail-feature h2 {
+    max-width: 12ch;
+    font-size: 10px;
+    letter-spacing: 0.075em;
+  }
+
+  .retail-home .retail-features__row--bottom .retail-feature:last-child {
+    grid-column: 1 / -1;
+    justify-self: center;
+    width: 50%;
+  }
+}
