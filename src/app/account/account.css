@@ -2657,3 +2657,9 @@
     width: 100%;
   }
 }
+/* Keep Account H1 headings on the shared storefront compact scale. */
+@media (max-width: 900px) {
+  .account-page__intro h1 {
+    font-size: clamp(38px, 11vw, 52px) !important;
+  }
+}
