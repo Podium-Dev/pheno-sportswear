@@ -12408,3 +12408,18 @@ h2 {
     display: none;
   }
 }
+
+
+/* Extra-small feature strip: stack all feature items in one column. */
+@media (max-width: 390px) {
+  .retail-home .retail-features__inner {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .retail-home .retail-features__row--bottom .retail-feature:last-child {
+    grid-column: auto;
+    justify-self: center;
+    width: 100%;
+  }
+}
