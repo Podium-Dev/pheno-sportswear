@@ -80,7 +80,7 @@ export function PhenoCampaignHero() {
             <figure
               className={"pheno-campaign__look" + (index === activeLook ? " is-active" : "")}
               key={look.id}
-              aria-hidden={index !== activeLook}
+              aria-hidden={isMobileSlider ? index !== activeLook : undefined}
             >
               <Image
                 src={look.src}
