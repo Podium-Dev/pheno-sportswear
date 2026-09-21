@@ -1,6 +1,6 @@
 "use client";
 
-import { type FormEvent, useMemo, useState } from "react";
+import { type FormEvent, useEffect, useMemo, useState } from "react";
 import {
   IconBox,
   IconChevronLeft,
@@ -229,6 +229,7 @@ export function AccountExperience() {
   const [activeCustomerEmail, setActiveCustomerEmail] = useState<string | null>(null);
   const dashboard = accountService.getDashboard(activeCustomerEmail ?? undefined);
   const [activeView, setActiveView] = useState<AccountView>("overview");
+  const [requestedView, setRequestedView] = useState<AccountView | null>(null);
   const [selectedOrderId, setSelectedOrderId] = useState<string | null>(null);
   const [orderFilter, setOrderFilter] = useState<AccountOrderFilter>("All orders");
   const [addressKind, setAddressKind] = useState<AddressKind>("delivery");
@@ -250,6 +251,15 @@ export function AccountExperience() {
   const [emailPreferences, setEmailPreferences] = useState(dashboard.emailPreferences);
   const [profileFeedback, setProfileFeedback] = useState("");
   const [addressFeedback, setAddressFeedback] = useState("");
+
+  useEffect(() => {
+    const view = new URLSearchParams(window.location.search).get("view");
+
+    if (view === "favourites") {
+      setRequestedView("favourites");
+      setActiveView("favourites");
+    }
+  }, []);
 
   const favouriteProducts = useMemo(() => {
     const products = wishlist
@@ -281,7 +291,7 @@ export function AccountExperience() {
     setProfilePhone(nextDashboard.customer.phone);
     setEmailPreferences(nextDashboard.emailPreferences);
     setIsAuthenticated(true);
-    setActiveView("overview");
+    setActiveView(requestedView ?? "overview");
     setSelectedOrderId(null);
   };
 
