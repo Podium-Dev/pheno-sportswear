@@ -46,6 +46,14 @@ function AccountIcon() {
   );
 }
 
+function FavouritesIcon() {
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+      <path d="M20.8 8.8c0 5.1-8.8 10.2-8.8 10.2S3.2 13.9 3.2 8.8A4.6 4.6 0 0 1 12 6.3a4.6 4.6 0 0 1 8.8 2.5Z" />
+    </svg>
+  );
+}
+
 export function SiteHeader() {
   const { cartCount, setCartOpen, setSearchOpen } = useCommerce();
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -93,6 +101,9 @@ export function SiteHeader() {
             <CartIcon />
             <span>My cart ({cartCount})</span>
           </button>
+          <a className="retail-navigation__favourites" href="/account?view=favourites" aria-label="Favourites" title="Favourites">
+            <FavouritesIcon />
+          </a>
           <a className="retail-navigation__account" href="/account" aria-label="Account">
             <AccountIcon />
           </a>
@@ -111,6 +122,7 @@ export function SiteHeader() {
           ))}
           <button type="button" onClick={openSearch}>Search</button>
           <button type="button" onClick={openCart}>My cart ({cartCount})</button>
+          <a href="/account?view=favourites" onClick={() => setMobileOpen(false)}>Favourites</a>
           <a href="/account" onClick={() => setMobileOpen(false)}>Account</a>
         </nav>
       ) : null}
