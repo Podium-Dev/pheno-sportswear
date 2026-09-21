@@ -8538,6 +8538,78 @@ h6 {
   }
 }
 
+@media (max-width: 980px) and (min-width: 721px) {
+  /*
+   * At the compact-desktop range the hero becomes a stacked editorial panel:
+   * the product slider leads, while the campaign message follows beneath it.
+   */
+  .retail-hero {
+    min-height: 0;
+  }
+
+  .retail-hero__wash {
+    background: linear-gradient(
+      180deg,
+      rgb(241 242 240 / 0.12) 0%,
+      rgb(241 242 240 / 0.18) 51%,
+      rgb(241 242 240 / 0.96) 67%,
+      rgb(241 242 240 / 0.99) 100%
+    );
+  }
+
+  .retail-hero__inner {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .retail-hero__art {
+    position: relative;
+    top: auto;
+    right: auto;
+    order: 1;
+    width: 100%;
+    height: clamp(430px, 58vw, 540px);
+    flex: 0 0 auto;
+    overflow: hidden;
+  }
+
+  .retail-hero__mark {
+    top: -14%;
+    right: 4%;
+    height: 132%;
+  }
+
+  .retail-hero__product {
+    top: 0;
+    right: 50%;
+    width: min(58vw, 540px);
+    height: min(58vw, 540px);
+    transform: translateX(50%);
+  }
+
+  .retail-hero__copy {
+    order: 2;
+    width: 100%;
+    max-width: 540px;
+    padding: 42px var(--retail-section-x) 56px;
+    gap: 14px;
+  }
+
+  .retail-hero h1 {
+    font-size: clamp(58px, 7.4vw, 78px);
+  }
+
+  .retail-hero__copy > p:not(.retail-eyebrow) {
+    max-width: 43ch;
+  }
+
+  .retail-hero__indicators {
+    bottom: 21px;
+    left: var(--retail-section-x);
+  }
+}
+
 @media (max-width: 860px) and (min-width: 721px) {
   .pheno-campaign__columns {
     height: auto;
