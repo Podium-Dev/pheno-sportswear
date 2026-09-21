@@ -12439,3 +12439,65 @@ h2 {
     aspect-ratio: 1;
   }
 }
+
+
+/* Scope the campaign fade slider to 720px and below. */
+.pheno-campaign__columns {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 6px;
+}
+
+.pheno-campaign__look {
+  position: relative;
+  inset: auto;
+  z-index: auto;
+  width: 100%;
+  height: 100%;
+  opacity: 1;
+  visibility: visible;
+  will-change: auto;
+  transition: none;
+}
+
+.pheno-campaign__look.is-active {
+  opacity: 1;
+  visibility: visible;
+  transition: none;
+}
+
+.pheno-campaign__indicators {
+  display: none;
+}
+
+@media (max-width: 720px) {
+  .pheno-campaign__columns {
+    display: block;
+    height: auto;
+    grid-template-columns: none;
+    gap: 0;
+    aspect-ratio: 4 / 5;
+  }
+
+  .pheno-campaign__look {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    visibility: hidden;
+    will-change: opacity;
+    transition: opacity 850ms ease-in-out, visibility 0s linear 850ms;
+  }
+
+  .pheno-campaign__look.is-active {
+    opacity: 1;
+    visibility: visible;
+    transition-delay: 0s;
+  }
+
+  .pheno-campaign__indicators {
+    display: flex;
+  }
+}
