@@ -274,14 +274,26 @@ function RetailFeatureStrip() {
   return (
     <section className="retail-features" aria-label="Why shop PHENO">
       <div className="retail-features__inner">
-        {retailFeatures.map(([icon, label]) => (
-          <article className="retail-feature" key={label}>
-            <span className="retail-feature__icon">
-              <RetailFeatureIcon name={icon} />
-            </span>
-            <h2>{label}</h2>
-          </article>
-        ))}
+        <div className="retail-features__row retail-features__row--top">
+          {retailFeatures.slice(0, 3).map(([icon, label]) => (
+            <article className="retail-feature" key={label}>
+              <span className="retail-feature__icon">
+                <RetailFeatureIcon name={icon} />
+              </span>
+              <h2>{label}</h2>
+            </article>
+          ))}
+        </div>
+        <div className="retail-features__row retail-features__row--bottom">
+          {retailFeatures.slice(3).map(([icon, label]) => (
+            <article className="retail-feature" key={label}>
+              <span className="retail-feature__icon">
+                <RetailFeatureIcon name={icon} />
+              </span>
+              <h2>{label}</h2>
+            </article>
+          ))}
+        </div>
       </div>
     </section>
   );
