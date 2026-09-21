@@ -8610,6 +8610,45 @@ h6 {
     bottom: 21px;
     left: var(--retail-section-x);
   }
+
+  /*
+   * Keep the Type 1 product slider visually first at the compact-desktop
+   * breakpoint, then let the editorial copy follow as a clear lower panel.
+   */
+  .retail-spotlight {
+    min-height: 0;
+  }
+
+  .retail-spotlight__inner {
+    display: flex;
+    min-height: 0;
+    flex-direction: column;
+    padding: 0;
+  }
+
+  .retail-spotlight__art {
+    position: relative;
+    inset: auto;
+    order: 1;
+    width: 100%;
+    height: clamp(300px, 40vw, 390px);
+    flex: 0 0 auto;
+  }
+
+  .retail-spotlight__slider {
+    inset: 18px 0 16px;
+  }
+
+  .retail-spotlight__copy {
+    order: 2;
+    width: 100%;
+    min-height: 0;
+    padding: 36px var(--retail-section-x) 42px;
+  }
+
+  .retail-spotlight h2 {
+    max-width: 12ch;
+  }
 }
 
 @media (max-width: 860px) and (min-width: 721px) {
