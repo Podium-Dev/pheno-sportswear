@@ -76,7 +76,10 @@ export default function OurStoryPage() {
 
         <section className="story-principles" aria-labelledby="principles-title">
           <p className="eyebrow">THE PRINCIPLES</p>
-          <h2 id="principles-title">Performance with purpose.</h2>
+          <h2 id="principles-title">
+            <span>Performance with</span>
+            <span>purpose.</span>
+          </h2>
           <div className="story-principles__grid">
             <article>
               <img className="story-principles__image" src="/images/editorial-left.jpg" alt="Athlete standing outdoors at sunrise" />
