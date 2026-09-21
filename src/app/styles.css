@@ -8764,19 +8764,31 @@ h6 {
   }
 
   .retail-hero {
-    min-height: 640px;
+    min-height: 0;
   }
 
   .retail-hero__wash {
-    background: linear-gradient(180deg, rgb(241 242 240 / 0.98) 0%, rgb(241 242 240 / 0.87) 43%, rgb(241 242 240 / 0.17) 100%);
+    background: linear-gradient(
+      180deg,
+      rgb(241 242 240 / 0.12) 0%,
+      rgb(241 242 240 / 0.18) 51%,
+      rgb(241 242 240 / 0.96) 67%,
+      rgb(241 242 240 / 0.99) 100%
+    );
   }
 
   .retail-hero__inner {
-    display: block;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
   }
 
   .retail-hero__copy {
-    width: min(100%, 320px);
+    order: 2;
+    width: 100%;
+    max-width: none;
+    padding: 42px var(--retail-section-x) 51px;
+    gap: 14px;
   }
 
   .retail-hero h1 {
@@ -8784,29 +8796,36 @@ h6 {
   }
 
   .retail-hero__art {
+    position: relative;
     top: auto;
-    right: -9%;
-    bottom: 0;
-    width: 107%;
-    height: 400px;
+    right: auto;
+    bottom: auto;
+    left: auto;
+    order: 1;
+    width: 100%;
+    height: clamp(320px, 58vw, 390px);
+    flex: 0 0 auto;
+    overflow: hidden;
   }
 
   .retail-hero__mark {
-    top: -44px;
-    right: 0;
-    width: 390px;
-    height: auto;
+    top: -14%;
+    right: 4%;
+    width: auto;
+    height: 132%;
   }
 
   .retail-hero__product {
     top: 0;
-    right: 0;
-    width: 400px;
-    height: 400px;
+    right: 50%;
+    width: min(66vw, 470px);
+    height: min(66vw, 470px);
+    transform: translateX(50%);
   }
 
   .retail-hero__indicators {
-    bottom: 22px;
+    top: calc(clamp(320px, 58vw, 390px) - 26px);
+    bottom: auto;
     left: var(--retail-section-x);
   }
 
