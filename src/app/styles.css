@@ -7289,26 +7289,77 @@ h6 {
 }
 
 .pheno-campaign__columns {
-  display: grid;
+  position: relative;
   height: clamp(620px, 64vw, 860px);
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 6px;
+  overflow: hidden;
   background: var(--retail-white);
 }
 
 .pheno-campaign__look {
-  position: relative;
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  width: 100%;
   min-width: 0;
   height: 100%;
   margin: 0;
   overflow: hidden;
   background: var(--retail-soft);
+  opacity: 0;
+  visibility: hidden;
+  will-change: opacity;
+  transition: opacity 850ms ease-in-out, visibility 0s linear 850ms;
+}
+
+.pheno-campaign__look.is-active {
+  opacity: 1;
+  visibility: visible;
+  transition-delay: 0s;
 }
 
 .pheno-campaign__look img {
   display: block;
   object-fit: cover;
   object-position: center top;
+}
+
+.pheno-campaign__indicators {
+  position: absolute;
+  right: var(--retail-section-x);
+  bottom: 24px;
+  left: var(--retail-section-x);
+  z-index: 5;
+  display: flex;
+  justify-content: center;
+  gap: 5px;
+}
+
+.pheno-campaign__indicators button {
+  display: block;
+  width: 9px;
+  height: 6px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  transform: skew(-17deg);
+}
+
+.pheno-campaign__indicators button span {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: #bfc2bf;
+  transition: background-color 180ms ease-out, transform 180ms ease-out;
+}
+
+.pheno-campaign__indicators button:hover span,
+.pheno-campaign__indicators button:focus-visible span {
+  background: var(--retail-ink);
+  transform: scaleY(1.35);
+}
+
+.pheno-campaign__indicators button.is-active span {
+  background: var(--retail-yellow);
 }
 
 .pheno-campaign__copy {
@@ -8668,16 +8719,13 @@ h6 {
 
 @media (max-width: 860px) and (min-width: 721px) {
   .pheno-campaign__columns {
-    height: auto;
-    grid-template-columns: 1fr;
-    gap: 6px;
+    height: clamp(620px, 92vw, 780px);
   }
 
   .pheno-campaign__look {
-    height: auto;
-    aspect-ratio: 4 / 5;
+    height: 100%;
+    aspect-ratio: auto;
   }
-
 }
 
 @media (max-width: 720px) {
@@ -8722,13 +8770,16 @@ h6 {
 
   .pheno-campaign__columns {
     height: auto;
-    grid-template-columns: 1fr;
-    gap: 6px;
+    aspect-ratio: 4 / 5;
   }
 
   .pheno-campaign__look {
-    height: auto;
-    aspect-ratio: 4 / 5;
+    height: 100%;
+    aspect-ratio: auto;
+  }
+
+  .pheno-campaign__indicators {
+    bottom: 18px;
   }
 
   .pheno-campaign__copy {
