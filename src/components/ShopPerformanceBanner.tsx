@@ -31,7 +31,10 @@ export function ShopPerformanceBanner() {
       <div className="shop-performance-banner__inner">
         <div className="shop-performance-banner__copy">
           <p className="shop-performance-banner__eyebrow">TYPE 1 / PERFORMANCE SYSTEM</p>
-          <h1 id="shop-performance-title">Function in every layer.</h1>
+          <h1 id="shop-performance-title">
+            <span>Function in</span>
+            <span>every layer.</span>
+          </h1>
           <p>
             Built around the details that keep you moving, from warm-up to the last round.
           </p>
