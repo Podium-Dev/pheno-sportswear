@@ -7537,7 +7537,8 @@ h6 {
   mix-blend-mode: normal;
   opacity: 0;
   visibility: hidden;
-  transition: opacity 650ms ease, visibility 0ms linear 650ms;
+  will-change: opacity;
+  transition: opacity 850ms ease-in-out, visibility 0s linear 850ms;
 }
 
 .retail-hero__product--cutout {
