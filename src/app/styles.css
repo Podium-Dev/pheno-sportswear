@@ -12369,3 +12369,11 @@ h2 {
     width: 50%;
   }
 }
+
+
+/* Small-mobile spotlight alignment: keep the orange mark on the right-hand guide line. */
+@media (max-width: 480px) {
+  .retail-home .retail-spotlight__mark {
+    right: -64%;
+  }
+}
