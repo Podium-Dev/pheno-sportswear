@@ -9355,6 +9355,12 @@ h2 {
   font-size: 28px !important;
 }
 
+@media (max-width: 900px) {
+  :root {
+    --type-h1: clamp(38px, 11vw, 52px);
+  }
+}
+
 @media (max-width: 720px) {
   :root {
     --type-h1: clamp(38px, 11vw, 52px);
