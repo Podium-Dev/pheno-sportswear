@@ -9047,7 +9047,7 @@ h6 {
 }
 
 .shop-performance-banner__copy h1 {
-  max-width: 7ch;
+  max-width: 100%;
   margin: 0;
   color: var(--paper);
   font-family: var(--heading-font);
@@ -9056,6 +9056,11 @@ h6 {
   letter-spacing: -0.07em;
   line-height: 0.88;
   text-transform: uppercase;
+}
+
+.shop-performance-banner__copy h1 span {
+  display: block;
+  white-space: nowrap;
 }
 
 .shop-performance-banner__copy > p:not(.shop-performance-banner__eyebrow) {
