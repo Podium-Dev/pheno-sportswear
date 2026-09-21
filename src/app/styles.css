@@ -12385,3 +12385,13 @@ h2 {
     bottom: -61px;
   }
 }
+
+
+/* Small-mobile campaign heading: force both wrapped lines to share one center axis. */
+@media (max-width: 480px) {
+  .pheno-campaign__copy h1 {
+    width: 100%;
+    margin-inline: auto;
+    text-align: center;
+  }
+}
