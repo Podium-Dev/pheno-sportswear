@@ -12515,3 +12515,11 @@ h2 {
     width: 50%;
   }
 }
+
+
+/* Extra-small spotlight artwork: keep the orange mark clear of the copy. */
+@media (max-width: 390px) {
+  .retail-home .retail-spotlight__mark {
+    right: -135%;
+  }
+}
