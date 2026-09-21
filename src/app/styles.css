@@ -12176,3 +12176,41 @@ h2 {
 .admin-eyebrow {
   font-size: 10px;
 }
+
+/* Contact responsive refinement below 900px: prevent detail collisions and free up form width. */
+@media (max-width: 900px) {
+  .contact-page__aside {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
+  .contact-page__form-pane {
+    padding-inline: 24px;
+  }
+
+  .contact-page__form-card {
+    padding: 28px;
+  }
+
+  .contact-page__form-card h2 {
+    margin-bottom: 24px;
+  }
+
+  .contact-page__form-card .contact-form {
+    gap: 20px;
+  }
+
+  .contact-page__form-card .form-grid {
+    gap: 14px;
+  }
+}
+
+@media (max-width: 720px) {
+  .contact-page__form-pane {
+    padding-inline: 18px;
+  }
+
+  .contact-page__form-card {
+    padding: 28px 20px 30px;
+  }
+}
